@@ -1,32 +1,37 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id='app'>
+        <router-view/>
     </div>
-    <router-view/>
-  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+<script>
+    //import SubComponent from '../components/SubComponent'
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    export default {
+        name: 'app',
+        components: { /* Subcomponents */ },
+        props: [/* Inputs */],
+        data() { return { /* Local variables */ }},
+        beforeCreate() {},
+        created() {},
+        mounted() {},
+        updated() {},
+        computed: { /*
+            Creates a new property
+            Updates when any dependant property changes */
+        },
+        watch: { /*
+            Watches an existing property
+            Only runs when the watched property changes */
+        },
+        methods: {}
+    }
+</script>
+
+
+
+<style scoped>
+
 </style>
