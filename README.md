@@ -1,19 +1,13 @@
-# lychee-list
+# Lychee List
 
-## Project setup
-```
-npm install
-```
+### Install
+```npm install```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Development Server 
+```npm run serve```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Build for Production
+```npm run build```
 
-### Customize configuration
+### Customize Config
 See [Configuration Reference](https://cli.vuejs.org/config/).
