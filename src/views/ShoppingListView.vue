@@ -1,6 +1,6 @@
 <template>
-    <div id='shopping-list-view' class='view'>
-        <div class='view-title'>Shopping List</div>
+    <div id='grocery-list-view' class='view'>
+        <div class='view-title'>Grocery List</div>
 </template>
 
 
@@ -9,10 +9,31 @@
     //import SubComponent from '../components/SubComponent'
 
     export default {
-        name: 'component-name',
+        name: 'grocery-list-view',
         components: { /* Subcomponents */ },
         props: [/* Inputs */],
-        data() { return { /* Local variables */ }},
+        data() { return {
+            list: [{
+                    category: 'asdf',
+                    items: [
+                        { name: 'asdf' },
+                        { name: 'asdf' },
+                        { name: 'asdf' },
+                ]}, {
+                    category: 'asdf',
+                    items: [
+                        { name: 'asdf' },
+                        { name: 'asdf' },
+                        { name: 'asdf' },
+                ]}, {
+                    category: 'asdf',
+                    items: [
+                        { name: 'asdf' },
+                        { name: 'asdf' },
+                        { name: 'asdf' },
+                ]}
+            ]
+        }},
         beforeCreate() {},
         created() {},
         mounted() {},
