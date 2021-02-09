@@ -1,7 +1,6 @@
 <template>
     <div id='shopping-list-view' class='view'>
-        <div>Shopping List</div>
-    </div>
+        <div class='view-title'>Shopping List</div>
 </template>
 
 
