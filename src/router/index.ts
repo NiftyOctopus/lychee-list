@@ -5,8 +5,8 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
     {
-        name: 'ShoppingList', path: '/shopping',
-        component: () => import('../views/ShoppingListView.vue')
+        name: 'GroceryList', path: '/list',
+        component: () => import('../views/GroceryListView.vue')
     }, {
         name: 'RecipeList', path: '/recipes',
         component: () => import('../views/RecipeListView.vue')

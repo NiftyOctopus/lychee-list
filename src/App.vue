@@ -1,7 +1,7 @@
 <template>
     <div id='app'>
         <div id='primary-nav'>
-            <router-link to='/shopping'>
+            <router-link to='/list'>
                 <img class='icon' src='./assets/icons/shopping-cart.svg'>
             </router-link>
 
@@ -45,10 +45,11 @@
 <style>
     #primary-nav {
         position:   fixed;
-        top:        5px;
+        top:        0;
         left:       0;
         right:      0;
-        height:     35px;
+        height:     30px;
+        padding:    5px;
         text-align: center;
     }
 
@@ -56,15 +57,26 @@
         margin: 0 10px;
     }
 
+    .view {
+        margin-top: 75px;
+    }
+
     .view-title {
         position:   fixed;
         top:        40px;
         left:       0;
         right:      0;
+        height:     25px;
+        padding:    5px;
         text-align: center;
     }
 
-    .router-link-active {
-        
+    #primary-nav, .view-title {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .group-header {
+        margin-top:  10px;
+        font-weight: bold;
     }
 </style>
