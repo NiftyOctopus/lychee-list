@@ -10,6 +10,9 @@ const routes: Array<RouteConfig> = [
     }, {
         name: 'RecipeList', path: '/recipes',
         component: () => import('../views/RecipeListView.vue')
+    }, {
+        name: 'Recipe', path: '/recipe/:id',
+        component: () => import('../views/RecipeView.vue')
     }
 ]
 
