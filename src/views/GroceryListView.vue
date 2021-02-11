@@ -13,55 +13,21 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'grocery-list-view',
         components: { /* Subcomponents */ },
         props: [/* Inputs */],
         data() { return {
-            list: [{
-                    category: 'Produce',
-                    items: [
-                        { name: 'Bananas' },
-                        { name: 'Apples' },
-                        { name: 'Strawberries' },
-                        { name: 'Grapes' },
-                        { name: 'Oranges' },
-                        { name: 'Potatoes' },
-                        { name: 'Tomatoes' },
-                        { name: 'Onions' },
-                        { name: 'Carrots' },
-                        { name: 'Broccoli' }
-                ]}, {
-                    category: 'Baking and Spices',
-                    items: [
-                        { name: 'Flour' },
-                        { name: 'Sugar' },
-                        { name: 'Powdered sugar' },
-                        { name: 'Brown sugar' },
-                        { name: 'Baking powder' },
-                        { name: 'Yeast' },
-                        { name: 'Cornstarch' },
-                        { name: 'Powdered sugar' }
-                ]}, {
-                    category: 'Dairy',
-                    items: [
-                        { name: 'Milk' },
-                        { name: 'Heavy cream' },
-                        { name: 'Greek yogurt' },
-                        { name: 'Unsalted butter' },
-                        { name: 'Cheddar cheese' },
-                        { name: 'Parm cheese' },
-                ]}
-            ]
+            
         }},
         beforeCreate() {},
         created() {},
         mounted() {},
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['list'])
         },
         watch: { /*
             Watches an existing property
