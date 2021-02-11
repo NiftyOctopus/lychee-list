@@ -1,6 +1,9 @@
 <template>
-    <div class='recipe-list-view'>
+    <div id='recipe-list-view' class='view'>
         <div class='view-title'>Recipes</div>
+        <div v-for='recipe in recipeList' :key='recipe.name'>
+            <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
+        </div>
     </div>
 </template>
 
@@ -8,9 +11,10 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
+    import { mapGetters } from 'vuex'
 
     export default {
-        name: 'component-name',
+        name: 'recipe-list-view',
         components: { /* Subcomponents */ },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
@@ -18,9 +22,8 @@
         created() {},
         mounted() {},
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapGetters(['recipeList'])
         },
         watch: { /*
             Watches an existing property
