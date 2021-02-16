@@ -13,6 +13,18 @@ const routes: Array<RouteConfig> = [
     }, {
         name: 'Recipe', path: '/recipe/:id',
         component: () => import('../views/RecipeView.vue')
+    }, {
+        name: 'Item', path: '/item',
+        component: () => import('../views/ItemView.vue')
+    }, {
+        name: 'Category', path: '/category',
+        component: () => import('../views/CategoryView.vue')
+    }, {
+        name: 'Unit', path: '/unit',
+        component: () => import('../views/UnitView.vue')
+    }, {
+        name: 'Amount', path: '/amount',
+        component: () => import('../views/AmountView.vue')
     }
 ]
 

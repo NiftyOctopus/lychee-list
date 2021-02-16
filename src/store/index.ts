@@ -3,6 +3,26 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+let recipes:{[index:number]:any} = {
+    1: { id: 1, name: 'Banbanji Chicken' },
+    2: { id: 2, name: 'Chili' },
+    3: { id: 3, name: 'Broccoli Rabe Sausage Pasta' },
+    4: { 
+        id: 4, name: 'Mapo Tofu',
+        items: [
+            { name: 'Milk' },
+            { name: 'Heavy cream' },
+            { name: 'Greek yogurt' },
+            { name: 'Unsalted butter' },
+            { name: 'Cheddar cheese' },
+            { name: 'Parm cheese' }
+        ]
+    },
+    5: { id: 5, name: 'Tadka Dal' },
+    6: { id: 6, name: 'Brussel Sprouts and Bacon' },
+    7: { id: 7, name: 'Pad See Ew' }
+}
+
 export default new Vuex.Store({
     state: {
         list: [{
@@ -40,27 +60,10 @@ export default new Vuex.Store({
                 { name: 'Parm cheese' }
             ]}
         ],
-        recipes: {
-            1: { id: 1, name: 'Banbanji Chicken' },
-            2: { id: 2, name: 'Chili' },
-            3: { id: 3, name: 'Broccoli Rabe Sausage Pasta' },
-            4: { 
-                id: 4, name: 'Mapo Tofu',
-                items: [
-                    { name: 'Milk' },
-                    { name: 'Heavy cream' },
-                    { name: 'Greek yogurt' },
-                    { name: 'Unsalted butter' },
-                    { name: 'Cheddar cheese' },
-                    { name: 'Parm cheese' }
-                ]
-            },
-            5: { id: 5, name: 'Tadka Dal' },
-            6: { id: 6, name: 'Brussel Sprouts and Bacon' },
-            7: { id: 7, name: 'Pad See Ew' }
-        },
+        recipes,
         activeRecipeID: 2,
-        query: 'a'
+        query: 'a',
+        item: { name: 'Cornstarch' }
     },
     mutations: {
         openRecipe(state, id) {

@@ -61,7 +61,7 @@
         margin-top: 75px;
     }
 
-    .view-title {
+    .view-header {
         position:   fixed;
         top:        40px;
         left:       0;

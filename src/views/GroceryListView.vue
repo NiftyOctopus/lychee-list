@@ -1,6 +1,6 @@
 <template>
     <div id='grocery-list-view' class='view'>
-        <div class='view-title'>Grocery List</div>
+        <div class='view-header'>Grocery List</div>
 
         <div v-for='group in list' :key='group.category'>
             <div class='group-header'>{{ group.category }}</div>

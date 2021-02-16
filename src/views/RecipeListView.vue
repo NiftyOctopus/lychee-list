@@ -1,6 +1,7 @@
 <template>
     <div id='recipe-list-view' class='view'>
-        <div class='view-title'>Recipes</div>
+        <div class='view-header'>Recipes</div>
+
         <div v-for='recipe in recipeList' :key='recipe.name'>
             <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
         </div>
