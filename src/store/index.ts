@@ -25,6 +25,11 @@ let recipes:{[index:number]:any} = {
 
 export default new Vuex.Store({
     state: {
+        categories: ['Baking', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices'],
+        units: [
+            { type: 'Volume', units: ['Teaspoon', 'Tablespoon', 'Cup', 'Pint']},
+            { type: 'Weight', units: ['Gram', 'Ounce', 'Pound']}
+        ],
         list: [{
             category: 'Produce',
             items: [
@@ -68,6 +73,9 @@ export default new Vuex.Store({
     mutations: {
         openRecipe(state, id) {
             state.activeRecipeID = id
+        },
+        updateQuery(state, query) {
+            state.query = query
         }
     },
     actions: {

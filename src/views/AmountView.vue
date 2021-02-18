@@ -1,17 +1,17 @@
 <template>
     <div class='amount-view view'>
-        <div class='view-title'>Amount View</div>
+        <view-header title='How much?' fwd=true></view-header>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import ViewHeader from '../components/ViewHeader'
 
     export default {
         name: 'amount-view',
-        components: { /* Subcomponents */ },
+        components: { ViewHeader },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},

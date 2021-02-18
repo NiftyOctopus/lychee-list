@@ -1,26 +1,27 @@
 <template>
     <div class='category-view view'>
-        <div class='view-title'>Category View</div>
+        <view-header title='Select Category' fwd=true></view-header>
+        <div v-for='category in categories' :key='category'>{{ category }}</div>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import ViewHeader from '../components/ViewHeader'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'category-view',
-        components: { /* Subcomponents */ },
+        components: { ViewHeader },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
         mounted() {},
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['categories']),
         },
         watch: { /*
             Watches an existing property

@@ -1,26 +1,31 @@
 <template>
     <div class='unit-view view'>
-        <div class='view-title'>Unit View</div>
+        <view-header title='Unit of Measure' fwd=true></view-header>
+
+        <div v-for='group in units' :key='group.type'>
+            <div class='group-header'>{{ group.type }}</div>
+            <div v-for='unit in group.units' :key='unit'>{{ unit }}</div>
+        </div>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import ViewHeader from '../components/ViewHeader'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'unit-view',
-        components: { /* Subcomponents */ },
+        components: { ViewHeader },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
         mounted() {},
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['units']),
         },
         watch: { /*
             Watches an existing property

@@ -1,5 +1,15 @@
 <template>
     <div id='app'>
+        <div id='dev-nav'>
+            <router-link class='link' to='/'>GroceryList</router-link>
+            <router-link class='link' to='/recipes'>RecipeList</router-link>
+            <router-link class='link' to='/recipe/4'>Recipe</router-link>
+            <router-link class='link' to='/item'>Item</router-link>
+            <router-link class='link' to='/category'>Category</router-link>
+            <router-link class='link' to='/unit'>Unit</router-link>
+            <router-link class='link' to='/amount'>Amount</router-link>
+        </div>
+
         <div id='primary-nav'>
             <router-link to='/list'>
                 <img class='icon' src='./assets/icons/shopping-cart.svg'>
@@ -43,6 +53,23 @@
 
 
 <style>
+    #dev-nav {
+        position:   fixed;
+        top:        0;
+        left:       0;
+        right:      0;
+        z-index:    10;
+        padding:    5px;
+        text-align: center;
+        font-size:  12px;
+        
+    }
+
+    #dev-nav .link {
+        padding: 5px;
+        background-color: rgba(230, 230, 230, 0.85);
+    }
+
     #primary-nav {
         position:   fixed;
         top:        0;
@@ -58,7 +85,8 @@
     }
 
     .view {
-        margin-top: 75px;
+        margin-top: 100px;
+        text-align: center;
     }
 
     .view-header {

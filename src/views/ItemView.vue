@@ -1,6 +1,7 @@
 <template>
     <div class='item-view view'>
-        <view-header title='Add Ingredient' :crumbs='crumbs' back=true></view-header>
+        <view-header title='Add Ingredient'></view-header>
+        <div><input type='text' v-model.lazy='item.name'></div>
     </div>
 </template>
 
@@ -8,21 +9,19 @@
 
 <script>
     import ViewHeader from '../components/ViewHeader'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'item-view',
         components: { ViewHeader },
-        props: [/* Inputs */],
-        data() { return {
-            crumbs: [{ name: 'Testasdf' }, { name: 'Teasdfst2' }]
-        }},
+        props: [],
+        data() { return {} },
         beforeCreate() {},
         created() {},
         mounted() {},
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['item']),
         },
         watch: { /*
             Watches an existing property

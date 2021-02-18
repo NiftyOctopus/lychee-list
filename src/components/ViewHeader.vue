@@ -1,12 +1,12 @@
 <template>
     <div class='view-header'>
-        <div>{{ recipe.name }}</div>
-        <div>{{ item.name }}</div>
+        <div v-if='recipe'>{{ recipe.name }}</div>
+        <div v-if="this.$route.path != '/item'">{{ item.name }}</div>
 
         <div class='view-title'>
-            <img v-if='back' class='icon' src='../assets/icons/archive.svg'>
+            <img class='icon' src='../assets/icons/arrow-left-circle.svg'>
             <span>{{ title }}</span>
-            <img v-if='fwd' class='icon' src='../assets/icons/archive.svg'>
+            <img v-if='fwd' class='icon' src='../assets/icons/arrow-right-circle.svg'>
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@
     export default {
         name: 'view-header',
         components: { /* Subcomponents */ },
-        props: ['title', 'crumbs', 'back', 'fwd'],
+        props: ['title', 'fwd'],
         data() { return {
 
         }},
