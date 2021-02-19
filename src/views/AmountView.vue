@@ -1,6 +1,7 @@
 <template>
     <div class='amount-view view'>
-        <view-header title='How much?' fwd=true></view-header>
+        <view-header title='How much?'></view-header>
+        <view-footer></view-footer>
     </div>
 </template>
 
@@ -8,10 +9,11 @@
 
 <script>
     import ViewHeader from '../components/ViewHeader'
+    import ViewFooter from '../components/ViewFooter'
 
     export default {
         name: 'amount-view',
-        components: { ViewHeader },
+        components: { ViewHeader, ViewFooter },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},

@@ -6,18 +6,20 @@
             <div class='group-header'>{{ group.category }}</div>
             <div v-for='item in group.items' :key='item.name'>{{ item.name }}</div>
         </div>
+
+        <view-footer></view-footer>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import ViewFooter from '../components/ViewFooter'
     import { mapState } from 'vuex'
 
     export default {
         name: 'grocery-list-view',
-        components: { /* Subcomponents */ },
+        components: { ViewFooter },
         props: [/* Inputs */],
         data() { return {
             

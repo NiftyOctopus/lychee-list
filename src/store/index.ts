@@ -52,8 +52,7 @@ export default new Vuex.Store({
                 { name: 'Brown sugar' },
                 { name: 'Baking powder' },
                 { name: 'Yeast' },
-                { name: 'Cornstarch' },
-                { name: 'Powdered sugar' }
+                { name: 'Cornstarch' }
         ]}, {
             category: 'Dairy',
             items: [
@@ -76,6 +75,9 @@ export default new Vuex.Store({
         },
         updateQuery(state, query) {
             state.query = query
+        },
+        updateItemName(state, name) {
+            state.item.name = name
         }
     },
     actions: {

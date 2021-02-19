@@ -2,20 +2,21 @@
     <div class='recipe-view view'>
         <div class='view-header'>{{ recipe.name }}</div>
         <div v-for='item in recipe.items' :key='item.name'>{{ item.name }}</div>
+        <view-footer></view-footer>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import ViewFooter from '../components/ViewFooter'
     import { mapMutations } from 'vuex'
     import { mapGetters }   from 'vuex'
 
 
     export default {
         name: 'recipe-view',
-        components: { /* Subcomponents */ },
+        components: { ViewFooter },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},

@@ -1,25 +1,28 @@
 <template>
     <div id='recipe-list-view' class='view'>
         <div class='view-header'>Recipes</div>
-
-        <div><input type='text' v-model='query'></div>
+        <search :init='query' @update='updateQuery'></search>
 
         <div v-for='recipe in recipeList' :key='recipe.name'>
             <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
         </div>
+
+        <view-footer></view-footer>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import Search     from '../components/Search'
+    import ViewFooter from '../components/ViewFooter'
+
     import { mapState }   from 'vuex'
     import { mapGetters } from 'vuex'
 
     export default {
         name: 'recipe-list-view',
-        components: { /* Subcomponents */ },
+        components: { Search, ViewFooter },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
@@ -27,18 +30,18 @@
         mounted() {},
         updated() {},
         computed: {
-            //...mapState(['query']),
-            ...mapGetters(['recipeList']),
-            query: {
-                get() { return this.$store.state.query },
-                set(query) { this.$store.commit('updateQuery', query) }
-            }
+            ...mapState(['query']),
+            ...mapGetters(['recipeList'])
         },
         watch: { /*
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            updateQuery(query) {
+                this.$store.commit('updateQuery', query)
+            }
+        }
     }
 </script>
 
