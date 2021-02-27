@@ -70,6 +70,10 @@
         background-color: rgba(230, 230, 230, 0.85);
     }
 
+    body {
+        font-size: 20px;
+    }
+
     #primary-nav {
         position:   fixed;
         top:        0;

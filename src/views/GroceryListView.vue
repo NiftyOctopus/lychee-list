@@ -2,9 +2,11 @@
     <div id='grocery-list-view' class='view'>
         <div class='view-header'>Grocery List</div>
 
-        <div v-for='group in list' :key='group.category'>
-            <div class='group-header'>{{ group.category }}</div>
-            <div v-for='item in group.items' :key='item.name'>{{ item.name }}</div>
+        <div v-for='category in categories' :key='category'>
+            <div v-if='list[category] && list[category].length'>
+                <div class='group-header'>{{ category }}</div>
+                <item v-for='(item, index) in list[category]' :key='index' :i='index' :item='item'></item>
+            </div>
         </div>
 
         <view-footer></view-footer>
@@ -14,22 +16,21 @@
 
 
 <script>
+    import Item       from '../components/Item'
     import ViewFooter from '../components/ViewFooter'
     import { mapState } from 'vuex'
 
     export default {
         name: 'grocery-list-view',
-        components: { ViewFooter },
+        components: { Item, ViewFooter },
         props: [/* Inputs */],
-        data() { return {
-            
-        }},
+        data() { return {}},
         beforeCreate() {},
         created() {},
         mounted() {},
         updated() {},
         computed: {
-            ...mapState(['list'])
+            ...mapState(['categories', 'list'])
         },
         watch: { /*
             Watches an existing property
