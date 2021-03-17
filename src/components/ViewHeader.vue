@@ -6,7 +6,7 @@
         <div class='view-title'>
             <img class='icon' src='../assets/icons/arrow-left-circle.svg'>
             <span>{{ title }}</span>
-            <img v-if='fwd' class='icon' src='../assets/icons/arrow-right-circle.svg'>
+            <img v-if='fwd' class='icon' src='../assets/icons/arrow-right-circle.svg' @click='forward'>
         </div>
     </div>
 </template>
@@ -37,7 +37,11 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            forward() {
+                this.$emit('forward')
+            }
+        }
     }
 </script>
 

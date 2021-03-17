@@ -1,15 +1,13 @@
 <template>
-    <div class='item' @click='toggleItem'>
+    <div class='item'>
         <div class='actions'>
-            <!-- <img class='icon' src='../assets/icons/shopping-cart.svg'> -->
-            <!-- <img class='icon' src='../assets/icons/shopping-cart.svg'> -->
-            Hi :)
+            <img class='icon edit'   src='../assets/icons/edit.svg'>
+            <img class='icon delete' src='../assets/icons/trash.svg'>
         </div>
 
         <div class='wrapper' v-bind:class="{ open: open }" @touchstart='startSwipe' @touchmove='swiping' @touchend='endSwipe'>
-            <div class='name'>
-                <span>{{ item.name }}</span>
-                <div v-if='item.done' class='done'></div>
+            <div class='name' @click='toggleItem'>
+                <span v-bind:class="{ done: item.done }">{{ item.name }}</span>
             </div>
         </div>
     </div>
@@ -64,39 +62,70 @@
 <style scoped>
     .item {
         position: relative;
+        /* border: 1px solid red; */
+        margin: 2px 0;
+        /* font-size: 70px; */
     }
 
     .wrapper {
+        display: flex;
         position: relative;
+        
+        padding: 2px;
         right: 0;
-        /* border: 1px solid blue; */
+        /* border: 1px solid green; */
         background-color: white;
-        transition: right 250ms;
+        transition: all 250ms;
+        transition-timing-function: cubic-bezier(0.32, 1.69, 0.6, 0.8);
         
     }
 
     .name {
-        display:  inline-block;
+        /* display:  flex; */
         position: relative;
+        /* border: 1px solid black; */
+        margin: 0 auto;
     }
 
     .done {
-        position: absolute;
+        text-decoration: line-through;
+        color: gray;
+        /* position: absolute;
         top:    0;
         left:  -3px;
         right: -3px;
         height: 50%;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid black; */
     }
 
     .actions {
+        display: flex;
         position: absolute;
         right: 5px;
-        background-color: red;
+        height: 100%;
+        /* background-color: gray; */
         z-index: -1;
+        /* border: 1px solid blue; */
+        padding: 0;
     }
 
     .open {
-        right: 50px;
+        right: 74px;
+        background-color: #f2f2f2;
+    }
+
+    .icon {
+        /* border: 1px solid black; */
+        /* background-color: lightblue; */
+        padding: 0 4px;
+        margin: 0 1px;
+    }
+
+    .edit {
+        background-color: lightskyblue
+    }
+
+    .delete {
+        background-color: lightsalmon;
     }
 </style>

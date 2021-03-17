@@ -1,7 +1,8 @@
 <template>
     <div class='view-footer'>
-        <img class='icon' src='../assets/icons/shopping-cart.svg'>
-        <div>asdf</div>
+        <img v-if='allowAdd'  class='icon' src='../assets/icons/plus-circle.svg' @click='add'>
+        <img v-if='allowSave' class='icon' src='../assets/icons/save.svg' @click='save'>
+        <div v-if='allowDelete'>Delete Recipe</div>
     </div>
 </template>
 
@@ -13,7 +14,7 @@
     export default {
         name: 'view-footer',
         components: { /* Subcomponents */ },
-        props: [/* Inputs */],
+        props: ['allowAdd', 'allowSave'],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
@@ -27,7 +28,14 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            add() {
+                this.$emit('add')
+            },
+            save() {
+                this.$emit('save')
+            }
+        }
     }
 </script>
 
@@ -36,7 +44,7 @@
 <style scoped>
     .view-footer {
         position:   fixed;
-        bottom:     0;
+        bottom:     50px;
         left:       0;
         right:      0;
         padding:    5px;

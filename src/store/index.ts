@@ -60,7 +60,7 @@ export default new Vuex.Store({
         recipes,
         activeRecipeID: 2,
         query: 'a',
-        item: { name: 'Cornstarch' }
+        item: { name: 'Cornstarch', category: '', unit: '' }
     },
     mutations: {
         openRecipe(state, id) {
@@ -72,6 +72,25 @@ export default new Vuex.Store({
         updateItemName(state, name) {
             state.item.name = name
         },
+        updateItemCategory(state, category) {
+            state.item.category = category
+        },
+        updateItemUnit(state, unit) {
+            state.item.unit = unit
+        },
+        saveItem(state) {
+            const category = state.item.category
+
+            if(category) {
+                if(state.activeRecipeID) {
+                    state.recipes[state.activeRecipeID].items.push(state.item)
+
+                } else {
+                    if(!state.list[category]) { Vue.set(state.list, category, []) }
+                    state.list[category].push(state.item)
+                }
+            }
+        },
         toggleItem(state, item) {
             const i = item.i
             delete item.i
@@ -80,6 +99,10 @@ export default new Vuex.Store({
                 item.done = !item.done
                 state.list[item.category].splice(i, 1, item)
             }
+        },
+        clearItem(state) {
+            state.item.name = ''
+            state.activeRecipeID = 0
         }
     },
     actions: {

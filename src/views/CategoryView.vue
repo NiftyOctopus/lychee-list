@@ -1,7 +1,7 @@
 <template>
     <div class='category-view view'>
         <view-header title='Select Category' fwd=true></view-header>
-        <div v-for='category in categories' :key='category'>{{ category }}</div>
+        <div v-for='category in categories' :key='category' @click='selectCategory(category)'>{{ category }}</div>
     </div>
 </template>
 
@@ -27,7 +27,12 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            selectCategory(category) {
+                this.$store.commit('updateItemCategory', category)
+                this.$router.push('unit')
+            }
+        }
     }
 </script>
 

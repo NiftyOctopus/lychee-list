@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <view-footer></view-footer>
+        <view-footer :allowAdd=true @add='navToAddItem'></view-footer>
     </div>
 </template>
 
@@ -36,12 +36,19 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            navToAddItem() {
+                this.$store.commit('clearItem')
+                this.$router.push('item')
+            }
+        }
     }
 </script>
 
 
 
 <style scoped>
-
+    #grocery-list-view {
+        margin-bottom: 100px;
+    }
 </style>

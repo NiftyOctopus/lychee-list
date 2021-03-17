@@ -53,6 +53,8 @@
 
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
     #dev-nav {
         position:   fixed;
         top:        0;
@@ -71,7 +73,8 @@
     }
 
     body {
-        font-size: 20px;
+        font-family: 'Roboto', sans-serif;
+        font-size:    18px;
     }
 
     #primary-nav {

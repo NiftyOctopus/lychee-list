@@ -1,6 +1,6 @@
 <template>
     <div class='item-view view'>
-        <view-header title='Add Ingredient' fwd=true></view-header>
+        <view-header title='Add Ingredient' fwd=true @forward='navToCategory'></view-header>
         <search :init='item.name' @update='updateItem'></search>
     </div>
 </template>
@@ -31,6 +31,9 @@
         methods: {
             updateItem(name) {
                 this.$store.commit('updateItemName', name)
+            },
+            navToCategory() {
+                this.$router.push('category')
             }
         }
     }

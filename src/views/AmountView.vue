@@ -1,7 +1,7 @@
 <template>
     <div class='amount-view view'>
         <view-header title='How much?'></view-header>
-        <view-footer></view-footer>
+        <view-footer :allowSave=true @save='saveItem'></view-footer>
     </div>
 </template>
 
@@ -28,7 +28,12 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            saveItem() {
+                this.$store.commit('saveItem')
+                this.$router.push('/')
+            }
+        }
     }
 </script>
 

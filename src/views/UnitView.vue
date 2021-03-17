@@ -4,7 +4,7 @@
 
         <div v-for='group in units' :key='group.type'>
             <div class='group-header'>{{ group.type }}</div>
-            <div v-for='unit in group.units' :key='unit'>{{ unit }}</div>
+            <div v-for='unit in group.units' :key='unit' @click='selectUnit(unit)'>{{ unit }}</div>
         </div>
     </div>
 </template>
@@ -31,7 +31,12 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            selectUnit(unit) {
+                this.$store.commit('updateItemUnit', unit)
+                this.$router.push('amount')
+            }
+        }
     }
 </script>
 
