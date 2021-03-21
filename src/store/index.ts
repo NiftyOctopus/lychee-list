@@ -49,18 +49,30 @@ let list:{[index:string]:any} = {
 }
 
 
+
+
+
 export default new Vuex.Store({
     state: {
         categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices'],
         units: [
-            { type: 'Volume', units: ['Teaspoon', 'Tablespoon', 'Cup', 'Pint']},
-            { type: 'Weight', units: ['Gram', 'Ounce', 'Pound']}
+            { type: 'Volume', units: [
+                { abbr: 'tsp',  name: 'Teaspoon' },
+                { abbr: 'tbsp', name: 'Tablespoon' },
+                { abbr: 'c',    name: 'Cup' },
+                { abbr: 'pt',   name: 'Pint' },
+            ]},
+            { type: 'Weight', units: [
+                { abbr: 'g',  name: 'Gram' },
+                { abbr: 'oz', name: 'Ounce' },
+                { abbr: 'lb', name: 'Pound' },
+            ]}
         ],
         list,
         recipes,
         activeRecipeID: 2,
         query: 'a',
-        item: { name: 'Cornstarch', category: '', unit: '' }
+        item: { name: 'Cornstarch', category: '', unit: '', amount: 1 }
     },
     mutations: {
         openRecipe(state, id) {
@@ -77,6 +89,9 @@ export default new Vuex.Store({
         },
         updateItemUnit(state, unit) {
             state.item.unit = unit
+        },
+        updateItemAmount(state, amount) {
+            state.item.amount = amount
         },
         saveItem(state) {
             const category = state.item.category
@@ -101,8 +116,11 @@ export default new Vuex.Store({
             }
         },
         clearItem(state) {
-            state.item.name = ''
+            Vue.set(state, 'item', {})
             state.activeRecipeID = 0
+        },
+        setList(state, list) {
+            Vue.set(state, 'list', list)
         }
     },
     actions: {

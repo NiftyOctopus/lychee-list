@@ -56,7 +56,7 @@
 
 <style scoped>
     .fraction {
-        margin-top: 100px;
+        margin-top: 20px;
         display: inline-block;
         /* border: 1px solid red; */
     }

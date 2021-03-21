@@ -1,6 +1,6 @@
 <template>
     <div id='app'>
-        <div id='dev-nav'>
+        <!-- <div id='dev-nav'>
             <router-link class='link' to='/'>GroceryList</router-link>
             <router-link class='link' to='/recipes'>RecipeList</router-link>
             <router-link class='link' to='/recipe/4'>Recipe</router-link>
@@ -8,10 +8,10 @@
             <router-link class='link' to='/category'>Category</router-link>
             <router-link class='link' to='/unit'>Unit</router-link>
             <router-link class='link' to='/amount'>Amount</router-link>
-        </div>
+        </div> -->
 
         <div id='primary-nav'>
-            <router-link to='/list'>
+            <router-link to='/'>
                 <img class='icon' src='./assets/icons/shopping-cart.svg'>
             </router-link>
 
@@ -21,6 +21,9 @@
         </div>
 
         <router-view/>
+
+        <!-- <img src='./assets/icons/arrow-left-circle.svg'> -->
+        <!-- <img src='./assets/icons/arrow-right-circle.svg'> -->
     </div>
 </template>
 
@@ -36,7 +39,10 @@
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
-        mounted() {},
+        mounted() {
+            this.init()
+            this.load()    
+        },
         updated() {},
         computed: { /*
             Creates a new property
@@ -46,7 +52,21 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            init() {
+                this.$db.version(1).stores({ list: '++id' });
+            },
+            async load() {
+                let list = {}
+                let items = await this.$db.list.toArray()
+                for(let i in items) {
+                    const item = items[i]
+                    if(!list[item.category]) { list[item.category] = [] }
+                    list[item.category].push(item)
+                }
+                this.$store.commit('setList', list)
+            }
+        }
     }
 </script>
 
@@ -85,6 +105,7 @@
         height:     30px;
         padding:    5px;
         text-align: center;
+        z-index: 100;
     }
 
     #primary-nav .icon {
@@ -106,8 +127,13 @@
         text-align: center;
     }
 
-    #primary-nav, .view-title {
+    #primary-nav, .view-header {
         background-color: rgba(255, 255, 255, 0.7);
+        z-index: 100;
+    }
+
+    .view-title {
+        font-weight: bold;
     }
 
     .group-header {

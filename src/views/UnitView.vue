@@ -4,7 +4,7 @@
 
         <div v-for='group in units' :key='group.type'>
             <div class='group-header'>{{ group.type }}</div>
-            <div v-for='unit in group.units' :key='unit' @click='selectUnit(unit)'>{{ unit }}</div>
+            <div v-for='unit in group.units' :key='unit' @click='selectUnit(unit)'>{{ unit.name }}</div>
         </div>
     </div>
 </template>
@@ -33,7 +33,7 @@
         },
         methods: {
             selectUnit(unit) {
-                this.$store.commit('updateItemUnit', unit)
+                this.$store.commit('updateItemUnit', unit.abbr)
                 this.$router.push('amount')
             }
         }

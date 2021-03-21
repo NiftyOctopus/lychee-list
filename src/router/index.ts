@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
+import GroceryListView from '../views/GroceryListView.vue'
+import ItemView from '../views/ItemView.vue'
+
+
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
     {
         name: 'GroceryList', path: '/',
-        component: () => import('../views/GroceryListView.vue')
+        component: GroceryListView
     }, {
         name: 'RecipeList', path: '/recipes',
         component: () => import('../views/RecipeListView.vue')
@@ -15,7 +19,7 @@ const routes: Array<RouteConfig> = [
         component: () => import('../views/RecipeView.vue')
     }, {
         name: 'Item', path: '/item',
-        component: () => import('../views/ItemView.vue')
+        component: ItemView
     }, {
         name: 'Category', path: '/category',
         component: () => import('../views/CategoryView.vue')

@@ -44,10 +44,10 @@
 <style scoped>
     .view-footer {
         position:   fixed;
-        bottom:     50px;
+        bottom:     0;
         left:       0;
         right:      0;
-        padding:    5px;
+        padding:    5px 5px 25px 5px;
         text-align: center;
         background-color: rgba(255, 255, 255, 0.7);
     }

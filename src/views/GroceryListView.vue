@@ -1,6 +1,8 @@
 <template>
     <div id='grocery-list-view' class='view'>
-        <div class='view-header'>Grocery List</div>
+        <div class='view-header'>
+            <div class='view-title'>Grocery List</div>
+        </div>
 
         <div v-for='category in categories' :key='category'>
             <div v-if='list[category] && list[category].length'>
@@ -26,8 +28,8 @@
         props: [/* Inputs */],
         data() { return {}},
         beforeCreate() {},
-        created() {},
-        mounted() {},
+        created() { },
+        mounted() { },
         updated() {},
         computed: {
             ...mapState(['categories', 'list'])
