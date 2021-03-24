@@ -103,9 +103,10 @@
         left:       0;
         right:      0;
         height:     30px;
-        padding:    5px;
+        padding:    5px 0 0 0;
         text-align: center;
         z-index: 100;
+        background-color: #e8385b;
     }
 
     #primary-nav .icon {
@@ -119,7 +120,7 @@
 
     .view-header {
         position:   fixed;
-        top:        40px;
+        top:        35px;
         left:       0;
         right:      0;
         height:     25px;
@@ -127,8 +128,9 @@
         text-align: center;
     }
 
-    #primary-nav, .view-header {
+    .view-header {
         background-color: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(2px);
         z-index: 100;
     }
 

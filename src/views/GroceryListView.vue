@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <view-footer :allowAdd=true @add='navToAddItem'></view-footer>
+        <view-footer :allowAdd=true @add='navToItemView'></view-footer>
     </div>
 </template>
 
@@ -28,8 +28,8 @@
         props: [/* Inputs */],
         data() { return {}},
         beforeCreate() {},
-        created() { },
-        mounted() { },
+        created() {},
+        mounted() {},
         updated() {},
         computed: {
             ...mapState(['categories', 'list'])
@@ -39,7 +39,7 @@
             Only runs when the watched property changes */
         },
         methods: {
-            navToAddItem() {
+            navToItemView() {
                 this.$store.commit('clearItem')
                 this.$router.push('item')
             }
