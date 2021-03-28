@@ -4,7 +4,7 @@
         <div style='margin-top: 150px'><button @click='getRandomValue'>Refresh</button></div>
         <div>{{ value }}</div>
         <fraction :value='value'></fraction>
-        <adjuster d=3></adjuster>
+        <!-- <adjuster d=3></adjuster> -->
         <view-footer :allowSave=true @save='saveItem'></view-footer>
     </div>
 </template>

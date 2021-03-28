@@ -14,7 +14,7 @@
     export default {
         name: 'view-footer',
         components: { /* Subcomponents */ },
-        props: ['allowAdd', 'allowSave'],
+        props: ['allowAdd', 'allowSave', 'allowDelete'],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
