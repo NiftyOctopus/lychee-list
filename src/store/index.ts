@@ -91,7 +91,8 @@ export default new Vuex.Store({
             state.item.unit = unit
         },
         updateItemAmount(state, amount) {
-            state.item.amount = amount
+            const current = state.item.amount ? state.item.amount : 0
+            Vue.set(state.item, 'amount', current + amount)
         },
         saveItem(state) {
             const category = state.item.category

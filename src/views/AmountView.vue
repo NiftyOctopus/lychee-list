@@ -1,10 +1,13 @@
 <template>
     <div class='amount-view view'>
         <view-header title='How much?'></view-header>
-        <div style='margin-top: 150px'><button @click='getRandomValue'>Refresh</button></div>
-        <div>{{ value }}</div>
-        <fraction :value='value'></fraction>
-        <!-- <adjuster d=3></adjuster> -->
+        <!-- <div style='margin-top: 150px'><button @click='getRandomValue'>Refresh</button></div> -->
+        <div style='margin-top: 150px;'>Amt: {{ item.amount }}</div>
+        <!-- <div><fraction :value='value'></fraction></div> -->
+        
+        <adjuster d=2></adjuster>
+        <adjuster d=3></adjuster>
+        <adjuster d=4></adjuster>
         <view-footer :allowSave=true @save='saveItem'></view-footer>
     </div>
 </template>
@@ -38,7 +41,8 @@
         },
         methods: {
             setAmount(amount) {
-                this.$store.commit('updateItemAmount', amount)
+                //alert('WTF')
+                //this.$store.commit('updateItemAmount', 6)
             },
             async saveItem() {
                 //alert(this.item.id)

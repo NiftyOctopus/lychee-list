@@ -1,9 +1,19 @@
 <template>
     <div class='adjuster'>
-        <div>Plus</div>
+        <div>
+            <img class='icon'
+                src='../assets/icons/plus-circle.svg'
+                @click='setAmount(plus)'>
+        </div>
+
         <div class='numerator'  >1</div>
         <div class='denominator'>{{ d }}</div>
-        <div>Minus</div>
+
+        <div>
+            <img class='icon'
+                src='../assets/icons/minus-circle.svg'
+                @click=setAmount(minus)>
+        </div>
     </div>
 </template>
 
@@ -24,13 +34,21 @@
         mounted() {},
         updated() {},
         computed: {
-
+            plus() {
+                return 1 / this.d
+            },
+            minus() {
+                return -1 / this.d
+            }
         },
         watch: {
 
         },
         methods: {
-
+            setAmount(amount) {
+                //alert('Hello')
+                this.$store.commit('updateItemAmount', amount)
+            },
         }
     }
 </script>
@@ -40,6 +58,7 @@
 <style scoped>
     .adjuster {
         display: inline-block;
+        padding: 10px;
         /* border: 1px solid red; */
     }
 
@@ -49,5 +68,9 @@
 
     .numerator, .denominator {
         padding: 2px 5px;
+    }
+
+    .icon {
+        touch-action: manipulation;
     }
 </style>
