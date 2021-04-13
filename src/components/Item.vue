@@ -7,7 +7,7 @@
 
         <div class='wrapper' v-bind:class="{ open: open }" @touchstart='startSwipe' @touchmove='swiping' @touchend='endSwipe'>
             <div class='name' @click='toggleItem'>
-                <span v-bind:class="{ done: item.done }">{{ item.name }}</span>
+                <span v-bind:class="{ done: item.done }">{{ item.name }}, {{ amount }}</span>
             </div>
         </div>
     </div>
@@ -16,10 +16,11 @@
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
+    import { fractionize } from '../mixins/fractionize'
 
     export default {
         name: 'item',
+        mixins: [fractionize],
         components: { /* Subcomponents */ },
         props: ['i', 'item'],
         data() { return { open: false, pos: 0, start: 0 }},
@@ -27,9 +28,20 @@
         created() {},
         mounted() {},
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            value() {
+                return this.item.amount
+            },
+            amount() {
+                const whole = Math.floor(this.item.amount)
+                let amt = whole > 0 ? whole : ''
+
+                const n = this.fraction.n
+                const d = this.fraction.d
+                if(n > 0) { amt = amt + ' ' + n + '/' + d }
+
+                return amt + ' ' + this.item.unit
+            }
         },
         watch: { /*
             Watches an existing property

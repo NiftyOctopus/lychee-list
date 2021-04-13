@@ -54,7 +54,7 @@
         },
         methods: {
             init() {
-                this.$db.version(1).stores({ list: '++id' });
+                this.$db.version(1).stores({ list: '++id, &[name+category]' });
             },
             async load() {
                 let list = {}
