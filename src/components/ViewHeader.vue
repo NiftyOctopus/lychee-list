@@ -5,7 +5,7 @@
 
         <div class='view-title'>
             <img class='icon' src='../assets/icons/arrow-left-circle.svg'>
-            <span>{{ title }}</span>
+            <span class='title'>{{ title }}</span>
             <img v-if='fwd' class='icon' src='../assets/icons/arrow-right-circle.svg' @click='forward'>
         </div>
     </div>
@@ -48,5 +48,13 @@
 
 
 <style scoped>
+    .view-title {
+        display:         flex;
+        align-items:     center;
+        justify-content: center;
+    }
 
+    .title {
+        margin: 0 5px 0 5px;
+    }
 </style>

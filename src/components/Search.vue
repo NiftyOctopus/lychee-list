@@ -1,7 +1,7 @@
 <template>
     <div class='search'>
         <div class='wrapper'>
-            <input type='text' v-model='text'>
+            <input type='text' v-model='text' @keyup='key'>
             <img class='icon' src='../assets/icons/search.svg'>
         </div>
     </div>
@@ -31,7 +31,14 @@
                 this.timer = window.setTimeout(() => this.$emit('update', this.text), 250)
             }
         },
-        methods: {}
+        methods: {
+            key(event) {
+                if(event.key == 'Enter') {
+                    this.$emit('update', this.text)
+                    this.$emit('forward')
+                }
+            }
+        }
     }
 </script>
 

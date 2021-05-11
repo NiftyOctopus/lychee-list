@@ -10,9 +10,12 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
+    import { convert }  from '../mixins/convert'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'view-footer',
+        mixins: [convert],
         components: { /* Subcomponents */ },
         props: ['allowAdd', 'allowSave', 'allowDelete'],
         data() { return { /* Local variables */ }},
@@ -23,6 +26,7 @@
         computed: { /*
             Creates a new property
             Updates when any dependant property changes */
+            ...mapState(['item']),
         },
         watch: { /*
             Watches an existing property
@@ -32,9 +36,28 @@
             add() {
                 this.$emit('add')
             },
-            save() {
-                this.$emit('save')
-            }
+            async save() {
+                this.$store.commit('saveItem')
+
+                try {
+                    // There is already a list item that matches the name and category
+                    const index = { name: this.item.name, category: this.item.category }
+                    let existingItem = await this.$db.list.where(index).first()
+                    
+                    if(existingItem) {
+                        existingItem.amount = this.getNewAmount(existingItem)
+                        await this.$db.list.put(existingItem)
+
+                    } else {
+                        // Brand new item
+                        await this.$db.list.add(this.item)
+                    }
+                }
+                catch(error) { alert(error) }
+
+                this.$store.commit('clearItem')
+                this.$router.push('/')
+            },
         }
     }
 </script>
