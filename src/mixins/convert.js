@@ -11,9 +11,11 @@ export const convert = {
         getNewAmount(existing) {
             const to   = existing.unit
             const from = this.item.unit
-            const conv = this.conversions[from][to]
+            if(!to && !from) { return null }
 
+            const conv = to && from ? this.conversions[from][to] : null
             if(!conv) { throw 'Cannot combine amounts with different unit types' }
+            
             return existing.amount + (this.item.amount * conv)
         }
     }

@@ -58,7 +58,8 @@
             },
             async load() {
                 let list = {}
-                let items = await this.$db.list.toArray()
+                let items = await this.$db.items.toArray()
+                
                 for(let i in items) {
                     const item = items[i]
                     if(!list[item.category]) { list[item.category] = [] }

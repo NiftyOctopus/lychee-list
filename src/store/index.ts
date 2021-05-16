@@ -21,50 +21,30 @@ function findListItem(name:string, list:any) {
 
 
 
-let recipes:{[index:number]:any} = {
-    1: { id: 1, name: 'Banbanji Chicken' },
-    2: { id: 2, name: 'Chili' },
-    3: { id: 3, name: 'Broccoli Rabe Sausage Pasta' },
-    4: { 
-        id: 4, name: 'Mapo Tofu',
-        items: [
-            { name: 'Milk' },
-            { name: 'Heavy cream' },
-            { name: 'Greek yogurt' },
-            { name: 'Unsalted butter' },
-            { name: 'Cheddar cheese' },
-            { name: 'Parm cheese' }
-        ]
-    },
-    5: { id: 5, name: 'Tadka Dal' },
-    6: { id: 6, name: 'Brussel Sprouts and Bacon' },
-    7: { id: 7, name: 'Pad See Ew' }
+type Item = {
+    id:number,
+    name:string,
+    category?:string,
+    unit?:string,
+    amount?:number,
+    recipe?:number,
+    done?:boolean
 }
 
+type ItemList = { [key:string]:Item[] }
 
-let list:{[index:string]:any} = {
-    'Produce': [
-        { id: 10, name: 'Bananas',      category: 'Produce', done: true },
-        { id: 11, name: 'Apples',       category: 'Produce' },
-        { id: 12, name: 'Strawberries', category: 'Produce' },
-        { id: 13, name: 'Grapes',       category: 'Produce' },
-        { id: 14, name: 'Oranges',      category: 'Produce' },
-    ],
-    'Baking and Spices': [
-        { id: 15, name: 'Flour',          category: 'Baking and Spices' },
-        { id: 16, name: 'Sugar',          category: 'Baking and Spices' },
-        { id: 17, name: 'Powdered sugar', category: 'Baking and Spices' },
-        { id: 18, name: 'Brown sugar',    category: 'Baking and Spices' },
-        { id: 19, name: 'Baking powder',  category: 'Baking and Spices' },
-    ],
-    'Dairy': [
-        { id: 20, name: 'Milk',            category: 'Dairy' },
-        { id: 21, name: 'Heavy cream',     category: 'Dairy' },
-        { id: 22, name: 'Greek yogurt',    category: 'Dairy' },
-        { id: 23, name: 'Unsalted butter', category: 'Dairy' },
-        { id: 24, name: 'Cheddar cheese',  category: 'Dairy' },
+let list:ItemList = {
+    'Category': [
+        { id: 1, name: 'Item' }
     ]
 }
+
+
+
+type Recipe     = { id:number, name:string, items?:ItemList }
+type RecipeList = { [key:number]:Recipe }
+let recipes:RecipeList = {}
+
 
 
 type UnitConversion = { [key:string]:number }
@@ -94,13 +74,13 @@ let units:UnitType[] = [
 
 export default new Vuex.Store({
     state: {
-        categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices'],
+        categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices', 'Other'],
         units,
         list,
         recipes,
         activeRecipeID: 2,
         query: 'a',
-        item: { name: 'Cornstarch', category: 'Other', unit: null, amount: null, recipe: null }
+        item: { name: 'Cornstarch', category: 'Other', unit: null, amount: null, recipe: 0 }
     },
     mutations: {
         openRecipe(state, id) {
@@ -125,26 +105,18 @@ export default new Vuex.Store({
             const current = state.item.amount ? state.item.amount : 0
             Vue.set(state.item, 'amount', current + amount)
         },
-        saveItem(state) {
-            const category = state.item.category
-
-            if(category) {
-                if(state.activeRecipeID) {
-                    state.recipes[state.activeRecipeID].items.push(state.item)
-
-                } else {
-                    if(!state.list[category]) { Vue.set(state.list, category, []) }
-                    const exists = findListItem(state.item.name, state.list)
-
-                    if(exists) {
-                        const existingItem = state.list[exists.category][exists.i]
-                        Vue.set(state.list[exists.category][exists.i], 'amount', existingItem.amount + state.item.amount)
-
-                    } else {
-                        state.list[category].push(state.item)
+        saveExistingItem(state, existing) {
+            for(let category in state.list) {
+                if(category == existing.category) {
+                    for(let i in list[category]) {
+                        alert(i)
+                        //state.list[category].splice(i, 1, existing)
                     }
                 }
             }
+        },
+        addNewItem(state) {
+            alert('Add new item [mutation]')
         },
         toggleItem(state, item) {
             const i = item.i
@@ -156,7 +128,7 @@ export default new Vuex.Store({
             }
         },
         clearItem(state) {
-            Vue.set(state, 'item', {})
+            Vue.set(state, 'item', { name: 'Item', category: 'Other', unit: null, amount: null, recipe: 0 })
             state.activeRecipeID = 0
         },
         setList(state, list) {

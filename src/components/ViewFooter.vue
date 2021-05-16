@@ -39,27 +39,29 @@
             async save() {
                 try {
                     this.prepareItem()
-
                     if(this.item.id) {
                         // Editing a specific existing item
                         await this.$db.items.update(this.item)
 
                     } else {
                         let existing = await this.getExistingItem()
-                        
+
                         if(existing) {
                             if(this.item.recipe) { throw 'This item already exists in the recipe' }
-                            // Updating existing item
-                            // Update item in db
                             existing.amount = this.getNewAmount(existing)
-                            await this.$db.items.update(existing)
+                            await this.$db.items.update(existing.id, existing)
+                            
                             // Update item in store
+                            this.$store.commit('updateExistingItem')
 
                         } else {
                             // Brand new item
-                            // Update item in db
+                            console.log('Add new item')
+                            alert('Add new item')
                             await this.$db.items.add(this.item)
+                            
                             // Update item in store
+                            this.$store.commit('addNewItem')
                         }
                     }
                 }
@@ -69,19 +71,26 @@
                 this.$router.push('/')
             },
             prepareItem() {
-                if(!this.item.name)     { throw 'Item name cannot be blank' }
-                if(!this.item.category) { this.$store.commit('setItemCategory', 'Other') }
-                if(!this.item.unit)     { this.$store.commit('setItemAmount', null) }
-                if(!this.item.amount)   { this.$store.commit('setItemUnit',   null) }
-            },
-            getExistingItem() {
-                const index = {
-                    name:     this.item.name,
-                    category: this.item.category,
-                    recipe:   this.item.recipe
+                if(!this.item.name) {
+                    throw 'Item name cannot be blank'
                 }
 
-                return this.$db.items.where(index).first()
+                if(!this.item.category) {
+                    this.$store.commit('setItemCategory', 'Other')
+                }
+
+                if(!this.item.unit) {
+                    this.$store.commit('setItemAmount', null)
+                }
+
+                if(!this.item.amount) {
+                    this.$store.commit('setItemUnit', null)
+                }
+            },
+            getExistingItem() {
+                const index   = ['name', 'category', 'recipe']
+                const filters = [this.item.name, this.item.category, this.item.recipe]
+                return this.$db.items.where(index).equals(filters).first()
             }
         }
     }
