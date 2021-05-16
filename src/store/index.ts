@@ -100,7 +100,7 @@ export default new Vuex.Store({
         recipes,
         activeRecipeID: 2,
         query: 'a',
-        item: { name: 'Cornstarch', category: '', unit: '', amount: 1 }
+        item: { name: 'Cornstarch', category: 'Other', unit: null, amount: null, recipe: null }
     },
     mutations: {
         openRecipe(state, id) {
@@ -109,14 +109,17 @@ export default new Vuex.Store({
         updateQuery(state, query) {
             state.query = query
         },
-        updateItemName(state, name) {
+        setItemName(state, name) {
             state.item.name = name
         },
-        updateItemCategory(state, category) {
+        setItemCategory(state, category) {
             state.item.category = category
         },
-        updateItemUnit(state, unit) {
+        setItemUnit(state, unit) {
             state.item.unit = unit
+        },
+        setItemAmount(state, amount) {
+            state.item.amount = amount
         },
         updateItemAmount(state, amount) {
             const current = state.item.amount ? state.item.amount : 0

@@ -37,20 +37,30 @@
                 this.$emit('add')
             },
             async save() {
-                this.$store.commit('saveItem')
-
                 try {
-                    // There is already a list item that matches the name and category
-                    const index = { name: this.item.name, category: this.item.category }
-                    let existingItem = await this.$db.list.where(index).first()
-                    
-                    if(existingItem) {
-                        existingItem.amount = this.getNewAmount(existingItem)
-                        await this.$db.list.put(existingItem)
+                    this.prepareItem()
+
+                    if(this.item.id) {
+                        // Editing a specific existing item
+                        await this.$db.items.update(this.item)
 
                     } else {
-                        // Brand new item
-                        await this.$db.list.add(this.item)
+                        let existing = await this.getExistingItem()
+                        
+                        if(existing) {
+                            if(this.item.recipe) { throw 'This item already exists in the recipe' }
+                            // Updating existing item
+                            // Update item in db
+                            existing.amount = this.getNewAmount(existing)
+                            await this.$db.items.update(existing)
+                            // Update item in store
+
+                        } else {
+                            // Brand new item
+                            // Update item in db
+                            await this.$db.items.add(this.item)
+                            // Update item in store
+                        }
                     }
                 }
                 catch(error) { alert(error) }
@@ -58,6 +68,21 @@
                 this.$store.commit('clearItem')
                 this.$router.push('/')
             },
+            prepareItem() {
+                if(!this.item.name)     { throw 'Item name cannot be blank' }
+                if(!this.item.category) { this.$store.commit('setItemCategory', 'Other') }
+                if(!this.item.unit)     { this.$store.commit('setItemAmount', null) }
+                if(!this.item.amount)   { this.$store.commit('setItemUnit',   null) }
+            },
+            getExistingItem() {
+                const index = {
+                    name:     this.item.name,
+                    category: this.item.category,
+                    recipe:   this.item.recipe
+                }
+
+                return this.$db.items.where(index).first()
+            }
         }
     }
 </script>

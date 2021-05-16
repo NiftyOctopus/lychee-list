@@ -8,11 +8,13 @@ export const convert = {
         ...mapGetters(['conversions']),
     },
     methods: {
-        getNewAmount(existingItem) {
-            const to   = existingItem.unit
+        getNewAmount(existing) {
+            const to   = existing.unit
             const from = this.item.unit
             const conv = this.conversions[from][to]
-            return existingItem.amount + (this.item.amount * conv)
+
+            if(!conv) { throw 'Cannot combine amounts with different unit types' }
+            return existing.amount + (this.item.amount * conv)
         }
     }
 }
