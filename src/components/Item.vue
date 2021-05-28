@@ -7,7 +7,10 @@
 
         <div class='wrapper' v-bind:class="{ open: open }" @touchstart='startSwipe' @touchmove='swiping' @touchend='endSwipe'>
             <div class='name' @click='toggleItem'>
-                <span v-bind:class="{ done: item.done }">{{ item.name }}, {{ amount }}</span>
+                <span v-bind:class="{ done: item.done }">
+                    <span>{{ item.name }}</span>
+                    <span v-if='amount'>, {{ amount }}</span>
+                </span>
             </div>
         </div>
     </div>
@@ -33,6 +36,8 @@
                 return this.item.amount
             },
             amount() {
+                if(!this.item.amount || !this.item.unit) { return null }
+
                 const whole = Math.floor(this.item.amount)
                 let amt = whole > 0 ? whole : ''
 

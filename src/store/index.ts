@@ -1,4 +1,5 @@
 import Vue  from 'vue'
+import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
@@ -22,7 +23,7 @@ function findListItem(name:string, list:any) {
 
 
 type Item = {
-    id:number,
+    id?:number,
     name:string,
     category?:string,
     unit?:string,
@@ -31,17 +32,14 @@ type Item = {
     done?:boolean
 }
 
-type ItemList = { [key:string]:Item[] }
+let item:Item = { name: 'Cornstarch', category: 'Other', unit: '', amount: 0, recipe: 0 }
 
-let list:ItemList = {
-    'Category': [
-        { id: 1, name: 'Item' }
-    ]
-}
+type ItemList     = { [key:string]:Item[] }
+let list:ItemList = {}
 
 
 
-type Recipe     = { id:number, name:string, items?:ItemList }
+type Recipe     = { id:number, name:string, items:ItemList }
 type RecipeList = { [key:number]:Recipe }
 let recipes:RecipeList = {}
 
@@ -80,7 +78,7 @@ export default new Vuex.Store({
         recipes,
         activeRecipeID: 2,
         query: 'a',
-        item: { name: 'Cornstarch', category: 'Other', unit: null, amount: null, recipe: 0 }
+        item
     },
     mutations: {
         openRecipe(state, id) {
@@ -105,18 +103,34 @@ export default new Vuex.Store({
             const current = state.item.amount ? state.item.amount : 0
             Vue.set(state.item, 'amount', current + amount)
         },
-        saveExistingItem(state, existing) {
-            for(let category in state.list) {
-                if(category == existing.category) {
-                    for(let i in list[category]) {
-                        alert(i)
-                        //state.list[category].splice(i, 1, existing)
-                    }
+        updateExistingItem(state) {
+            const category = state.item.category ? state.item.category : 'Other'
+            if(!state.list[category]) { return }
+
+            let item
+            for(let i = 0; i < state.list[category].length; i++) {
+                item = state.list[category][i]
+
+                if(item.name == state.item.name) {
+                    state.list[category].splice(i, 1, state.item)
                 }
             }
         },
         addNewItem(state) {
-            alert('Add new item [mutation]')
+            const category = state.item.category ? state.item.category : 'Other'
+            const id = state.item.recipe ? state.item.recipe : 0
+
+            if(id > 0) {
+                const recipe = state.recipes[id]
+                if(!recipe) { return }
+
+                if(!recipe.items[category]) { Vue.set(state.recipes[id].items, category, []) }
+                state.recipes[id].items[category].push(state.item)
+            
+            } else {
+                if(!state.list[category]) { Vue.set(state.list, category, []) }
+                state.list[category].push(state.item)
+            }
         },
         toggleItem(state, item) {
             const i = item.i

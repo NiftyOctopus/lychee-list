@@ -42,22 +42,23 @@
                     if(this.item.id) {
                         // Editing a specific existing item
                         await this.$db.items.update(this.item)
-
+                    
                     } else {
                         let existing = await this.getExistingItem()
 
                         if(existing) {
                             if(this.item.recipe) { throw 'This item already exists in the recipe' }
-                            existing.amount = this.getNewAmount(existing)
+
+                            const amount    = this.getNewAmount(existing)
+                            existing.amount = amount
                             await this.$db.items.update(existing.id, existing)
                             
                             // Update item in store
+                            this.$store.commit('setItemAmount', amount)
                             this.$store.commit('updateExistingItem')
 
                         } else {
                             // Brand new item
-                            console.log('Add new item')
-                            alert('Add new item')
                             await this.$db.items.add(this.item)
                             
                             // Update item in store
