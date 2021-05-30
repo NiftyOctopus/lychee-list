@@ -1,8 +1,8 @@
 <template>
     <div class='item'>
         <div class='actions'>
-            <img class='icon edit'   src='../assets/icons/edit.svg'>
-            <img class='icon delete' src='../assets/icons/trash.svg'>
+            <img class='icon edit'   src='../assets/icons/edit.svg'  @click='editItem'>
+            <img class='icon delete' src='../assets/icons/trash.svg' @click='deleteItem'>
         </div>
 
         <div class='wrapper' v-bind:class="{ open: open }" @touchstart='startSwipe' @touchmove='swiping' @touchend='endSwipe'>
@@ -70,6 +70,13 @@
             endSwipe(event) {
 
             },
+            editItem() {
+                this.$store.commit('setItem', this.item)
+                this.$router.push('/item')
+            },
+            deleteItem() {
+                alert('Delete!')
+            }
         }
     }
 </script>
@@ -94,7 +101,7 @@
         background-color: white;
         transition: all 250ms;
         transition-timing-function: cubic-bezier(0.32, 1.69, 0.6, 0.8);
-        
+        z-index: 20;
     }
 
     .name {
@@ -124,12 +131,14 @@
         z-index: -1;
         /* border: 1px solid blue; */
         padding: 0;
+        z-index: 10;
     }
 
     .open {
         right: 74px;
         background-color: #f2f2f2;
     }
+
 
     .icon {
         /* border: 1px solid black; */

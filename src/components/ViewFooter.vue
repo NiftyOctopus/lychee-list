@@ -41,7 +41,8 @@
                     this.prepareItem()
                     if(this.item.id) {
                         // Editing a specific existing item
-                        await this.$db.items.update(this.item)
+                        await this.$db.items.update(this.item.id, this.item)
+                        this.$store.commit('editExistingItem')
                     
                     } else {
                         let existing = await this.getExistingItem()
@@ -55,7 +56,7 @@
                             
                             // Update item in store
                             this.$store.commit('setItemAmount', amount)
-                            this.$store.commit('updateExistingItem')
+                            this.$store.commit('appendExistingItem')
 
                         } else {
                             // Brand new item

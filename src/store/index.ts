@@ -6,43 +6,27 @@ Vue.use(Vuex)
 
 
 
-function findListItem(name:string, list:any) {
-    let item
-
-    for(let category in list) {
-        for(let i in list[category]) {
-            item = list[category][i]
-            if(item.name == name) { return { category, i }}
-        }
-    }
-
-    //return { category: null, i: null }
-    return null
-}
-
-
-
 type Item = {
     id?:number,
     name:string,
-    category?:string,
+    category:string,
     unit?:string,
     amount?:number,
-    recipe?:number,
+    recipe:number,
     done?:boolean
 }
 
 let item:Item = { name: 'Cornstarch', category: 'Other', unit: '', amount: 0, recipe: 0 }
-
-type ItemList     = { [key:string]:Item[] }
+type ItemList = { [key:string]:Item[] }
 let list:ItemList = {}
 
 
 
-type Recipe     = { id:number, name:string, items:ItemList }
-type RecipeList = { [key:number]:Recipe }
+type Recipe      = { id:number, name:string }
+type RecipeList  = { [key:number]:Recipe }
+type RecipeCache = { [key:number]:ItemList }
 let recipes:RecipeList = {}
-
+let recipeItemCache:RecipeCache = {}
 
 
 type UnitConversion = { [key:string]:number }
@@ -76,6 +60,7 @@ export default new Vuex.Store({
         units,
         list,
         recipes,
+        recipeItemCache,
         activeRecipeID: 2,
         query: 'a',
         item
@@ -99,12 +84,31 @@ export default new Vuex.Store({
         setItemAmount(state, amount) {
             state.item.amount = amount
         },
+        setItem(state, item) {
+            Vue.set(state, 'item', item)
+        },
         updateItemAmount(state, amount) {
             const current = state.item.amount ? state.item.amount : 0
             Vue.set(state.item, 'amount', current + amount)
         },
-        updateExistingItem(state) {
-            const category = state.item.category ? state.item.category : 'Other'
+        addNewItem(state) {
+            const category = state.item.category
+            const rid = state.item.recipe
+
+            if(rid > 0) {
+                const cache = state.recipeItemCache[rid]
+                if(!cache) { return }
+
+                if(!cache[category]) { Vue.set(state.recipeItemCache[rid], category, []) }
+                state.recipeItemCache[rid][category].push(state.item)
+            
+            } else {
+                if(!state.list[category]) { Vue.set(state.list, category, []) }
+                state.list[category].push(state.item)
+            }
+        },
+        appendExistingItem(state) {
+            const category = state.item.category
             if(!state.list[category]) { return }
 
             let item
@@ -113,23 +117,36 @@ export default new Vuex.Store({
 
                 if(item.name == state.item.name) {
                     state.list[category].splice(i, 1, state.item)
+                    return
                 }
             }
         },
-        addNewItem(state) {
-            const category = state.item.category ? state.item.category : 'Other'
-            const id = state.item.recipe ? state.item.recipe : 0
+        editExistingItem(state) {
+            if(!state.item.id) { return }
+            const cat = state.item.category
+            const rid = state.item.recipe
 
-            if(id > 0) {
-                const recipe = state.recipes[id]
-                if(!recipe) { return }
+            const items = rid > 0 ? state.recipeItemCache[rid] : state.list
+            if(!items) { return }
 
-                if(!recipe.items[category]) { Vue.set(state.recipes[id].items, category, []) }
-                state.recipes[id].items[category].push(state.item)
-            
-            } else {
-                if(!state.list[category]) { Vue.set(state.list, category, []) }
-                state.list[category].push(state.item)
+            let item
+            for(let category in items) {
+                for(let i = 0; i < items[category].length; i++) {
+                    item = items[category][i]
+
+                    if(item.id == state.item.id) {
+                        if(rid > 0) {
+                            state.recipeItemCache[rid][category].splice(i, 1)
+                            if(!state.recipeItemCache[rid][cat]) { Vue.set(state.recipeItemCache[rid], cat, []) }
+                            state.recipeItemCache[rid][cat].push(state.item)
+                        
+                        } else {
+                            state.list[category].splice(i, 1)
+                            if(!state.list[cat]) { Vue.set(state.list, cat, []) }
+                            state.list[cat].push(state.item)
+                        }
+                    }
+                }
             }
         },
         toggleItem(state, item) {
