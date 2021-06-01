@@ -71,11 +71,14 @@
 
             },
             editItem() {
-                this.$store.commit('setItem', this.item)
+                const data = { prev: this.item.category, i: this.i }
+                const item = Object.assign(data, this.item)
+                this.$store.commit('setItem', item)
                 this.$router.push('/item')
             },
             deleteItem() {
-                alert('Delete!')
+                const item = Object.assign({ i: this.i }, this.item)
+                this.$store.commit('deleteItem', item)
             }
         }
     }

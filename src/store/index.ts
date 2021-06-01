@@ -8,8 +8,10 @@ Vue.use(Vuex)
 
 type Item = {
     id?:number,
+    i?:number,
     name:string,
     category:string,
+    prev?:string,
     unit?:string,
     amount?:number,
     recipe:number,
@@ -92,61 +94,98 @@ export default new Vuex.Store({
             Vue.set(state.item, 'amount', current + amount)
         },
         addNewItem(state) {
-            const category = state.item.category
+            const cat = state.item.category
             const rid = state.item.recipe
 
             if(rid > 0) {
                 const cache = state.recipeItemCache[rid]
                 if(!cache) { return }
 
-                if(!cache[category]) { Vue.set(state.recipeItemCache[rid], category, []) }
-                state.recipeItemCache[rid][category].push(state.item)
+                if(!cache[cat]) { Vue.set(state.recipeItemCache[rid], cat, []) }
+                state.recipeItemCache[rid][cat].push(state.item)
             
             } else {
-                if(!state.list[category]) { Vue.set(state.list, category, []) }
-                state.list[category].push(state.item)
+                if(!state.list[cat]) { Vue.set(state.list, cat, []) }
+                state.list[cat].push(state.item)
             }
         },
         appendExistingItem(state) {
-            const category = state.item.category
-            if(!state.list[category]) { return }
+            const cat = state.item.category
+            const rid = state.item.recipe
+            if(!state.list[cat] || (rid > 0)) { return }
 
             let item
-            for(let i = 0; i < state.list[category].length; i++) {
-                item = state.list[category][i]
+            for(let i = 0; i < state.list[cat].length; i++) {
+                item = state.list[cat][i]
 
                 if(item.name == state.item.name) {
-                    state.list[category].splice(i, 1, state.item)
+                    state.list[cat].splice(i, 1, state.item)
                     return
                 }
             }
         },
         editExistingItem(state) {
-            if(!state.item.id) { return }
-            const cat = state.item.category
-            const rid = state.item.recipe
+            try {
+                if(!state.item.id) { throw 'Item id missing' }
+                
+                const cat  = state.item.category
+                const rid  = state.item.recipe
+                const prev = state.item.prev
+                const i    = state.item.i
 
-            const items = rid > 0 ? state.recipeItemCache[rid] : state.list
-            if(!items) { return }
+                delete state.item.prev
+                delete state.item.i
+                if(prev === undefined || i === undefined) { return }
 
-            let item
-            for(let category in items) {
-                for(let i = 0; i < items[category].length; i++) {
-                    item = items[category][i]
+                const item = rid > 0 ? state.recipeItemCache[rid][prev][i] : state.list[prev][i]
+                if(item.id != state.item.id) { return }
 
-                    if(item.id == state.item.id) {
-                        if(rid > 0) {
-                            state.recipeItemCache[rid][category].splice(i, 1)
-                            if(!state.recipeItemCache[rid][cat]) { Vue.set(state.recipeItemCache[rid], cat, []) }
-                            state.recipeItemCache[rid][cat].push(state.item)
-                        
-                        } else {
-                            state.list[category].splice(i, 1)
-                            if(!state.list[cat]) { Vue.set(state.list, cat, []) }
-                            state.list[cat].push(state.item)
-                        }
+                if(cat == prev) {
+                    // Category was not changed
+                    if(rid > 0) {
+                        // Recipe item
+                        state.recipeItemCache[rid][cat].splice(i, 1, state.item)
+
+                    } else {
+                        // List item
+                        state.list[cat].splice(i, 1, state.item)
+                    }
+
+                } else {
+                    // Item moved to new category
+                    if(rid > 0) {
+                        state.recipeItemCache[rid][prev].splice(i, 1)    // Remove item from previous category
+                        state.recipeItemCache[rid][cat].push(state.item) // Add item to new category
+
+                    } else {
+                        state.list[prev].splice(i, 1)
+                        state.list[cat].push(state.item)
                     }
                 }
+        
+            } catch(e) {
+                alert(e)
+            }
+        },
+        deleteItem(state, item) {
+            try {
+                if(!item.id) { throw('Item id missing') }
+                
+                const cat = item.category
+                const rid = item.recipe
+
+                const i = item.i
+                delete item.i
+
+                if(rid > 0) {
+                    state.recipeItemCache[rid][cat].splice(i, 1)
+
+                } else {
+                    state.list[cat].splice(i, 1)
+                }
+
+            } catch(e) {
+                alert(e)
             }
         },
         toggleItem(state, item) {
