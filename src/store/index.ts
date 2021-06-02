@@ -25,10 +25,10 @@ let list:ItemList = {}
 
 
 type Recipe      = { id:number, name:string }
-type RecipeList  = { [key:number]:Recipe }
 type RecipeCache = { [key:number]:ItemList }
-let recipes:RecipeList = {}
+let defaultRecipes:Recipe[] = []
 let recipeItemCache:RecipeCache = {}
+let recipe:Recipe = {}
 
 
 type UnitConversion = { [key:string]:number }
@@ -61,15 +61,16 @@ export default new Vuex.Store({
         categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices', 'Other'],
         units,
         list,
-        recipes,
+        defaultRecipes,
         recipeItemCache,
+        recipe,
         activeRecipeID: 2,
         query: 'a',
         item
     },
     mutations: {
-        openRecipe(state, id) {
-            state.activeRecipeID = id
+        setRecipe(state, recipe) {
+            state.recipe = recipe
         },
         updateQuery(state, query) {
             state.query = query
@@ -203,6 +204,9 @@ export default new Vuex.Store({
         },
         setList(state, list) {
             Vue.set(state, 'list', list)
+        },
+        setDefaultRecipes(state, recipes) {
+            Vue.set(state, 'defaultRecipes', recipes)
         }
     },
     actions: {
@@ -210,15 +214,6 @@ export default new Vuex.Store({
     modules: {
     },
     getters: {
-        list: (state) => {
-
-        },
-        recipeList: (state) => {
-            return Object.values(state.recipes).filter(recipe => recipe.name.includes(state.query))
-        },
-        recipe: (state) => {
-            return state.recipes[state.activeRecipeID]
-        },
         conversions: (state) => {
             let conv:{[index:string]:any} = {}
 

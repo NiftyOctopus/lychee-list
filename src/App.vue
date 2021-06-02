@@ -41,7 +41,8 @@
         created() {},
         mounted() {
             this.init()
-            this.load()    
+            this.loadList()
+            this.loadRecipes()    
         },
         updated() {},
         computed: { /*
@@ -54,9 +55,12 @@
         },
         methods: {
             init() {
-                this.$db.version(1).stores({ items: '++id, &[name+category+recipe]' });
+                this.$db.version(1).stores({
+                    items:   '++id, &[name+category+recipe]',
+                    recipes: '++id'
+                });
             },
-            async load() {
+            async loadList() {
                 let list = {}
                 let items = await this.$db.items.toArray()
                 
@@ -66,6 +70,10 @@
                     list[item.category].push(item)
                 }
                 this.$store.commit('setList', list)
+            },
+            async loadRecipes() {
+                let recipes = await this.$db.recipes.toArray()
+                this.$store.commit('setDefaultRecipes', recipes)
             }
         }
     }
