@@ -56,23 +56,16 @@
         methods: {
             init() {
                 this.$db.version(1).stores({
-                    items:   '++id, &[name+category+recipe]',
+                    items:   '++id, recipe, &[name+category+recipe]',
                     recipes: '++id'
                 });
             },
             async loadList() {
-                let list = {}
-                let items = await this.$db.items.toArray()
-                
-                for(let i in items) {
-                    const item = items[i]
-                    if(!list[item.category]) { list[item.category] = [] }
-                    list[item.category].push(item)
-                }
-                this.$store.commit('setList', list)
+                const items = await this.$db.items.toArray()
+                this.$store.commit('setList', items)
             },
             async loadRecipes() {
-                let recipes = await this.$db.recipes.toArray()
+                const recipes = await this.$db.recipes.toArray()
                 this.$store.commit('setDefaultRecipes', recipes)
             }
         }

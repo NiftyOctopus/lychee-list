@@ -41,7 +41,7 @@
         methods: {
             navToItemView() {
                 this.$store.commit('clearItem')
-                this.$router.push('item')
+                this.$router.push('/item')
             }
         }
     }

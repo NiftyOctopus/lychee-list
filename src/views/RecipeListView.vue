@@ -3,9 +3,8 @@
         <div class='view-header'>Recipes</div>
         <search :init='query' @update='updateQuery'></search>
 
-        <div v-for='recipe in defaultRecipes' :key='recipe.name'>
-            <!-- <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link> -->
-            <div @click='openRecipe(recipe)'>{{ recipe.name }}</div>
+        <div v-for='recipe in recipeList' :key='recipe.id'>
+            <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
         </div>
 
         <view-footer :allowAdd=true @add='addRecipe'></view-footer>
@@ -31,8 +30,8 @@
         mounted() {},
         updated() {},
         computed: {
-            ...mapState(['query', 'defaultRecipes']),
-            //...mapGetters(['recipeList'])
+            ...mapState(['query']),
+            ...mapGetters(['recipeList'])
         },
         watch: { /*
             Watches an existing property
@@ -42,14 +41,12 @@
             updateQuery(query) {
                 this.$store.commit('updateQuery', query)
             },
-            openRecipe(recipe) {
-                this.$store.commit('setRecipe', recipe)
-                this.$router.push('/recipe')
-            },
             async addRecipe() {
                 try {
-                    await this.$db.recipes.add({ name: 'My Recipe' })
-                    alert('Added recipe')
+                    let recipe = { name: 'My Recipe' }
+                    let id = await this.$db.recipes.add(recipe)
+                    recipe.id = id
+                    this.$store.commit('addRecipe', recipe)
                 
                 } catch(e) {
                     alert(e)

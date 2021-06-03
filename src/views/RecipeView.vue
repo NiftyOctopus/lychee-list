@@ -1,22 +1,24 @@
 <template>
     <div class='recipe-view view'>
-        <div class='view-header'>{{ recipe.name }}</div>
-        <div v-for='item in recipe.items' :key='item.name'>{{ item.name }}</div>
+        <div v-if='recipe' class='view-header'>{{ recipe.name }}</div>
         
-        <!-- <div v-for='category in categories' :key='category'>
-            <div v-if='list[category] && list[category].length'>
-                <div class='group-header'>{{ category }}</div>
-                <item v-for='(item, index) in list[category]' :key='index' :i='index' :item='item'></item>
+        <div v-if='recipeItems'>
+            <div v-for='category in categories' :key='category'>
+                <div v-if='recipeItems[category] && recipeItems[category].length'>
+                    <div class='group-header'>{{ category }}</div>
+                    <item v-for='(item, index) in recipeItems[category]' :key='index' :i='index' :item='item'></item>
+                </div>
             </div>
-        </div> -->
+        </div>
 
-        <view-footer></view-footer>
+        <view-footer :allowAdd=true @add='addRecipeItem'></view-footer>
     </div>
 </template>
 
 
 
 <script>
+    import Item       from '../components/Item'
     import ViewFooter from '../components/ViewFooter'
     import { mapMutations } from 'vuex'
     import { mapGetters }   from 'vuex'
@@ -24,23 +26,36 @@
 
     export default {
         name: 'recipe-view',
-        components: { ViewFooter },
+        components: { Item, ViewFooter },
         props: [/* Inputs */],
-        data() { return { /* Local variables */ }},
+        data() { return { id: null }},
         beforeCreate() {},
         created() { this.openRecipe(this.$route.params.id) },
-        mounted() {},
+        mounted() { this.loadRecipeItems() },
         updated() {},
         computed: {
-            // ...mapGetters(['recipe'])
-            ...mapState(['recipe'])
+            ...mapState(['categories']),
+            ...mapGetters(['recipe', 'recipeItems'])
         },
         watch: { /*
             Watches an existing property
             Only runs when the watched property changes */
         },
         methods: {
-            // ...mapMutations(['openRecipe'])
+            openRecipe(id) {
+                this.id = id
+                this.$store.commit('openRecipe', id)
+            },
+            async loadRecipeItems() {
+                if(!this.recipeItems) {
+                    const items = await this.$db.items.where('recipe').equals(this.id).toArray()
+                    this.$store.commit('addToRecipeItemCache', { id: this.id, items })
+                }
+            },
+            addRecipeItem() {
+                this.$store.commit('clearItem', this.id)
+                this.$router.push('/item')
+            }
         }
     }
 </script>

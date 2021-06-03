@@ -12,23 +12,27 @@ type Item = {
     name:string,
     category:string,
     prev?:string,
-    unit?:string,
-    amount?:number,
+    unit:string,
+    amount:number,
     recipe:number,
     done?:boolean
 }
 
-let item:Item = { name: 'Cornstarch', category: 'Other', unit: '', amount: 0, recipe: 0 }
+let item:Item = { name: 'Item', category: 'Other', unit: '', amount: 0, recipe: 0 }
 type ItemList = { [key:string]:Item[] }
 let list:ItemList = {}
 
 
 
-type Recipe      = { id:number, name:string }
+type Recipe      = { id:number, name:string, items?:ItemList }
+type RecipeList  = { [key:number]:Recipe[] }
 type RecipeCache = { [key:number]:ItemList }
-let defaultRecipes:Recipe[] = []
-let recipeItemCache:RecipeCache = {}
-let recipe:Recipe = {}
+
+let defaultRecipes:RecipeList      = {}
+let recipeSearchResults:RecipeList = {}
+let recipeItemCache:RecipeCache    = {}
+let recipe:Recipe = { id: 0, name: 'Recipe' }
+
 
 
 type UnitConversion = { [key:string]:number }
@@ -62,6 +66,7 @@ export default new Vuex.Store({
         units,
         list,
         defaultRecipes,
+        recipeSearchResults,
         recipeItemCache,
         recipe,
         activeRecipeID: 2,
@@ -69,8 +74,8 @@ export default new Vuex.Store({
         item
     },
     mutations: {
-        setRecipe(state, recipe) {
-            state.recipe = recipe
+        openRecipe(state, id) {
+            state.activeRecipeID = id
         },
         updateQuery(state, query) {
             state.query = query
@@ -198,15 +203,46 @@ export default new Vuex.Store({
                 state.list[item.category].splice(i, 1, item)
             }
         },
-        clearItem(state) {
-            Vue.set(state, 'item', { name: 'Item', category: 'Other', unit: null, amount: null, recipe: 0 })
-            state.activeRecipeID = 0
+        clearItem(state, rid) {
+            const item = {
+                name:     'Item',
+                category: 'Other',
+                unit:     '',
+                amount:   0,
+                recipe:   rid && rid > 0 ? rid : 0
+            }
+            Vue.set(state, 'item', item)
         },
-        setList(state, list) {
-            Vue.set(state, 'list', list)
+        setList(state, items) {
+            for(let i in items) {
+                const item = items[i]
+                const cat  = item.category
+
+                if(!state.list[cat]) { Vue.set(state.list, cat, []) }
+                state.list[cat].push(item)
+            }
         },
         setDefaultRecipes(state, recipes) {
-            Vue.set(state, 'defaultRecipes', recipes)
+            Vue.set(state, 'defaultRecipes', {})
+
+            for(let i in recipes) {
+                const recipe = recipes[i]
+                Vue.set(state.defaultRecipes, recipe.id, recipe)
+            }
+        },
+        addRecipe(state, recipe) {
+            Vue.set(state.defaultRecipes, recipe.id, recipe)
+        },
+        addToRecipeItemCache(state, data) {
+            Vue.set(state.recipeItemCache, data.id, {})
+
+            for(let i in data.items) {
+                const item = data.items[i]
+                const cat  = item.category
+
+                if(!state.recipeItemCache[data.id][cat]) { Vue.set(state.recipeItemCache[data.id], cat, []) }
+                state.recipeItemCache[data.id][cat].push(item)
+            }
         }
     },
     actions: {
@@ -214,6 +250,34 @@ export default new Vuex.Store({
     modules: {
     },
     getters: {
+        defaultRecipes: (state) => {
+            return Object.values(state.defaultRecipes)
+        },
+        recipeSearchResults: (state) => {
+            return Object.values(state.recipeSearchResults)
+        },
+        recipeList: (state, getters) => {
+            let recipes = getters.defaultRecipes.concat(getters.recipeSearchResults)
+
+            recipes.sort((ra:Recipe, rb:Recipe) => {
+                const a = ra.name.toLowerCase()
+                const b = rb.name.toLowerCase()
+
+                if(a > b) { return  1 }
+                if(a < b) { return -1 }
+                return 0
+            })
+
+            return recipes
+        },
+        recipe: (state) => {
+            const id = state.activeRecipeID
+            return state.defaultRecipes[id] ? state.defaultRecipes[id] : state.recipeSearchResults[id]
+        },
+        recipeItems: (state) => {
+            const id = state.activeRecipeID
+            return state.recipeItemCache[id]
+        },
         conversions: (state) => {
             let conv:{[index:string]:any} = {}
 
