@@ -61,7 +61,7 @@
                 });
             },
             async loadList() {
-                const items = await this.$db.items.toArray()
+                const items = await this.$db.items.where('recipe').equals(0).toArray()
                 this.$store.commit('setList', items)
             },
             async loadRecipes() {

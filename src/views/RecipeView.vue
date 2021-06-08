@@ -1,6 +1,7 @@
 <template>
     <div class='recipe-view view'>
-        <div v-if='recipe' class='view-header'>{{ recipe.name }}</div>
+        <recipe-name :recipe='recipe'></recipe-name>
+
         
         <div v-if='recipeItems'>
             <div v-for='category in categories' :key='category'>
@@ -18,6 +19,7 @@
 
 
 <script>
+    import RecipeName from '../components/RecipeName'
     import Item       from '../components/Item'
     import ViewFooter from '../components/ViewFooter'
     import { mapMutations } from 'vuex'
@@ -26,7 +28,7 @@
 
     export default {
         name: 'recipe-view',
-        components: { Item, ViewFooter },
+        components: { RecipeName, Item, ViewFooter },
         props: [/* Inputs */],
         data() { return { id: null }},
         beforeCreate() {},

@@ -25,7 +25,7 @@ let list:ItemList = {}
 
 
 type Recipe      = { id:number, name:string, items?:ItemList }
-type RecipeList  = { [key:number]:Recipe[] }
+type RecipeList  = { [key:number]:Recipe }
 type RecipeCache = { [key:number]:ItemList }
 
 let defaultRecipes:RecipeList      = {}
@@ -76,6 +76,12 @@ export default new Vuex.Store({
     mutations: {
         openRecipe(state, id) {
             state.activeRecipeID = id
+        },
+        saveRecipeName(state, recipe) {
+            const id = recipe.id
+            if(state.defaultRecipes[id]) {
+                state.defaultRecipes[id].name = recipe.name
+            }
         },
         updateQuery(state, query) {
             state.query = query
