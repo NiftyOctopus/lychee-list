@@ -1,6 +1,6 @@
 <template>
     <div class='view-header'>
-        <div v-if='recipe'>{{ recipe.name }}</div>
+        <div v-if='item.recipe && recipe && item.recipe == recipe.id'>{{ recipe.name }}</div>
         <div v-if="this.$route.path != '/item'">{{ item.name }}</div>
 
         <div class='view-title'>
