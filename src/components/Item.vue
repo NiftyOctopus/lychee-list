@@ -76,9 +76,15 @@
                 this.$store.commit('setItem', item)
                 this.$router.push('/item')
             },
-            deleteItem() {
-                const item = Object.assign({ i: this.i }, this.item)
-                this.$store.commit('deleteItem', item)
+            async deleteItem() {
+                try {
+                    const item = Object.assign({ i: this.i }, this.item)
+                    this.$store.commit('deleteItem', item)
+                    await this.$db.items.delete(this.item.id)
+                
+                } catch(e) {
+                    alert(e)
+                }
             }
         }
     }
