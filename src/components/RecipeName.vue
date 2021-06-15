@@ -46,5 +46,7 @@
 
 
 <style scoped>
-
+    input {
+        border: 2px solid white;
+    }
 </style>

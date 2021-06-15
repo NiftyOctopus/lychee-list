@@ -109,4 +109,17 @@
         margin-top:  10px;
         font-weight: bold;
     }
+
+    input[type=text] {
+        appearance:  none;
+        font-size:   16px;
+        font-weight: bold;
+        text-align:  center;
+        border:      2px solid lightgray;
+        outline:     none;
+    }
+
+    input:focus {
+        border: 2px solid #e8385b !important;
+    }
 </style>

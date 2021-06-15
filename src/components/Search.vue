@@ -45,24 +45,9 @@
 
 
 <style scoped>
-
     .wrapper {
         position: relative;
         display: inline-block;
-    }
-
-    input[type=text] {
-        appearance: none;
-        /* -webkit-appearance: none; */
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        border: 2px solid lightgray;
-        outline: none;
-    }
-
-    input:focus {
-        border: 2px solid #e8385b;
     }
 
     .icon {
