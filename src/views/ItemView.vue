@@ -1,6 +1,6 @@
 <template>
     <div class='item-view view'>
-        <view-header title='Add Ingredient' fwd=true @forward='navToCategory'></view-header>
+        <view-header title='Add Ingredient' fwd=true @forward='navToCategory' @back='back'></view-header>
         <search :init='item.name' @update='updateItem' @forward='navToCategory'></search>
         <view-footer :allowSave=true></view-footer>
     </div>
@@ -36,6 +36,9 @@
             },
             navToCategory() {
                 this.$router.push('category')
+            },
+            back() {
+                this.$router.push(this.item.recipe ? 'recipe/' + this.item.recipe : '/')
             }
         }
     }

@@ -69,8 +69,8 @@
                 }
                 catch(error) { alert(error) }
 
+                this.$router.push(this.item.recipe ? 'recipe/' + this.item.recipe : '/')
                 this.$store.commit('clearItem')
-                this.$router.push('/')
             },
             prepareItem() {
                 if(!this.item.name) {

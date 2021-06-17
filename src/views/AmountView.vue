@@ -1,6 +1,6 @@
 <template>
     <div class='amount-view view'>
-        <view-header title='How much?'></view-header>
+        <view-header title='How much?'  @back='back'></view-header>
         <!-- <div style='margin-top: 150px'><button @click='getRandomValue'>Refresh</button></div> -->
         <div style='margin-top: 150px;'>Amt: {{ item.amount }}</div>
         <!-- <div><fraction :value='value'></fraction></div> -->
@@ -42,7 +42,9 @@
             Only runs when the watched property changes */
         },
         methods: {
-
+            back() {
+                this.$router.push('unit')
+            }
         }
     }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class='unit-view view'>
-        <view-header title='Unit of Measure' fwd=true></view-header>
+        <view-header title='Unit of Measure' fwd=true @back='back' @forward='forward'></view-header>
 
         <div v-for='group in units' :key='group.type'>
             <div class='group-header'>{{ group.type }}</div>
@@ -37,6 +37,12 @@
         methods: {
             selectUnit(unit) {
                 this.$store.commit('setItemUnit', unit.abbr)
+                this.$router.push('amount')
+            },
+            back() {
+                this.$router.push('category')
+            },
+            forward() {
                 this.$router.push('amount')
             }
         }

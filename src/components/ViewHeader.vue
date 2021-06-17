@@ -4,9 +4,9 @@
         <div v-if="this.$route.path != '/item'">{{ item.name }}</div>
 
         <div class='view-title'>
-            <img class='icon' src='../assets/icons/arrow-left-circle.svg'>
+            <img class='icon' src='../assets/icons/arrow-left-circle.svg' @click='back'>
             <span class='title'>{{ title }}</span>
-            <img v-if='fwd' class='icon' src='../assets/icons/arrow-right-circle.svg' @click='forward'>
+            <img v-if='fwd'  class='icon' src='../assets/icons/arrow-right-circle.svg' @click='forward'>
         </div>
     </div>
 </template>
@@ -40,6 +40,9 @@
         methods: {
             forward() {
                 this.$emit('forward')
+            },
+            back() {
+                this.$emit('back')
             }
         }
     }

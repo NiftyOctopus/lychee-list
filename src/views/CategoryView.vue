@@ -1,7 +1,12 @@
 <template>
     <div class='category-view view'>
-        <view-header title='Select Category' fwd=true></view-header>
-        <div v-for='category in categories' :key='category' @click='selectCategory(category)'>{{ category }}</div>
+        <view-header title='Select Category' fwd=true @back='back' @forward='forward'></view-header>
+        <div v-for='category in categories'
+            :key='category'
+            @click='selectCategory(category)'
+            v-bind:class='{ selected: item.category == category }'>
+            <span>{{ category }}</span>
+        </div>
         <view-footer :allowSave=true></view-footer>
     </div>
 </template>
@@ -23,7 +28,7 @@
         mounted() {},
         updated() {},
         computed: {
-            ...mapState(['categories']),
+            ...mapState(['categories', 'item']),
         },
         watch: { /*
             Watches an existing property
@@ -33,6 +38,12 @@
             selectCategory(category) {
                 this.$store.commit('setItemCategory', category)
                 this.$router.push('unit')
+            },
+            back() {
+                this.$router.push('item')
+            },
+            forward() {
+                this.$router.push('unit')
             }
         }
     }
@@ -41,5 +52,7 @@
 
 
 <style scoped>
-
+    .selected {
+        background-color: cyan;
+    }
 </style>

@@ -47,6 +47,7 @@
                     let id = await this.$db.recipes.add(recipe)
                     recipe.id = id
                     this.$store.commit('addRecipe', recipe)
+                    this.$router.push('recipe/' + id)
                 
                 } catch(e) {
                     alert(e)
