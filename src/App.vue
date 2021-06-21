@@ -138,4 +138,8 @@
     input:focus {
         border: 2px solid #e8385b !important;
     }
+
+    .selected {
+        background-color: cyan;
+    }
 </style>

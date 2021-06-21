@@ -1,6 +1,6 @@
 <template>
     <div v-if='recipe' class='recipe-name view-header'>
-        <input type='text' v-model='name' @focus='focus' @blur='blur'>
+        <input id='input' type='text' v-model='name' @focus='focus' @blur='blur'>
     </div>
 </template>
 
@@ -16,7 +16,13 @@
         data() { return { name: '' }},
         beforeCreate() {},
         created() {},
-        mounted() { this.name = this.recipe.name },
+        mounted() {
+            this.name = this.recipe.name
+            if(!this.name || this.name == 'My Recipe') {
+                document.getElementById('input').blur()
+                document.getElementById('input').focus()
+            }
+        },
         updated() {},
         computed: { /*
             Creates a new property

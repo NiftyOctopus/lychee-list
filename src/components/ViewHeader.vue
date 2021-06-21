@@ -1,7 +1,11 @@
 <template>
     <div class='view-header'>
         <div v-if='item.recipe && recipe && item.recipe == recipe.id'>{{ recipe.name }}</div>
-        <div v-if="this.$route.path != '/item'">{{ item.name }}</div>
+        <div class='item-details' v-if="this.$route.path != '/item'">
+            <span>{{ item.name }}</span>
+            <span v-if='item.category'>&nbsp;[{{ item.category }}]</span>
+            <span v-if='item.unit'>&nbsp;{{ item.amount }} {{ item.unit }}</span>
+        </div>
 
         <div class='view-title'>
             <img class='icon' src='../assets/icons/arrow-left-circle.svg' @click='back'>
@@ -59,5 +63,9 @@
 
     .title {
         margin: 0 5px 0 5px;
+    }
+
+    .item-details {
+        font-size: 14px;
     }
 </style>

@@ -52,7 +52,5 @@
 
 
 <style scoped>
-    .selected {
-        background-color: cyan;
-    }
+
 </style>

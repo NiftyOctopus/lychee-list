@@ -1,7 +1,7 @@
 <template>
     <div class='search'>
         <div class='wrapper'>
-            <input type='text' v-model='text' @keyup='key'>
+            <input id='input' type='text' v-model='text' @keyup='key'>
             <img class='icon' src='../assets/icons/search.svg'>
         </div>
     </div>
@@ -19,7 +19,7 @@
         data() { return { text: '', timer: null }},
         beforeCreate() {},
         created() { this.text = this.init },
-        mounted() {},
+        mounted() { document.getElementById('input').focus() },
         updated() {},
         computed: { /*
             Creates a new property

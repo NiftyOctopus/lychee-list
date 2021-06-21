@@ -41,7 +41,7 @@
 
                 for(let category in this.list) {
                     let items = this.list[category]
-                    n = n + items.length
+                    n = n + items.filter(item => !item.done).length
                 }
                 return n
             }

@@ -4,7 +4,12 @@
 
         <div v-for='group in units' :key='group.type'>
             <div class='group-header'>{{ group.type }}</div>
-            <div v-for='unit in group.units' :key='unit.name' @click='selectUnit(unit)'>{{ unit.name }}</div>
+            <div v-for='unit in group.units'
+                :key='unit.name'
+                @click='selectUnit(unit)'
+                v-bind:class='{ selected: item.unit == unit.abbr }'>
+                <span>{{ unit.name }}</span>
+            </div>
         </div>
 
         <view-footer :allowSave=true></view-footer>
@@ -28,7 +33,7 @@
         mounted() {},
         updated() {},
         computed: {
-            ...mapState(['units']),
+            ...mapState(['units', 'item']),
         },
         watch: { /*
             Watches an existing property
