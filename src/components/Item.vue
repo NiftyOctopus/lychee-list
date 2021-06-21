@@ -54,9 +54,11 @@
         },
         methods: {
             async toggleItem() {
-                const item = Object.assign({ i: this.i }, this.item)
-                this.$store.commit('toggleItem', item)
-                await this.$db.items.update(this.item.id, { done: !this.item.done })
+                if(this.item.recipe === 0) {
+                    const item = Object.assign({ i: this.i }, this.item)
+                    this.$store.commit('toggleItem', item)
+                    await this.$db.items.update(this.item.id, { done: !this.item.done })
+                }
             },
             startSwipe(event) {
                 this.start = event.touches[0].clientX

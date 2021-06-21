@@ -1,7 +1,10 @@
 <template>
     <div id='grocery-list-view' class='view'>
         <div class='view-header'>
-            <div class='view-title'>Grocery List</div>
+            <div class='view-title'>
+                <span id='count'>{{ count }}</span>
+                <span>Grocery List</span>
+            </div>
         </div>
 
         <div v-for='category in categories' :key='category'>
@@ -32,7 +35,16 @@
         mounted() {},
         updated() {},
         computed: {
-            ...mapState(['categories', 'list'])
+            ...mapState(['categories', 'list']),
+            count() {
+                let n = 0
+
+                for(let category in this.list) {
+                    let items = this.list[category]
+                    n = n + items.length
+                }
+                return n
+            }
         },
         watch: { /*
             Watches an existing property
@@ -52,5 +64,10 @@
 <style scoped>
     #grocery-list-view {
         margin-bottom: 100px;
+    }
+
+    #count {
+        margin-right: 5px;
+        color: #e8385b;
     }
 </style>

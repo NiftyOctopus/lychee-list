@@ -2,11 +2,11 @@
     <div id='app'>
         <div id='primary-nav'>
             <router-link to='/'>
-                <img class='icon' src='./assets/icons/shopping-cart.svg'>
+                <img class='icon' v-bind:class="{ active: this.groceriesActive }" src='./assets/icons/shopping-cart.svg'>
             </router-link>
 
             <router-link to='/recipes'>
-                <img class='icon' src='./assets/icons/archive.svg'>
+                <img class='icon' v-bind:class="{ active: this.recipesActive }" src='./assets/icons/archive.svg'>
             </router-link>
         </div>
 
@@ -17,6 +17,8 @@
 
 
 <script>
+    import { mapState } from 'vuex'
+
     export default {
         name: 'app',
         components: { /* Subcomponents */ },
@@ -27,9 +29,18 @@
             this.loadList()
             this.loadRecipes()    
         },
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['item']),
+            groceriesActive() {
+                const route = this.$route.name
+                if(route == 'GroceryList') { return true }
+                //return this.item.recipe === 0
+            },
+            recipesActive() {
+                const route = this.$route.name
+                if(route == 'RecipeList') { return true }
+                //return this.item.recipe > 0
+            }
         },
         watch: { /*
             Watches an existing property
@@ -77,7 +88,12 @@
     }
 
     #primary-nav .icon {
-        margin: 0 10px;
+        margin:  0 10px;
+        opacity: 0.3;
+    }
+
+    #primary-nav .active {
+        opacity: 1;
     }
 
     .view {

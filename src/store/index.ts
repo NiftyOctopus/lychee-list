@@ -167,6 +167,7 @@ export default new Vuex.Store({
                     // Item moved to new category
                     if(rid > 0) {
                         state.recipeItemCache[rid][prev].splice(i, 1)    // Remove item from previous category
+                        if(!state.recipeItemCache[rid][cat]) { state.recipeItemCache[rid][cat] = [] }
                         state.recipeItemCache[rid][cat].push(state.item) // Add item to new category
 
                     } else {
