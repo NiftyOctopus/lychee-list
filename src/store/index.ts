@@ -83,6 +83,11 @@ export default new Vuex.Store({
                 state.defaultRecipes[id].name = recipe.name
             }
         },
+        deleteRecipe(state, id) {
+            Vue.delete(state.defaultRecipes, id)
+            Vue.delete(state.recipeSearchResults, id)
+            Vue.delete(state.recipeItemCache, id)
+        },
         updateQuery(state, query) {
             state.query = query
         },

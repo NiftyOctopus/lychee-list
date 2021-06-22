@@ -2,7 +2,7 @@
     <div class='view-footer'>
         <img v-if='allowAdd'  class='icon' src='../assets/icons/plus-circle.svg' @click='add'>
         <img v-if='allowSave' class='icon' src='../assets/icons/save.svg' @click='save'>
-        <div v-if='allowDelete'>Delete Recipe</div>
+        <div v-if='allowDelete' id='delete' @click='del'>DELETE</div>
     </div>
 </template>
 
@@ -35,6 +35,9 @@
         methods: {
             add() {
                 this.$emit('add')
+            },
+            del() {
+                this.$emit('delete')
             },
             async save() {
                 try {
@@ -109,5 +112,12 @@
         padding:    5px 5px 25px 5px;
         text-align: center;
         background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    #delete {
+        color: salmon;
+        font-weight: bold;
+        font-size: 14px;
+        margin-top: 10px;
     }
 </style>

@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <view-footer :allowAdd=true @add='addRecipeItem'></view-footer>
+        <view-footer :allowAdd=true @add='addRecipeItem' :allowDelete=true @delete='deleteRecipe'></view-footer>
     </div>
 </template>
 
@@ -57,6 +57,16 @@
             addRecipeItem() {
                 this.$store.commit('clearItem', this.id)
                 this.$router.push('/item')
+            },
+            async deleteRecipe() {
+                try {
+                    this.$router.push('/recipes')
+                    this.$store.commit('deleteRecipe', this.id)
+                    await this.$db.recipes.delete(this.id)
+                
+                } catch(e) {
+                    alert(e)
+                }
             }
         }
     }
