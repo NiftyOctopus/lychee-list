@@ -5,6 +5,7 @@
         <div style='margin-top: 150px;'>Amt: {{ item.amount }}</div>
         <!-- <div><fraction :value='value'></fraction></div> -->
         
+        <adjuster d=1></adjuster>
         <adjuster d=2></adjuster>
         <adjuster d=3></adjuster>
         <adjuster d=4></adjuster>
