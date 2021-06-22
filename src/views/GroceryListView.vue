@@ -2,7 +2,7 @@
     <div id='grocery-list-view' class='view'>
         <div class='view-header'>
             <div class='view-title'>
-                <span id='count'>{{ count }}</span>
+                <!-- <span id='count'>{{ count }}</span> -->
                 <span>Grocery List</span>
             </div>
         </div>
@@ -36,7 +36,7 @@
         updated() {},
         computed: {
             ...mapState(['categories', 'list']),
-            count() {
+            /*count() {
                 let n = 0
 
                 for(let category in this.list) {
@@ -44,7 +44,7 @@
                     n = n + items.filter(item => !item.done).length
                 }
                 return n
-            }
+            }*/
         },
         watch: { /*
             Watches an existing property
