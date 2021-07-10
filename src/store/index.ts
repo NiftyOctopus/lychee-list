@@ -18,7 +18,7 @@ type Item = {
     done?:boolean
 }
 
-let item:Item = { name: 'Item', category: 'Other', unit: '', amount: 0, recipe: 0 }
+let item:Item = { name: '', category: 'Other', unit: '', amount: 0, recipe: 0 }
 type ItemList = { [key:string]:Item[] }
 let list:ItemList = {}
 
@@ -221,7 +221,7 @@ export default new Vuex.Store({
         },
         clearItem(state, rid) {
             const item = {
-                name:     'Item',
+                name:     '',
                 category: 'Other',
                 unit:     '',
                 amount:   0,
