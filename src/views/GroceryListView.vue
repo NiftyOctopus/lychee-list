@@ -76,7 +76,7 @@
 
 <style scoped>
     #grocery-list-view {
-        margin-bottom: 100px;
+        margin-bottom: 150px;
     }
 
     #controls {
