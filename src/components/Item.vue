@@ -83,6 +83,7 @@
             },
             async deleteItem() {
                 try {
+                    this.open = false
                     const item = Object.assign({ i: this.i }, this.item)
                     this.$store.commit('deleteItem', item)
                     await this.$db.items.delete(this.item.id)
