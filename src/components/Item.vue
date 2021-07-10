@@ -1,5 +1,5 @@
 <template>
-    <div class='item'>
+    <div class='item' v-if='showCompleted || !item.done'>
         <div class='actions'>
             <img class='icon edit'   src='../assets/icons/edit.svg'  @click='editItem'>
             <img class='icon delete' src='../assets/icons/trash.svg' @click='deleteItem'>
@@ -20,6 +20,7 @@
 
 <script>
     import { fractionize } from '../mixins/fractionize'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'item',
@@ -32,6 +33,7 @@
         mounted() {},
         updated() {},
         computed: {
+            ...mapState(['showCompleted']),
             value() {
                 return this.item.amount
             },

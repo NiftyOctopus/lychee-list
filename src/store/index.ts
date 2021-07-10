@@ -65,6 +65,7 @@ export default new Vuex.Store({
         categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices', 'Other'],
         units,
         list,
+        showCompleted: true,
         defaultRecipes,
         recipeSearchResults,
         recipeItemCache,
@@ -214,6 +215,9 @@ export default new Vuex.Store({
                 item.done = !item.done
                 state.list[item.category].splice(i, 1, item)
             }
+        },
+        toggleDoneFilter(state) {
+            state.showCompleted = !state.showCompleted
         },
         clearItem(state, rid) {
             const item = {

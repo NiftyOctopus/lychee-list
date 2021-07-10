@@ -7,10 +7,20 @@
             </div>
         </div>
 
+        <div id='controls'>
+            <div><img src='../assets/icons/trash.svg'></div>
+            <div><img src='../assets/icons/filter.svg' @click='toggleDoneFilter'></div>
+        </div>
+
         <div v-for='category in categories' :key='category'>
             <div v-if='list[category] && list[category].length'>
                 <div class='group-header'>{{ category }}</div>
-                <item v-for='(item, index) in list[category]' :key='index' :i='index' :item='item'></item>
+                <item
+                    v-for='(item, index) in list[category]'
+                    :key='index'
+                    :i='index'
+                    :item='item'>
+                </item>
             </div>
         </div>
 
@@ -54,6 +64,9 @@
             navToItemView() {
                 this.$store.commit('clearItem')
                 this.$router.push('/item')
+            },
+            toggleDoneFilter() {
+                this.$store.commit('toggleDoneFilter')
             }
         }
     }
@@ -64,6 +77,18 @@
 <style scoped>
     #grocery-list-view {
         margin-bottom: 100px;
+    }
+
+    #controls {
+        position: fixed;
+        top: 60px;
+        right: 10px;
+        z-index: 100;
+    }
+
+    #controls div {
+        margin-bottom: 10px;
+        opacity: 0.5;
     }
 
     #count {
