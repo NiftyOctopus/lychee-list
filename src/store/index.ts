@@ -71,7 +71,7 @@ export default new Vuex.Store({
         recipeItemCache,
         recipe,
         activeRecipeID: 2,
-        query: 'a',
+        query: '',
         item
     },
     mutations: {
