@@ -55,10 +55,12 @@
             },
             async loadList() {
                 const items = await this.$db.items.where('recipe').equals(0).toArray()
+                this.$store.commit('log', 'Loaded ' + items.length + ' items from db')
                 this.$store.commit('setList', items)
             },
             async loadRecipes() {
                 const recipes = await this.$db.recipes.toArray()
+                this.$store.commit('log', 'Loaded ' + recipes.length + ' recipes from db')
                 this.$store.commit('setDefaultRecipes', recipes)
             }
         }

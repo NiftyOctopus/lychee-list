@@ -58,7 +58,7 @@ let units:UnitType[] = [
         ]}
 ]
 
-
+let log:string[] = []
 
 export default new Vuex.Store({
     state: {
@@ -72,7 +72,8 @@ export default new Vuex.Store({
         recipe,
         activeRecipeID: 2,
         query: '',
-        item
+        item,
+        log
     },
     mutations: {
         openRecipe(state, id) {
@@ -211,8 +212,12 @@ export default new Vuex.Store({
             const i = item.i
             delete item.i
 
-            if(state.list[item.category][i].id == item.id) {
+            const id = state.list[item.category][i].id
+
+            if(id == item.id) {
+                state.log.push('[' + id + '] = [' + item.id + ']')
                 item.done = !item.done
+                state.log.push('Marking item ' + (item.done ? 'done' : 'incomplete'))
                 state.list[item.category].splice(i, 1, item)
             }
         },
@@ -258,6 +263,12 @@ export default new Vuex.Store({
 
                 if(!state.recipeItemCache[data.id][cat]) { Vue.set(state.recipeItemCache[data.id], cat, []) }
                 state.recipeItemCache[data.id][cat].push(item)
+            }
+        },
+        log(state, msg) {
+            state.log.push(msg)
+            if(state.log.length > 10) {
+                state.log.splice(0, state.log.length - 10)
             }
         }
     },

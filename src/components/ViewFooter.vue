@@ -3,6 +3,12 @@
         <img v-if='allowAdd'  class='icon' src='../assets/icons/plus-circle.svg' @click='add'>
         <img v-if='allowSave' class='icon' src='../assets/icons/save.svg' @click='save'>
         <div v-if='allowDelete' id='delete' @click='del'>DELETE</div>
+
+        <div id='log'>
+            <div v-for='(msg, index) in log' :key='index'>
+                <span>{{ msg }}</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -26,7 +32,7 @@
         computed: { /*
             Creates a new property
             Updates when any dependant property changes */
-            ...mapState(['item']),
+            ...mapState(['item', 'log']),
         },
         watch: { /*
             Watches an existing property
@@ -119,5 +125,12 @@
         font-weight: bold;
         font-size: 14px;
         margin-top: 10px;
+    }
+
+    #log {
+        padding-left: 5px;
+        font-family: monospace;
+        text-align: left;
+        font-size: 12px;
     }
 </style>
