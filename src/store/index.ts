@@ -209,16 +209,19 @@ export default new Vuex.Store({
             }
         },
         toggleItem(state, item) {
-            const i = item.i
-            delete item.i
+            const id   = item.id
+            const cat  = item.category
+            const done = item.done
+        
+            let store
+            for(let i in state.list[cat]) {
+                store = state.list[cat][i]
 
-            const id = state.list[item.category][i].id
-
-            if(id == item.id) {
-                state.log.push('[' + id + '] = [' + item.id + ']')
-                item.done = !item.done
-                state.log.push('Marking item ' + (item.done ? 'done' : 'incomplete'))
-                state.list[item.category].splice(i, 1, item)
+                if(store.id == id) {
+                    state.log.push('[' + store.id + '] = [' + id + ']')
+                    Vue.set(state.list[cat][i], 'done', !done)
+                    state.log.push('Marked item ' + (done ? 'incomplete' : 'done'))
+                }
             }
         },
         toggleDoneFilter(state) {
