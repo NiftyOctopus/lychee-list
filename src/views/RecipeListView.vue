@@ -5,8 +5,12 @@
         </div>
         <search :init='query' @update='updateQuery'></search>
 
-        <div v-for='recipe in recipeList' :key='recipe.id'>
-            <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
+        <div>
+            <recipe
+                v-for='recipe in recipeList'
+                :key='recipe.id'
+                :recipe='recipe'>
+            </recipe>
         </div>
 
         <view-footer :allowAdd=true @add='addRecipe'></view-footer>
@@ -17,6 +21,7 @@
 
 <script>
     import Search     from '../components/Search'
+    import Recipe     from '../components/Recipe'
     import ViewFooter from '../components/ViewFooter'
 
     import { mapState }   from 'vuex'
@@ -24,7 +29,7 @@
 
     export default {
         name: 'recipe-list-view',
-        components: { Search, ViewFooter },
+        components: { Search, Recipe, ViewFooter },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
@@ -32,7 +37,7 @@
         mounted() {},
         updated() {},
         computed: {
-            ...mapState(['query']),
+            ...mapState(['query', 'categories']),
             ...mapGetters(['recipeList'])
         },
         watch: { /*

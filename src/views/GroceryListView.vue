@@ -25,19 +25,21 @@
         </div>
 
         <view-footer :allowAdd=true @add='navToItemView'></view-footer>
+        <confirm-delete></confirm-delete>
     </div>
 </template>
 
 
 
 <script>
-    import Item       from '../components/Item'
-    import ViewFooter from '../components/ViewFooter'
+    import Item          from '../components/Item'
+    import ViewFooter    from '../components/ViewFooter'
+    import ConfirmDelete from '../components/ConfirmDelete'
     import { mapState } from 'vuex'
 
     export default {
         name: 'grocery-list-view',
-        components: { Item, ViewFooter },
+        components: { Item, ViewFooter, ConfirmDelete },
         props: [/* Inputs */],
         data() { return {}},
         beforeCreate() {},
