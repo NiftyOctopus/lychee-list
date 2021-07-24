@@ -8,7 +8,7 @@
         </div>
 
         <div id='controls'>
-            <div><img src='../assets/icons/trash.svg'></div>
+            <div><img src='../assets/icons/trash.svg' @click='confirmDelete'></div>
             <div><img src='../assets/icons/filter.svg' @click='toggleDoneFilter'></div>
         </div>
 
@@ -25,7 +25,14 @@
         </div>
 
         <view-footer :allowAdd=true @add='navToItemView'></view-footer>
-        <confirm-delete></confirm-delete>
+
+        <confirm
+            v-if='confirm'
+            @cancel='cancelDelete'
+            :buttons="[{ text: 'Delete Completed', event: 'completed' }, { text: 'Delete All', event: 'all' }]"
+            @completed='deleteCompleted'
+            @all='deleteAll'>
+        </confirm>
     </div>
 </template>
 
@@ -34,14 +41,14 @@
 <script>
     import Item          from '../components/Item'
     import ViewFooter    from '../components/ViewFooter'
-    import ConfirmDelete from '../components/ConfirmDelete'
+    import Confirm from '../components/Confirm'
     import { mapState } from 'vuex'
 
     export default {
         name: 'grocery-list-view',
-        components: { Item, ViewFooter, ConfirmDelete },
+        components: { Item, ViewFooter, Confirm },
         props: [/* Inputs */],
-        data() { return {}},
+        data() { return { confirm: false }},
         beforeCreate() {},
         created() {},
         mounted() {},
@@ -69,6 +76,27 @@
             },
             toggleDoneFilter() {
                 this.$store.commit('toggleDoneFilter')
+            },
+            confirmDelete() {
+                this.confirm = true
+            },
+            cancelDelete() {
+                this.confirm = false
+            },
+            async deleteCompleted() {
+                try {
+                    this.confirm = false
+                    const result = await this.$db.items.where({ recipe: 0, done: 1 }).delete()
+                    this.$store.commit('deleteCompleted')
+
+                } catch(e) {
+                    alert(e)
+                }
+            },
+            async deleteAll() {
+                this.confirm = false
+                await this.$db.items.where('recipe').equals(0).delete()
+                this.$store.commit('deleteList')
             }
         }
     }

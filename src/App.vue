@@ -49,7 +49,7 @@
         methods: {
             init() {
                 this.$db.version(1).stores({
-                    items:   '++id, recipe, &[name+category+recipe]',
+                    items:   '++id, recipe, done, &[name+category+recipe]',
                     recipes: '++id'
                 });
             },

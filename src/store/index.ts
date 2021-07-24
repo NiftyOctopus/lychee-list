@@ -15,7 +15,7 @@ type Item = {
     unit:string,
     amount:number,
     recipe:number,
-    done?:boolean
+    done?:number
 }
 
 let item:Item = { name: '', category: 'Other', unit: '', amount: 0, recipe: 0 }
@@ -219,7 +219,7 @@ export default new Vuex.Store({
 
                 if(store.id == id) {
                     state.log.push('[' + store.id + '] = [' + id + ']')
-                    Vue.set(state.list[cat][i], 'done', !done)
+                    Vue.set(state.list[cat][i], 'done', done ? 0 : 1)
                     state.log.push('Marked item ' + (done ? 'incomplete' : 'done'))
                 }
             }
@@ -244,6 +244,16 @@ export default new Vuex.Store({
 
                 if(!state.list[cat]) { Vue.set(state.list, cat, []) }
                 state.list[cat].push(item)
+            }
+        },
+        deleteList(state) {
+            Vue.set(state, 'list', {})
+        },
+        deleteCompleted(state) {
+            let remaining
+            for(let cat in state.list) {
+                remaining = state.list[cat].filter(item => !item.done)
+                Vue.set(state.list, cat, remaining)
             }
         },
         setDefaultRecipes(state, recipes) {
