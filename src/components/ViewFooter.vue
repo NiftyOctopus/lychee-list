@@ -46,62 +46,9 @@
                 this.$emit('delete')
             },
             async save() {
-                try {
-                    this.prepareItem()
-                    if(this.item.id) {
-                        // Editing a specific existing item
-                        await this.$db.items.update(this.item.id, this.item)
-                        this.$store.commit('editExistingItem')
-                    
-                    } else {
-                        let existing = await this.getExistingItem()
-
-                        if(existing) {
-                            if(this.item.recipe) { throw 'This item already exists in the recipe' }
-
-                            const amount    = this.getNewAmount(existing)
-                            existing.amount = amount
-                            await this.$db.items.update(existing.id, existing)
-                            
-                            // Update item in store
-                            this.$store.commit('setItemAmount', amount)
-                            this.$store.commit('appendExistingItem')
-
-                        } else {
-                            // Brand new item
-                            await this.$db.items.add(this.item)
-                            
-                            // Update item in store
-                            this.$store.commit('addNewItem')
-                        }
-                    }
-                }
-                catch(error) { alert(error) }
-
+                await this.saveItem()
                 this.$router.push(this.item.recipe ? 'recipe/' + this.item.recipe : '/')
                 this.$store.commit('clearItem')
-            },
-            prepareItem() {
-                if(!this.item.name) {
-                    throw 'Item name cannot be blank'
-                }
-
-                if(!this.item.category) {
-                    this.$store.commit('setItemCategory', 'Other')
-                }
-
-                if(!this.item.unit) {
-                    this.$store.commit('setItemAmount', null)
-                }
-
-                if(!this.item.amount) {
-                    this.$store.commit('setItemUnit', null)
-                }
-            },
-            getExistingItem() {
-                const index   = ['name', 'category', 'recipe']
-                const filters = [this.item.name, this.item.category, this.item.recipe]
-                return this.$db.items.where(index).equals(filters).first()
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div class='recipe'>
-        <img src='../assets/icons/plus-circle.svg'>
+        <img src='../assets/icons/plus-circle.svg' @click='addRecipeItems'>
         <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
     </div>
 </template>
@@ -27,7 +27,12 @@
             Watches an existing property
             Only runs when the watched property changes */
         },
-        methods: {}
+        methods: {
+            async addRecipeItems() {
+                const items = await this.$db.items.where('recipe').equals(this.recipe.id).toArray()
+                alert(items[0].name)
+            }
+        }
     }
 </script>
 
