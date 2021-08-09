@@ -9,9 +9,12 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
+    import { convert } from '../mixins/convert'
+    import { mapState } from 'vuex'
 
     export default {
         name: 'recipe',
+        mixins: [convert],
         components: { /* Subcomponents */ },
         props: ['recipe'],
         data() { return { /* Local variables */ }},
@@ -22,6 +25,7 @@
         computed: { /*
             Creates a new property
             Updates when any dependant property changes */
+            ...mapState(['item'])
         },
         watch: { /*
             Watches an existing property
@@ -30,7 +34,15 @@
         methods: {
             async addRecipeItems() {
                 const items = await this.$db.items.where('recipe').equals(this.recipe.id).toArray()
-                alert(items[0].name)
+                
+                let item
+                for(let i in items) {
+                    item = items[i]
+                    delete item.id
+                    item.recipe = 0
+                    this.$store.commit('setItem', item)
+                    await this.saveItem()
+                }
             }
         }
     }
