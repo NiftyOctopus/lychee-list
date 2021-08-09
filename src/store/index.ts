@@ -179,6 +179,7 @@ export default new Vuex.Store({
 
                     } else {
                         state.list[prev].splice(i, 1)
+                        if(!state.list[cat]) { state.list[cat] = [] }
                         state.list[cat].push(state.item)
                     }
                 }

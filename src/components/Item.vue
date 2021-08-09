@@ -78,8 +78,10 @@
 
             },
             editItem() {
-                const data = { prev: this.item.category, i: this.i }
-                const item = Object.assign(data, this.item)
+                const item = Object.assign({}, this.item)
+                item.prev  = this.item.category
+                item.i     = this.i
+
                 this.$store.commit('setItem', item)
                 this.$router.push(this.item.unit ? '/amount' : '/unit')
             },
