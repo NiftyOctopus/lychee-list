@@ -1,34 +1,28 @@
 <template>
     <div class='adjuster'>
-        <div>
-            <img class='icon'
-                src='../assets/icons/plus-circle.svg'
-                @click='setAmount(plus)'>
-        </div>
-
-        <div class='numerator'  >1</div>
-        <div class='denominator'>{{ d }}</div>
+        <img class='icon'
+            src='../assets/icons/plus-circle.svg'
+            @click='setAmount(plus)'>
 
         <div>
-            <img class='icon'
-                src='../assets/icons/minus-circle.svg'
-                @click=setAmount(minus)>
+            <div class='numerator'>1</div>
+            <div v-if='d > 1' class='denominator'>{{ d }}</div>
         </div>
+
+        <img class='icon'
+            src='../assets/icons/minus-circle.svg'
+            @click='setAmount(minus)'>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
-
     export default {
         name: 'adjuster',
-        components: { /* Subcomponents */ },
+        components: {},
         props: ['d'],
-        data() { return {
-
-        }},
+        data() { return {}},
         beforeCreate() {},
         created() {},
         mounted() {},
@@ -41,12 +35,8 @@
                 return -1 / this.d
             }
         },
-        watch: {
-
-        },
         methods: {
             setAmount(amount) {
-                //alert('Hello')
                 this.$store.commit('updateItemAmount', amount)
             },
         }
@@ -57,17 +47,20 @@
 
 <style scoped>
     .adjuster {
-        display: inline-block;
-        padding: 10px;
-        /* border: 1px solid red; */
-    }
-
-    .numerator {
-        border-bottom: 1px solid black;
+        display:         flex;
+        flex-flow:       column nowrap;
+        justify-content: space-between;
+        align-items:     center;
+        margin:          10px;
+        height:          110px;
     }
 
     .numerator, .denominator {
-        padding: 2px 5px;
+        padding: 1px 3px;
+    }
+
+    .denominator {
+        border-top: 1px solid black;
     }
 
     .icon {

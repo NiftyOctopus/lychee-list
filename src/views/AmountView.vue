@@ -5,10 +5,13 @@
         <div style='margin-top: 150px;'>Amt: {{ item.amount }}</div>
         <!-- <div><fraction :value='value'></fraction></div> -->
         
-        <adjuster d=1></adjuster>
-        <adjuster d=2></adjuster>
-        <adjuster d=3></adjuster>
-        <adjuster d=4></adjuster>
+        <div id='adjusters'>
+            <adjuster d=1></adjuster>
+            <adjuster d=2></adjuster>
+            <adjuster d=3></adjuster>
+            <adjuster d=4></adjuster>
+        </div>
+
         <view-footer :allowSave=true></view-footer>
     </div>
 </template>
@@ -53,5 +56,10 @@
 
 
 <style scoped>
-
+    #adjusters {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
