@@ -58,10 +58,10 @@
             async toggleItem() {
                 if(this.item.recipe === 0) {
                     const done = this.item.done ? 0 : 1
-                    this.$store.commit('log', 'Toggle item ' + this.item.name + '[' + this.item.id + ']')
+                    //this.$store.commit('log', 'Toggle item ' + this.item.name + '[' + this.item.id + ']')
                     this.$store.commit('toggleItem', this.item)
                     const n = await this.$db.items.update(this.item.id, { done })
-                    this.$store.commit('log', 'Updated ' + n + ' records in db')
+                    //this.$store.commit('log', 'Updated ' + n + ' records in db')
                 }
             },
             startSwipe(event) {

@@ -219,9 +219,9 @@ export default new Vuex.Store({
                 store = state.list[cat][i]
 
                 if(store.id == id) {
-                    state.log.push('[' + store.id + '] = [' + id + ']')
+                    //state.log.push('[' + store.id + '] = [' + id + ']')
                     Vue.set(state.list[cat][i], 'done', done ? 0 : 1)
-                    state.log.push('Marked item ' + (done ? 'incomplete' : 'done'))
+                    //state.log.push('Marked item ' + (done ? 'incomplete' : 'done'))
                 }
             }
         },
