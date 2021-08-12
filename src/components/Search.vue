@@ -19,7 +19,7 @@
         data() { return { text: '', timer: null }},
         beforeCreate() {},
         created() { this.text = this.init },
-        mounted() { document.getElementById('input').focus() },
+        mounted() { /*document.getElementById('input').focus()*/ },
         updated() {},
         computed: { /*
             Creates a new property
