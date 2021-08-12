@@ -72,7 +72,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-    body {
+    body, button {
         font-family: 'Roboto', sans-serif;
         font-size:    18px;
     }

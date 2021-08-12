@@ -1,11 +1,14 @@
 <template>
-    <div class='confirm' @click='clickToCancel'>
-        <div>
-            <div>Are you sure?</div>
-            <div v-for='button in buttons' :key='button.event'>
-                <button @click='confirm(button.event)'>{{ button.text }}</button>
-            </div>
-            <div><button @click='cancel'>Cancel</button></div>
+    <div id='confirm' @click='clickToCancel'>
+        <div id='modal'>
+            <button
+                v-for='button in buttons'
+                :key='button.event'
+                @click='confirm(button.event)'>
+                {{ button.text }}
+            </button>
+
+            <button @click='cancel'>Cancel</button>
         </div>
     </div>
 </template>
@@ -37,7 +40,7 @@
                 this.$emit('cancel')
             },
             clickToCancel(event) {
-                if(event.target.className == 'confirm') {
+                if(event.target.id == 'confirm') {
                     this.$emit('cancel')
                 }
             },
@@ -51,7 +54,7 @@
 
 
 <style scoped>
-    .confirm {
+    #confirm {
         z-index: 1000;
         position: fixed;
         top: 0;
@@ -67,8 +70,18 @@
         background-color: rgba(0, 0, 0, 0.5);
     }
 
-    .confirm > div {
+    #modal {
         background-color: white;
         border: 1px solid black;
+        display: flex;
+        flex-flow:       column nowrap;
+        justify-content: center;
+        align-items:     stretch;
+    }
+
+    button {
+        border: 1px solid red;
+        padding: 5px 10px;
+        margin: 5px;
     }
 </style>
