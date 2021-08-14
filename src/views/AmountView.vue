@@ -1,9 +1,12 @@
 <template>
     <div class='amount-view view'>
         <view-header title='How much?'  @back='back'></view-header>
-        <!-- <div style='margin-top: 150px'><button @click='getRandomValue'>Refresh</button></div> -->
-        <div style='margin-top: 150px;'>Amt: {{ item.amount }}</div>
-        <!-- <div><fraction :value='value'></fraction></div> -->
+        
+        <div id='amount'>
+            <div id='whole'>{{ Math.floor(item.amount) }}</div>
+            <div id='fraction'><fraction :value='item.amount'></fraction></div>
+            <div>{{ item.unit }}</div>
+        </div>
         
         <div id='adjusters'>
             <adjuster d=1></adjuster>
@@ -31,7 +34,7 @@
         name: 'amount-view',
         components: { ViewHeader, ViewFooter, Fraction, Adjuster },
         props: [/* Inputs */],
-        data() { return { value: 1 }},
+        data() { return {} },
         beforeCreate() {},
         created() {},
         mounted() {},
@@ -39,7 +42,7 @@
         computed: { /*
             Creates a new property
             Updates when any dependant property changes */
-            ...mapState(['item']),
+            ...mapState(['item'])
         },
         watch: { /*
             Watches an existing property
@@ -56,6 +59,16 @@
 
 
 <style scoped>
+    #amount {
+        display: flex;
+        flex-flow:       row nowrap;
+        justify-content: center;
+        align-items:     center;
+    }
+    #whole {
+        font-size: 30px;
+    }
+
     #adjusters {
         display: flex;
         flex-flow: row nowrap;
