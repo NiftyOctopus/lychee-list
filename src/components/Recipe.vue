@@ -1,48 +1,38 @@
 <template>
     <div class='recipe'>
-        <img src='../assets/icons/plus-circle.svg' @click='addRecipeItems'>
-        <router-link :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
+        <img class='add' src='../assets/icons/plus.svg' @click='addRecipeItems'>
+        <router-link class='open' :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
     </div>
 </template>
 
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
-    import { convert } from '../mixins/convert'
+    import { convert }  from '../mixins/convert'
     import { mapState } from 'vuex'
 
     export default {
-        name: 'recipe',
+        name:   'recipe',
         mixins: [convert],
-        components: { /* Subcomponents */ },
-        props: ['recipe'],
-        data() { return { /* Local variables */ }},
-        beforeCreate() {},
-        created() {},
-        mounted() {},
-        updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        props:  ['recipe'],
+        computed: {
             ...mapState(['item'])
-        },
-        watch: { /*
-            Watches an existing property
-            Only runs when the watched property changes */
         },
         methods: {
             async addRecipeItems() {
-                const items = await this.$db.items.where('recipe').equals(this.recipe.id).toArray()
+                try {
+                    const items = await this.$db.items.where('recipe').equals(this.recipe.id).toArray()
+                    let item
                 
-                let item
-                for(let i in items) {
-                    item = items[i]
-                    delete item.id
-                    item.recipe = 0
-                    this.$store.commit('setItem', item)
-                    await this.saveItem()
-                }
+                    for(let i in items) {
+                        item = items[i]
+                        delete item.id
+                        item.recipe = 0
+                    
+                        this.$store.commit('setItem', item)
+                        await this.saveItem()
+                    }
+                } catch(e) { alert(e) }
             }
         }
     }
@@ -51,5 +41,19 @@
 
 
 <style scoped>
+    .recipe {
+        display:         flex;
+        flex-flow:       row nowrap;
+        justify-content: left;
+        align-items:     center;
+    }
 
+    .add {
+        margin: 10px;
+    }
+
+    .open {
+        text-decoration: none;
+        color: black;
+    }
 </style>
