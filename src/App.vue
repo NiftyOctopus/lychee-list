@@ -108,18 +108,12 @@
         top:        35px;
         left:       0;
         right:      0;
-        height:     25px;
-        padding:    5px;
-        text-align: center;
+        z-index:    100;
+        padding:    7px;
+        background-color: lightgray;
     }
 
-    .view-header {
-        background-color: rgba(255, 255, 255, 0.7);
-        backdrop-filter:    blur(2px);
-        z-index: 100;
-    }
-
-    .view-title {
+    #view-title {
         font-weight: bold;
     }
 
@@ -143,5 +137,9 @@
 
     .selected {
         background-color: cyan;
+    }
+
+    .hide {
+        visibility: hidden;
     }
 </style>

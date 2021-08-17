@@ -1,7 +1,7 @@
 <template>
     <div id='grocery-list-view' class='view'>
         <div class='view-header'>
-            <div class='view-title'>
+            <div id='view-title'>
                 <!-- <span id='count'>{{ count }}</span> -->
                 <span>Grocery List</span>
             </div>

@@ -1,7 +1,7 @@
 <template>
     <div id='recipe-list-view' class='view'>
         <div class='view-header'>
-            <div class='view-title'><span>Recipes</span></div>
+            <div id='view-title'><span>Recipes</span></div>
         </div>
         <search :init='query' @update='updateQuery'></search>
 
