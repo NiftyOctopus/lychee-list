@@ -1,7 +1,7 @@
 <template>
     <div class='recipe'>
         <img class='add' src='../assets/icons/plus.svg' @click='addRecipeItems'>
-        <router-link class='open' :to="'/recipe/' + recipe.id">{{ recipe.name }}</router-link>
+        <router-link class='open' :to="'/recipe/' + recipe.id">{{ name }}</router-link>
     </div>
 </template>
 
@@ -16,7 +16,12 @@
         mixins: [convert],
         props:  ['recipe'],
         computed: {
-            ...mapState(['item'])
+            ...mapState(['item']),
+
+            name() {
+                const name = this.recipe.name
+                return name ? name : 'Recipe ' + this.recipe.id
+            }
         },
         methods: {
             async addRecipeItems() {

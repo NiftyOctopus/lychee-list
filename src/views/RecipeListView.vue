@@ -50,7 +50,7 @@
             },
             async addRecipe() {
                 try {
-                    let recipe = { name: 'My Recipe' }
+                    let recipe = { name: '' }
                     let id = await this.$db.recipes.add(recipe)
                     recipe.id = id
                     this.$store.commit('addRecipe', recipe)
