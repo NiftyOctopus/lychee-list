@@ -13,9 +13,7 @@
     export default {
         name: 'recipe-name',
         props: ['recipe'],
-        mounted() {
-            this.name = this.recipe.name
-        },
+        data() { return { name: this.recipe.name }},
         methods: {
             async saveName() {
                 try {
@@ -36,6 +34,7 @@
     input {
         appearance:    none;
         padding:       0;
+        width:         80%;
         font-family:  'Roboto', sans-serif;
         font-size:     18px;
         font-weight:   bold;
