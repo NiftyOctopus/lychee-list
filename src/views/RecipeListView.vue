@@ -3,7 +3,7 @@
         <div class='view-header'>
             <div id='view-title'><span>Recipes</span></div>
         </div>
-        <search :init='query' @update='updateQuery'></search>
+        <search :init='query' showIcon=true @update='updateQuery'></search>
 
         <div>
             <recipe
