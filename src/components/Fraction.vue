@@ -1,7 +1,13 @@
 <template>
     <div class='fraction'>
-        <div class='numerator'  >{{ fraction.n }}</div>
-        <div class='denominator'>{{ fraction.d }}</div>
+        <div>{{ whole }}</div>
+        
+        <div id='frac' v-if='fraction.n < fraction.d'>
+            <div class='numerator'  >{{ fraction.n }}</div>
+            <div class='denominator'>{{ fraction.d }}</div>
+        </div>
+        
+        <div>{{ value }}</div>
     </div>
 </template>
 

@@ -3,8 +3,7 @@
         <view-header title='How much?'  @back='back'></view-header>
         
         <div id='amount'>
-            <div id='whole'>{{ Math.floor(item.amount) }}</div>
-            <div id='fraction'><fraction :value='item.amount'></fraction></div>
+            <fraction :value='item.amount'></fraction>
             <div>{{ item.unit }}</div>
         </div>
         
@@ -13,6 +12,7 @@
             <adjuster d=2></adjuster>
             <adjuster d=3></adjuster>
             <adjuster d=4></adjuster>
+            <adjuster d=8></adjuster>
         </div>
 
         <view-footer :allowSave=true></view-footer>
@@ -59,16 +59,6 @@
 
 
 <style scoped>
-    #amount {
-        display: flex;
-        flex-flow:       row nowrap;
-        justify-content: center;
-        align-items:     center;
-    }
-    #whole {
-        font-size: 30px;
-    }
-
     #adjusters {
         display: flex;
         flex-flow: row nowrap;
