@@ -44,6 +44,7 @@
         left:       0;
         right:      0;
         padding:    10px;
+        z-index:    100;
         display:            flex;
         flex-flow:          row nowrap;
         justify-content:    center;
