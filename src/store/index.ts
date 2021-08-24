@@ -54,7 +54,7 @@ let units:UnitType[] = [
             { abbr: 'gal',  name: 'Gallon',     to: { tsp: 768, tbsp: 256, c: 16, pt: 8,   qt: 4,    gal: 1      }},
         ]},
         { type: 'Other', units: [
-            { abbr: 'ct',  name: 'Count' }
+            { abbr: 'ct',  name: 'Count', to: { ct: 1 }}
         ]}
 ]
 
