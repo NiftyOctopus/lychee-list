@@ -25,12 +25,18 @@
 
 
 <script>
+    import { margin } from '../mixins/margin'
     import { mapState }   from 'vuex'
     import { mapGetters } from 'vuex'
 
     export default {
         name: 'view-header',
+        mixins: [margin],
         props: ['title', 'fwd'],
+        beforeCreate() { },
+        created() { },
+        mounted() { this.updateViewMargin() },
+        updated() { },
         computed: {
             ...mapState(['item']),
             ...mapGetters(['recipe'])

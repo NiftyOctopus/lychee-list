@@ -22,6 +22,7 @@
     import RecipeName from '../components/RecipeName'
     import Item       from '../components/Item'
     import ViewFooter from '../components/ViewFooter'
+    import { margin } from '../mixins/margin'
     import { mapMutations } from 'vuex'
     import { mapGetters }   from 'vuex'
     import { mapState }   from 'vuex'
@@ -29,11 +30,15 @@
     export default {
         name: 'recipe-view',
         components: { RecipeName, Item, ViewFooter },
+        mixins: [margin],
         props: [/* Inputs */],
         data() { return { id: null }},
         beforeCreate() {},
         created() { this.openRecipe(this.$route.params.id) },
-        mounted() { this.loadRecipeItems() },
+        mounted() {
+            this.updateViewMargin()
+            this.loadRecipeItems()
+        },
         updated() {},
         computed: {
             ...mapState(['categories']),

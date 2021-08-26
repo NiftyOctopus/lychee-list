@@ -42,16 +42,18 @@
     import Item          from '../components/Item'
     import ViewFooter    from '../components/ViewFooter'
     import Confirm from '../components/Confirm'
+    import { margin } from '../mixins/margin'
     import { mapState } from 'vuex'
 
     export default {
         name: 'grocery-list-view',
         components: { Item, ViewFooter, Confirm },
+        mixins: [margin],
         props: [/* Inputs */],
         data() { return { confirm: false }},
         beforeCreate() {},
         created() {},
-        mounted() {},
+        mounted() { this.updateViewMargin() },
         updated() {},
         computed: {
             ...mapState(['categories', 'list']),
@@ -111,7 +113,7 @@
 
     #controls {
         position: fixed;
-        top: 60px;
+        top: 80px;
         right: 10px;
         z-index: 100;
     }

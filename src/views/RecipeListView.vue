@@ -23,6 +23,7 @@
     import Search     from '../components/Search'
     import Recipe     from '../components/Recipe'
     import ViewFooter from '../components/ViewFooter'
+    import { margin } from '../mixins/margin'
 
     import { mapState }   from 'vuex'
     import { mapGetters } from 'vuex'
@@ -30,11 +31,12 @@
     export default {
         name: 'recipe-list-view',
         components: { Search, Recipe, ViewFooter },
+        mixins: [margin],
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
-        mounted() {},
+        mounted() { this.updateViewMargin() },
         updated() {},
         computed: {
             ...mapState(['query', 'categories']),
