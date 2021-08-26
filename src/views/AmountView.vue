@@ -1,6 +1,6 @@
 <template>
     <div class='amount-view view'>
-        <view-header title='How much?'  @back='back'></view-header>
+        <view-header title='How much?' @back='back'></view-header>
         
         <div id='amount'>
             <div id='whole'>{{ whole }}</div>
@@ -70,7 +70,6 @@
 
 <style scoped>
     #amount {
-        /* border: 1px solid gray; */
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
@@ -81,10 +80,6 @@
         font-size: 30px;
         margin-right: 2px;
         padding: 15px 0;
-    }
-
-    #fraction {
-        /* border: 1px solid red; */
     }
 
     #fraction > #n {
@@ -107,6 +102,7 @@
     }
 
     #adjusters {
+        margin-top: 20px;
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
