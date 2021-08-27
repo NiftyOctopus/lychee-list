@@ -5,8 +5,8 @@
             @click='setAmount(plus)'>
 
         <div>
-            <div class='numerator'>1</div>
-            <div v-if='d > 1' class='denominator'>{{ d }}</div>
+            <div class='adj-n'>{{ n > 0 ? n : 1 }}</div>
+            <div v-if='d > 1' class='adj-d'>{{ d }}</div>
         </div>
 
         <img class='icon'
@@ -20,19 +20,18 @@
 <script>
     export default {
         name: 'adjuster',
-        components: {},
-        props: ['d'],
-        data() { return {}},
-        beforeCreate() {},
-        created() {},
-        mounted() {},
-        updated() {},
+        props: ['n', 'd'],
         computed: {
+            increment() {
+                const n = this.n > 0 ? this.n : 1
+                const d = this.d > 1 ? this.d : 1
+                return n / d
+            },
             plus() {
-                return 1 / this.d
+                return this.increment
             },
             minus() {
-                return -1 / this.d
+                return this.increment * -1
             }
         },
         methods: {
@@ -55,11 +54,11 @@
         height:          110px;
     }
 
-    .numerator, .denominator {
+    .adj-n, .adj-d {
         padding: 1px 3px;
     }
 
-    .denominator {
+    .adj-d {
         border-top: 1px solid black;
     }
 

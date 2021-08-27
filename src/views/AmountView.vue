@@ -11,16 +11,19 @@
             </div>
 
             <div id='unit'>{{ item.unit }}</div>
+
+            <img id='zero' class='icon' src='../assets/icons/x.svg' @click='zero'>
         </div>
 
         <div id='value'>{{ value.toFixed(6) }}</div>
         
         <div id='adjusters'>
-            <adjuster d=1></adjuster>
-            <adjuster d=2></adjuster>
-            <adjuster d=3></adjuster>
-            <adjuster d=4></adjuster>
-            <adjuster d=8></adjuster>
+            <adjuster
+                v-for='(adj, index) in adjusters[item.unit]'
+                :key='index'
+                :n='adj.n'
+                :d='adj.d'>
+            </adjuster>
         </div>
 
         <view-footer :allowSave=true></view-footer>
@@ -35,7 +38,7 @@
     import Adjuster   from '../components/Adjuster'
     import { fractionize } from '../mixins/fractionize'
 
-    import { mapState } from 'vuex'
+    import { mapState, mapGetters } from 'vuex'
 
 
     export default {
@@ -51,7 +54,8 @@
         computed: { /*
             Creates a new property
             Updates when any dependant property changes */
-            ...mapState(['item']),
+            ...mapState(['units', 'item']),
+            ...mapGetters(['adjusters']),
             value() { return this.item.amount }
         },
         watch: { /*
@@ -61,6 +65,9 @@
         methods: {
             back() {
                 this.$router.push('unit')
+            },
+            zero() {
+                this.$store.commit('setItemAmount', 0)
             }
         }
     }
@@ -76,9 +83,14 @@
         align-items: center;
     }
 
+    #amount > div, #amount > img {
+        /* border: 1px solid blue; */
+        margin: 0 2px;
+    }
+
     #whole {
         font-size: 30px;
-        margin-right: 2px;
+        /* margin-right: 2px; */
         padding: 15px 0;
     }
 
@@ -87,13 +99,13 @@
     }
 
     #fraction > #n, #fraction > #d {
-        margin:  0px 5px;
+        /* margin:  0px 5px; */
         padding: 2px 8px;
     }
 
     #unit {
         /* padding-bottom: 1px; */
-        margin-left: 2px;
+        /* margin-left: 2px; */
     }
 
     #value {
@@ -107,5 +119,9 @@
         flex-flow: row nowrap;
         justify-content: center;
         align-items: center;
+    }
+
+    #zero {
+        /* margin-left: 5px; */
     }
 </style>
