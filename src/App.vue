@@ -75,6 +75,11 @@
     body, button {
         font-family: 'Roboto', sans-serif;
         font-size:    18px;
+        color: #25283D;
+    }
+
+    body, input {
+        background-color: #f2f2f2;
     }
 
     #primary-nav {
@@ -111,7 +116,12 @@
         right:      0;
         z-index:    100;
         padding:    7px;
-        background-color: lightgray;
+        background-color: #ffd966;
+        /* Colors */
+        /* Yellow is a bit much for header */
+        /* Maybe for highlighting selected Cat or Unit */
+        /* ffe375 Yellow Crayola */
+        /* ffe66d Naples Yellow */
     }
 
     #view-title {

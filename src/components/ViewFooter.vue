@@ -49,7 +49,7 @@
         flex-flow:          row nowrap;
         justify-content:    center;
         align-items:        center;
-        background-color: lightgray;
+        background-color: #f2f2f2;
     }
 
     img {

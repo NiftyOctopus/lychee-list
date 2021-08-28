@@ -109,7 +109,7 @@
         padding:  7px;
         z-index:  10;
 
-        background-color: white;
+        background-color: #f2f2f2;
 
         transition: right 250ms;
         transition-timing-function: cubic-bezier(0.32, 1.69, 0.6, 0.8);
