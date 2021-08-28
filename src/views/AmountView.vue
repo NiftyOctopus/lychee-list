@@ -11,12 +11,10 @@
             </div>
 
             <div id='unit'>{{ item.unit }}</div>
-
-            <img id='zero' class='icon' src='../assets/icons/x.svg' @click='zero'>
         </div>
 
-        <div id='value'>{{ value.toFixed(6) }}</div>
-        
+        <img id='zero' class='icon' src='../assets/icons/x.svg' @click='zero'>
+
         <div id='adjusters'>
             <adjuster
                 v-for='(adj, index) in adjusters[item.unit]'
@@ -36,8 +34,8 @@
     import ViewHeader from '../components/ViewHeader'
     import ViewFooter from '../components/ViewFooter'
     import Adjuster   from '../components/Adjuster'
-    import { fractionize } from '../mixins/fractionize'
 
+    import { fractionize } from '../mixins/fractionize'
     import { mapState, mapGetters } from 'vuex'
 
 
@@ -45,22 +43,11 @@
         name: 'amount-view',
         components: { ViewHeader, ViewFooter, Adjuster },
         mixins: [fractionize],
-        props: [/* Inputs */],
-        data() { return {} },
-        beforeCreate() {},
-        created() {},
-        mounted() {},
-        updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
             ...mapState(['units', 'item']),
             ...mapGetters(['adjusters']),
+        
             value() { return this.item.amount }
-        },
-        watch: { /*
-            Watches an existing property
-            Only runs when the watched property changes */
         },
         methods: {
             back() {
@@ -77,21 +64,19 @@
 
 <style scoped>
     #amount {
-        display: flex;
-        flex-flow: row nowrap;
+        display:         flex;
+        flex-flow:       row nowrap;
         justify-content: center;
-        align-items: center;
-    }
-
-    #amount > div, #amount > img {
-        /* border: 1px solid blue; */
-        margin: 0 2px;
+        align-items:     center;
     }
 
     #whole {
+        padding:   15px 0;
         font-size: 30px;
-        /* margin-right: 2px; */
-        padding: 15px 0;
+    }
+
+    #fraction {
+        margin-left: 5px;
     }
 
     #fraction > #n {
@@ -99,29 +84,24 @@
     }
 
     #fraction > #n, #fraction > #d {
-        /* margin:  0px 5px; */
-        padding: 2px 8px;
+        padding: 2px 6px;
     }
 
     #unit {
-        /* padding-bottom: 1px; */
-        /* margin-left: 2px; */
-    }
-
-    #value {
-        font-size: 14px;
-        color: gray;
+        margin-left:    12px;
+        padding-bottom: 2px;
     }
 
     #adjusters {
-        margin-top: 20px;
-        display: flex;
-        flex-flow: row nowrap;
+        margin-top:      20px;
+        display:         flex;
+        flex-flow:       row nowrap;
         justify-content: center;
-        align-items: center;
+        align-items:     center;
     }
 
     #zero {
-        /* margin-left: 5px; */
+        margin-top: 5px;
+        opacity:    0.3;
     }
 </style>
