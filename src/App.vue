@@ -9,8 +9,10 @@
                 <img class='icon' v-bind:class="{ active: this.recipesActive }" src='./assets/icons/archive.svg'>
             </router-link>
         </div>
-
+        
         <router-view/>
+
+        <div id='version'>{{ version }}</div>
     </div>
 </template>
 
@@ -30,7 +32,7 @@
             this.loadRecipes()    
         },
         computed: {
-            ...mapState(['item']),
+            ...mapState(['version', 'item']),
             groceriesActive() {
                 const route = this.$route.name
                 if(route == 'GroceryList') { return true }
@@ -80,6 +82,15 @@
 
     body, input {
         background-color: #f2f2f2;
+    }
+
+    #version {
+        z-index:   100;
+        position:  fixed;
+        bottom:    2px;
+        right:     5px;
+        font-size: 12px;
+        color:   gray;
     }
 
     #primary-nav {

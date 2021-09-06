@@ -117,7 +117,8 @@ export default new Vuex.Store({
         activeRecipeID: 2,
         query: '',
         item,
-        log
+        log,
+        version: process.env.PACKAGE_VERSION
     },
     mutations: {
         openRecipe(state, id) {
