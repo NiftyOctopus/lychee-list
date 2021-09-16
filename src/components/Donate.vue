@@ -2,11 +2,14 @@
     <div id='donate' @click='clickToCancel'>
         <div id='modal'>
             <h4>Enjoying Lychee List?</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur 
+                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
 
-            <a href='https://www.buymeacoffee.com/niftyoctopus'><button>Donate</button></a>
-            <button @click='cancel'>Maybe Later</button>
-            <a href='https://niftyoctopus.com'>Other Apps</a>
+            <a href='https://www.buymeacoffee.com/niftyoctopus' class='button'><button>Donate</button></a>
+            <div class='small'>Takes you to buymeacoffee.com</div>
+
+            <div class='button' @click='cancel'><button>Maybe Later</button></div>
+            <div class='small'>More apps at <a class='link' href='https://niftyoctopus.com'>niftyoctopus.com</a></div>
         </div>
     </div>
 </template>
@@ -16,21 +19,6 @@
 <script>
     export default {
         name: 'donate',
-        components: { /* Subcomponents */ },
-        props: ['buttons'],
-        data() { return { /* Local variables */ }},
-        beforeCreate() {},
-        created() {},
-        mounted() {},
-        updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
-        },
-        watch: { /*
-            Watches an existing property
-            Only runs when the watched property changes */
-        },
         methods: {
             clickToCancel(event) {
                 if(event.target.id == 'donate') {
@@ -48,26 +36,26 @@
 
 <style scoped>
     #donate {
-        z-index: 1000;
+        z-index:  1000;
         position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        top:      0;
+        left:     0;
+        bottom:   0;
+        right:    0;
         
         display:         flex;
         justify-content: center;
         align-items:     center;
-        overflow:        hidden;
 
         background-color: rgba(0, 0, 0, 0.5);
     }
 
     #modal {
-        max-width: 80%;
-        padding: 5px;
+        max-width: 75%;
+        padding: 10px;
         background-color: white;
         border: 1px solid black;
+        border-radius: 3px;
         display: flex;
         flex-flow:       column nowrap;
         justify-content: center;
@@ -75,17 +63,30 @@
     }
 
     h4 {
-        border: 1px solid blue;
         margin: 0;
     }
 
     p {
         text-align: left;
+        font-size: 16px;
+        padding: 0 5px;
     }
 
     button {
-        border: 1px solid red;
+        background: none;
+        border: none;
+    }
+
+    .button {
+        margin-top: 10px;
+        border: 1px solid gray;
         padding: 5px 10px;
-        margin: 5px;
+        border-radius: 3px;
+        background-color: lightgray;
+    }
+
+    .small {
+        font-size: 12px;
+        color: gray;
     }
 </style>
