@@ -2,14 +2,18 @@
     <div id='donate' @click='clickToCancel'>
         <div id='modal'>
             <h4>Enjoying Lychee List?</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur 
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+            <p>
+                Hey there! I'm 
+                <a class='link' href='https://niftyoctopus.com'>NiftyOctopus</a> 
+                and I create little web apps in my spare time.
+                If you are enjoying Lychee List, please consider supporting my work with a small donation.
+                Thank you!
+            </p>
 
             <a href='https://www.buymeacoffee.com/niftyoctopus' class='button'><button>Donate</button></a>
             <div class='small'>Takes you to buymeacoffee.com</div>
 
             <div class='button' @click='cancel'><button>Maybe Later</button></div>
-            <div class='small'>More apps at <a class='link' href='https://niftyoctopus.com'>niftyoctopus.com</a></div>
         </div>
     </div>
 </template>
