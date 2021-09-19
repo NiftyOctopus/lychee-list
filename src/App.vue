@@ -145,7 +145,11 @@
     }
 
     .selected {
-        background-color: cyan;
+        font-weight: bold;
+    }
+
+    .selected::before {
+        content: '>'
     }
 
     .hide {

@@ -1,7 +1,7 @@
 <template>
     <div class='view-footer'>
         <div id='footer-left'>
-            <img class='icon' src='../assets/icons/heart.svg' @click='like'>
+            <img class='icon heart' src='../assets/icons/heart.svg' @click='like'>
         </div>
 
         <div id='footer-center'>
@@ -86,5 +86,9 @@
 
     .icon {
         margin: 0 3px;
+    }
+
+    .heart {
+        opacity: 0.3;
     }
 </style>

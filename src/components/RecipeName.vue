@@ -42,8 +42,8 @@
         background:    none;
         outline:       none;
         border:        none;
-        border-top:    2px solid lightgray;
-        border-bottom: 2px solid lightgray;
+        border-top:    2px solid #ffd966;
+        border-bottom: 2px solid #ffd966;
         border-radius: 0;
     }
 
