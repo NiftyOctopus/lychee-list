@@ -99,20 +99,24 @@
         margin:   -1px 0;
         background-color: lightgray;
         
-        border-top:    1px solid lightgray;
-        border-bottom: 1px solid lightgray;
+        /* border-top:    1px solid lightgray; */
+        /* border-bottom: 1px solid lightgray; */
     }
 
     .wrapper {
         position: relative;
         right:    0;
-        padding:  7px;
+        padding:  7px 0;
         z-index:  10;
 
         background-color: #f2f2f2;
 
         transition: right 250ms;
         transition-timing-function: cubic-bezier(0.32, 1.69, 0.6, 0.8);
+    }
+
+    .name {
+        text-align: left;
     }
 
     .done {

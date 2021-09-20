@@ -102,6 +102,7 @@
         height:     30px;
         padding:    5px 0 0 0;
         text-align: center;
+        /* background-color: #808080; */
         background-color: #e8385b;
     }
 
@@ -118,6 +119,7 @@
         margin-top: 100px;
         padding: 10px;
         text-align: center;
+        margin-bottom: 50px;
     }
 
     .view-header {
@@ -128,6 +130,7 @@
         z-index:    100;
         padding:    7px;
         background-color: #ffd966;
+        /* background-color: lightgray; */
         /* Colors */
         /* Yellow is a bit much for header */
         /* Maybe for highlighting selected Cat or Unit */
@@ -142,14 +145,34 @@
     .group-header {
         margin-top:  10px;
         font-weight: bold;
+        text-align: left;
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 5px;
+        padding: 1px 0;
     }
 
-    .selected {
-        font-weight: bold;
+    .group-header span {
+        background-color: #ffd966;
+        color: #4d4d4d;
+        padding: 1px 2px;
+        border-radius: 3px 3px 0 0;
     }
 
-    .selected::before {
-        content: '>'
+    .option {
+        padding: 2px 6px;
+    }
+
+    .option span {
+        /* display: inline-block; */
+        padding: 2px 6px;
+        border-radius: 20px;
+        /* border: 2px solid #f2f2f2; */
+    }
+
+    .selected span {
+        /* font-weight: bold; */
+        /* background-color: lightblue; */
+        border: 2px solid #e8385b;
     }
 
     .hide {

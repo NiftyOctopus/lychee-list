@@ -4,10 +4,13 @@
 
         <div v-for='group in units' :key='group.type'>
             <div class='group-header'>{{ group.type }}</div>
-            <div v-for='unit in group.units'
+
+            <div class='option'
+                v-for='unit in group.units'
                 :key='unit.name'
                 @click='selectUnit(unit)'
                 v-bind:class='{ selected: item.unit == unit.abbr }'>
+            
                 <span>{{ unit.name }}</span>
             </div>
         </div>
@@ -19,25 +22,16 @@
 
 
 <script>
-    import ViewHeader from '../components/ViewHeader'
-    import ViewFooter from '../components/ViewFooter'
+    import ViewHeader   from '../components/ViewHeader'
+    import ViewFooter   from '../components/ViewFooter'
     import { mapState } from 'vuex'
+
 
     export default {
         name: 'unit-view',
         components: { ViewHeader, ViewFooter },
-        props: [/* Inputs */],
-        data() { return { /* Local variables */ }},
-        beforeCreate() {},
-        created() {},
-        mounted() {},
-        updated() {},
         computed: {
-            ...mapState(['units', 'item']),
-        },
-        watch: { /*
-            Watches an existing property
-            Only runs when the watched property changes */
+            ...mapState(['units', 'item'])
         },
         methods: {
             selectUnit(unit) {
