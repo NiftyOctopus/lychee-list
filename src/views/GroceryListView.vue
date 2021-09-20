@@ -14,7 +14,7 @@
 
         <div v-for='category in categories' :key='category'>
             <div v-if='list[category] && list[category].length'>
-                <div class='group-header'>{{ category }}</div>
+                <div class='group-header'><span>{{ category }}</span></div>
                 <item
                     v-for='(item, index) in list[category]'
                     :key='index'
