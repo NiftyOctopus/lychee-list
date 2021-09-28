@@ -77,7 +77,7 @@
     body, button {
         font-family: 'Roboto', sans-serif;
         font-size:    18px;
-        color: #25283D;
+        color: #262626;
     }
 
     body, input {
@@ -103,7 +103,10 @@
         padding:    5px 0 0 0;
         text-align: center;
         /* background-color: #808080; */
-        background-color: #e8385b;
+        /* background-color: #e8385b; */
+        /* background-color: #0B3954; */
+        /* background-color: #3C6E0E; */
+        background-color: #33704e;
     }
 
     #primary-nav .icon {
@@ -116,10 +119,11 @@
     }
 
     .view {
-        margin-top: 100px;
-        padding: 10px;
+        display: block;
+        padding: 5px;
         text-align: center;
         margin-bottom: 50px;
+        /* border: 1px solid gray; */
     }
 
     .view-header {
@@ -129,7 +133,9 @@
         right:      0;
         z-index:    100;
         padding:    7px;
-        background-color: #ffd966;
+        /* background-color: #ffd966; */
+        /* background-color: #8ACD4C; */
+        background-color: #54ce8b;
         /* background-color: lightgray; */
         /* Colors */
         /* Yellow is a bit much for header */
@@ -143,19 +149,21 @@
     }
 
     .group-header {
-        margin-top:  10px;
+        margin-top:  5px;
         font-weight: bold;
-        text-align: left;
-        border-bottom: 1px solid lightgray;
+        /* text-align: left; */
+        /* border-bottom: 1px solid lightgray; */
         margin-bottom: 5px;
         padding: 1px 0;
     }
 
-    .group-header span {
-        background-color: #ffd966;
-        color: #4d4d4d;
-        padding: 1px 2px;
-        border-radius: 3px 3px 0 0;
+    .group-header {
+        /* background-color: #C0F98B; */
+        background-color: #97f4c1;
+        color: #404040;
+        /* color: #f2f2f2; */
+        padding: 3px 0;
+        /* border-radius: 3px 3px 0 0; */
     }
 
     .option {
