@@ -34,6 +34,9 @@
         computed: {
             ...mapState(['showCompleted']),
 
+            value() {
+                return this.item.amount
+            },
             amountWithUnit() {
                 if(!this.item.amount || !this.item.unit) { return null }
                 const whole = Math.floor(this.item.amount)
