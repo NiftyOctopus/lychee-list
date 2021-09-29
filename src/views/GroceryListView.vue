@@ -6,11 +6,6 @@
             </div>
         </div>
 
-        <div id='controls'>
-            <div><img src='../assets/icons/trash.svg'  @click='confirmDelete'></div>
-            <div><img src='../assets/icons/filter.svg' @click='toggleDoneFilter'></div>
-        </div>
-
         <div v-for='category in categories' :key='category'>
             <div v-if='list[category] && list[category].length'>
                 <div class='group-header'>
@@ -26,7 +21,12 @@
             </div>
         </div>
 
-        <view-footer :allowAdd=true @add='navToItemView'></view-footer>
+        <view-footer
+            :allowAdd=true
+            :allowDelete=true
+            @add='navToItemView'
+            @delete='confirmDelete'>
+        </view-footer>
 
         <confirm
             v-if='confirm'
@@ -98,17 +98,5 @@
 <style scoped>
     #grocery-list-view {
         margin-bottom: 150px;
-    }
-
-    #controls {
-        position: fixed;
-        top:      80px;
-        right:    10px;
-        z-index:  100;
-    }
-
-    #controls div {
-        margin-bottom: 10px;
-        opacity: 0.5;
     }
 </style>
