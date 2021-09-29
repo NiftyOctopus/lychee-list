@@ -5,7 +5,6 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 
-
 type Item = {
     id?:number,
     i?:number,
@@ -23,7 +22,6 @@ type ItemList = { [key:string]:Item[] }
 let list:ItemList = {}
 
 
-
 type Recipe      = { id:number, name:string, items?:ItemList }
 type RecipeList  = { [key:number]:Recipe }
 type RecipeCache = { [key:number]:ItemList }
@@ -32,7 +30,6 @@ let defaultRecipes:RecipeList      = {}
 let recipeSearchResults:RecipeList = {}
 let recipeItemCache:RecipeCache    = {}
 let recipe:Recipe = { id: 0, name: 'Recipe' }
-
 
 
 type UnitConversion = { [key:string]:number }
@@ -102,10 +99,13 @@ let units:UnitType[] = [
         ]}
 ]
 
-type Message  = { key:number, text:string }
+
+type Message = { key:number, text:string }
 let messages:Message[] = []
 
 let log:string[] = []
+
+
 
 export default new Vuex.Store({
     state: {
@@ -336,7 +336,6 @@ export default new Vuex.Store({
         },
         addMessage(state, msg) {
             msg.key = Math.random()
-            msg.text = msg.text + msg.key
             state.messages.push(msg)
         },
         clearMessage(state) {
@@ -346,7 +345,7 @@ export default new Vuex.Store({
     actions: {
         message(context, msg) {
             context.commit('addMessage', msg)
-            window.setTimeout(() => context.commit('clearMessage'), 5000)
+            window.setTimeout(() => context.commit('clearMessage'), 2000)
         }
     },
     modules: {

@@ -43,7 +43,6 @@
             async save() {
                 await this.saveItem()
                 this.$router.push(this.item.recipe ? 'recipe/' + this.item.recipe : '/')
-                this.$store.dispatch('message', { text: 'Saved ' })
                 this.$store.commit('clearItem')
             },
             like() {

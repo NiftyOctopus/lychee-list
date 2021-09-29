@@ -38,7 +38,7 @@
                         await this.saveItem()
                     }
 
-                    this.$store.dispatch('message', { text: 'Added!' })
+                    this.$store.dispatch('message', { text: 'Recipe added to list' })
                 } catch(e) { alert(e) }
             }
         }
