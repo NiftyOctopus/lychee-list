@@ -1,5 +1,7 @@
 <template>
     <div id='app'>
+        <messages></messages>
+
         <div id='primary-nav'>
             <router-link to='/'>
                 <img class='icon' v-bind:class="{ active: this.groceriesActive }" src='./assets/icons/shopping-cart.svg'>
@@ -19,11 +21,12 @@
 
 
 <script>
+    import Messages from './components/Messages'
     import { mapState } from 'vuex'
 
     export default {
         name: 'app',
-        components: { /* Subcomponents */ },
+        components: { Messages },
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         mounted() {

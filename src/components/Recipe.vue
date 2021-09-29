@@ -37,6 +37,8 @@
                         this.$store.commit('setItem', item)
                         await this.saveItem()
                     }
+
+                    this.$store.dispatch('message', { text: 'Added!' })
                 } catch(e) { alert(e) }
             }
         }

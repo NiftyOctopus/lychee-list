@@ -102,10 +102,14 @@ let units:UnitType[] = [
         ]}
 ]
 
+type Message  = { key:number, text:string }
+let messages:Message[] = []
+
 let log:string[] = []
 
 export default new Vuex.Store({
     state: {
+        messages,
         categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices', 'Other'],
         units,
         list,
@@ -329,9 +333,21 @@ export default new Vuex.Store({
             if(state.log.length > 10) {
                 state.log.splice(0, state.log.length - 10)
             }
+        },
+        addMessage(state, msg) {
+            msg.key = Math.random()
+            msg.text = msg.text + msg.key
+            state.messages.push(msg)
+        },
+        clearMessage(state) {
+            state.messages.shift()
         }
     },
     actions: {
+        message(context, msg) {
+            context.commit('addMessage', msg)
+            window.setTimeout(() => context.commit('clearMessage'), 5000)
+        }
     },
     modules: {
     },
