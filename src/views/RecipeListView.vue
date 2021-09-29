@@ -1,9 +1,16 @@
 <template>
     <div id='recipe-list-view' class='view'>
         <div class='view-header'>
-            <div id='view-title'><span>Recipes</span></div>
+            <div id='view-title'>
+                <span>Recipes</span>
+            </div>
         </div>
-        <search :init='query' showIcon=true @update='updateQuery'></search>
+
+        <search
+            :init='query'
+            showIcon=true
+            @update='updateQuery'>
+        </search>
 
         <div>
             <recipe
@@ -28,23 +35,17 @@
     import { mapState }   from 'vuex'
     import { mapGetters } from 'vuex'
 
+
     export default {
         name: 'recipe-list-view',
         components: { Search, Recipe, ViewFooter },
         mixins: [margin],
-        props: [/* Inputs */],
-        data() { return { /* Local variables */ }},
-        beforeCreate() {},
-        created() {},
-        mounted() { this.updateViewMargin() },
-        updated() {},
+        mounted() {
+            this.updateViewMargin()
+        },
         computed: {
             ...mapState(['query', 'categories']),
             ...mapGetters(['recipeList'])
-        },
-        watch: { /*
-            Watches an existing property
-            Only runs when the watched property changes */
         },
         methods: {
             updateQuery(query) {
@@ -53,8 +54,9 @@
             async addRecipe() {
                 try {
                     let recipe = { name: '' }
-                    let id = await this.$db.recipes.add(recipe)
-                    recipe.id = id
+                    const id   = await this.$db.recipes.add(recipe)
+                    recipe.id  = id
+
                     this.$store.commit('addRecipe', recipe)
                     this.$router.push('recipe/' + id)
                 
