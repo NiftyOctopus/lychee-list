@@ -180,7 +180,7 @@
     .selected span {
         /* font-weight: bold; */
         /* background-color: lightblue; */
-        border: 2px solid #e8385b;
+        border: 2px solid #54ce8b;
     }
 
     .hide {
