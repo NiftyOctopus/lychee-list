@@ -37,6 +37,10 @@
 
 
 <style scoped>
+    .search {
+        margin-top: 15px;
+    }
+
     .wrapper {
         position: relative;
         display:  inline-block;

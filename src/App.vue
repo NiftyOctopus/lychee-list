@@ -167,7 +167,7 @@
     }
 
     .option {
-        padding: 2px 6px;
+        padding: 3px 0;
     }
 
     .option span {

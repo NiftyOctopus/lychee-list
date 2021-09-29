@@ -47,5 +47,7 @@
 
 
 <style scoped>
-
+    .category-view {
+        padding-top: 15px;
+    }
 </style>
