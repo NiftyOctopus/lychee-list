@@ -1,13 +1,13 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter, { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 import GroceryListView from '../views/GroceryListView.vue'
 import ItemView from '../views/ItemView.vue'
 
 
-Vue.use(VueRouter)
+//Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = [
+const routes = [
     {
         name: 'GroceryList', path: '/',
         component: GroceryListView
@@ -35,9 +35,9 @@ const routes: Array<RouteConfig> = [
     }
 ]
 
-const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
+const router = createRouter({
+    history: createWebHistory(),
+    //base: process.env.BASE_URL,
     routes
 })
 

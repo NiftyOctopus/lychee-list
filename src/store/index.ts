@@ -1,8 +1,9 @@
 import Vue  from 'vue'
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
+//import VueRouter from 'vue-router'
+//import Vuex from 'vuex'
+import { createStore } from 'vuex'
 
-Vue.use(Vuex)
+//Vue.use(Vuex)
 
 
 type Item = {
@@ -107,7 +108,7 @@ let log:string[] = []
 
 
 
-export default new Vuex.Store({
+export const store = createStore({
     state: {
         messages,
         categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices', 'Other'],
@@ -135,9 +136,12 @@ export default new Vuex.Store({
             }
         },
         deleteRecipe(state, id) {
-            Vue.delete(state.defaultRecipes, id)
-            Vue.delete(state.recipeSearchResults, id)
-            Vue.delete(state.recipeItemCache, id)
+            //Vue.delete(state.defaultRecipes, id)
+            //Vue.delete(state.recipeSearchResults, id)
+            //Vue.delete(state.recipeItemCache, id)
+            delete state.defaultRecipes[id]
+            delete state.recipeSearchResults[id]
+            delete state.recipeItemCache[id]
         },
         updateQuery(state, query) {
             state.query = query
@@ -155,11 +159,13 @@ export default new Vuex.Store({
             state.item.amount = amount
         },
         setItem(state, item) {
-            Vue.set(state, 'item', item)
+            //Vue.set(state, 'item', item)
+            state.item = item
         },
         updateItemAmount(state, amount) {
             const current = state.item.amount ? state.item.amount : 0
-            Vue.set(state.item, 'amount', current + amount)
+            //Vue.set(state.item, 'amount', current + amount)
+            state.item.amount = current + amount
         },
         addNewItem(state) {
             const cat = state.item.category
@@ -169,11 +175,17 @@ export default new Vuex.Store({
                 const cache = state.recipeItemCache[rid]
                 if(!cache) { return }
 
-                if(!cache[cat]) { Vue.set(state.recipeItemCache[rid], cat, []) }
+                if(!cache[cat]) {
+                    //Vue.set(state.recipeItemCache[rid], cat, [])
+                    state.recipeItemCache[rid][cat] = []
+                }
                 state.recipeItemCache[rid][cat].push(state.item)
             
             } else {
-                if(!state.list[cat]) { Vue.set(state.list, cat, []) }
+                if(!state.list[cat]) {
+                    //Vue.set(state.list, cat, [])
+                    state.list[cat] = []
+                }
                 state.list[cat].push(state.item)
             }
         },
@@ -269,7 +281,8 @@ export default new Vuex.Store({
 
                 if(store.id == id) {
                     //state.log.push('[' + store.id + '] = [' + id + ']')
-                    Vue.set(state.list[cat][i], 'done', done ? 0 : 1)
+                    //Vue.set(state.list[cat][i], 'done', done ? 0 : 1)
+                    state.list[cat][i].done = done ? 0 : 1
                     //state.log.push('Marked item ' + (done ? 'incomplete' : 'done'))
                 }
             }
@@ -285,46 +298,59 @@ export default new Vuex.Store({
                 amount:   0,
                 recipe:   rid && rid > 0 ? rid : 0
             }
-            Vue.set(state, 'item', item)
+            //Vue.set(state, 'item', item)
+            state.item = item
         },
         setList(state, items) {
             for(let i in items) {
                 const item = items[i]
                 const cat  = item.category
 
-                if(!state.list[cat]) { Vue.set(state.list, cat, []) }
+                if(!state.list[cat]) {
+                    //Vue.set(state.list, cat, [])
+                    state.list[cat] = []
+                }
                 state.list[cat].push(item)
             }
         },
         deleteList(state) {
-            Vue.set(state, 'list', {})
+            //Vue.set(state, 'list', {})
+            state.list = {}
         },
         deleteCompleted(state) {
             let remaining
             for(let cat in state.list) {
                 remaining = state.list[cat].filter(item => !item.done)
-                Vue.set(state.list, cat, remaining)
+                //Vue.set(state.list, cat, remaining)
+                state.list[cat] = remaining
             }
         },
         setDefaultRecipes(state, recipes) {
-            Vue.set(state, 'defaultRecipes', {})
+            //Vue.set(state, 'defaultRecipes', {})
+            state.defaultRecipes = {}
 
             for(let i in recipes) {
                 const recipe = recipes[i]
-                Vue.set(state.defaultRecipes, recipe.id, recipe)
+                //Vue.set(state.defaultRecipes, recipe.id, recipe)
+                state.defaultRecipes[recipe.id] = recipe
             }
         },
         addRecipe(state, recipe) {
-            Vue.set(state.defaultRecipes, recipe.id, recipe)
+            //Vue.set(state.defaultRecipes, recipe.id, recipe)
+            state.defaultRecipes[recipe.id] = recipe
         },
         addToRecipeItemCache(state, data) {
-            Vue.set(state.recipeItemCache, data.id, {})
+            //Vue.set(state.recipeItemCache, data.id, {})
+            state.recipeItemCache[data.id] = {}
 
             for(let i in data.items) {
                 const item = data.items[i]
                 const cat  = item.category
 
-                if(!state.recipeItemCache[data.id][cat]) { Vue.set(state.recipeItemCache[data.id], cat, []) }
+                if(!state.recipeItemCache[data.id][cat]) {
+                    //Vue.set(state.recipeItemCache[data.id], cat, [])
+                    state.recipeItemCache[data.id][cat] = []
+                }
                 state.recipeItemCache[data.id][cat].push(item)
             }
         },
