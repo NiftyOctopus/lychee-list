@@ -10,4 +10,7 @@ import './registerServiceWorker'
 //Vue.config.productionTip = false
 
 //new Vue({ router, store, render: h => h(App) }).$mount('#app')
-createApp(App).use(router).use(store).mount('#app')
+const app = createApp(App) //.use(router).use(store).mount('#app')
+app.config.globalProperties.$db = new Dexie('lychee')
+app.use(router).use(store)
+app.mount('#app')
