@@ -42,7 +42,7 @@
             },
             async save() {
                 await this.saveItem()
-                this.$router.push(this.item.recipe ? 'recipe/' + this.item.recipe : '/')
+                this.$router.push(this.item.recipe ? '/recipe/' + this.item.recipe : '/')
                 this.$store.commit('clearItem')
             },
             like() {

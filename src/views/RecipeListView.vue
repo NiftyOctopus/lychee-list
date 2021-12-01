@@ -58,7 +58,7 @@
                     recipe.id  = id
 
                     this.$store.commit('addRecipe', recipe)
-                    this.$router.push('recipe/' + id)
+                    this.$router.push('/recipe/' + id)
                 
                 } catch(e) {
                     alert(e)
