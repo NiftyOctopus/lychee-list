@@ -31,7 +31,7 @@
         },
         methods: {
             selectCategory(category) {
-                this.$store.commit('setItemCategory', category)
+                this.$store.commit('update', ['item.category', category])
                 this.$router.push('unit')
             },
             back() {

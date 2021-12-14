@@ -72,7 +72,7 @@
             editItem() {
                 try {
                     const item = Object.assign({ i: this.i, prev: this.item.category }, this.item)
-                    this.$store.commit('setItem', item)
+                    this.$store.commit('update', ['item', item])
 
                     let route = this.item.unit ? '/amount' : '/unit'
                     if(this.item.category == 'Other') { route = '/category' }

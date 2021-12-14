@@ -34,7 +34,7 @@
                         delete item.id
                         item.recipe = 0
                     
-                        this.$store.commit('setItem', item)
+                        this.$store.commit('update', ['item', item])
                         await this.saveItem()
                     }
 

@@ -54,7 +54,7 @@
                 this.$router.push('unit')
             },
             zero() {
-                this.$store.commit('setItemAmount', 0)
+                this.$store.commit('update', ['item.amount', 0])
             }
         }
     }

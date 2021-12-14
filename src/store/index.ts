@@ -1,131 +1,23 @@
-import Vue  from 'vue'
-//import VueRouter from 'vue-router'
-//import Vuex from 'vuex'
 import { createStore } from 'vuex'
 
-//Vue.use(Vuex)
-
-
-type Item = {
-    id?:number,
-    i?:number,
-    name:string,
-    category:string,
-    prev?:string,
-    unit:string,
-    amount:number,
-    recipe:number,
-    done?:number
-}
-
-let item:Item = { name: '', category: 'Other', unit: '', amount: 0, recipe: 0 }
-type ItemList = { [key:string]:Item[] }
-let list:ItemList = {}
-
-
-type Recipe      = { id:number, name:string, items?:ItemList }
-type RecipeList  = { [key:number]:Recipe }
-type RecipeCache = { [key:number]:ItemList }
-
-let defaultRecipes:RecipeList      = {}
-let recipeSearchResults:RecipeList = {}
-let recipeItemCache:RecipeCache    = {}
-let recipe:Recipe = { id: 0, name: 'Recipe' }
-
-
-type UnitConversion = { [key:string]:number }
-type UnitAdjuster   = { n?:number, d?:number }
-type Unit           = { abbr:string, name:string, to:UnitConversion, adj:UnitAdjuster[] }
-type UnitType       = { type:string, units:Unit[] }
-
-let units:UnitType[] = [
-        { type: 'Weight', units: [
-            {
-                abbr: 'g',
-                name: 'Gram',
-                to:  { g: 1, oz: 0.035274, lb: 0.00220462 },
-                adj: [{ n: 100 }, { n: 10 }, { n: 1 }]
-            }, {
-                abbr: 'oz',
-                name: 'Ounce',
-                to:  { g: 28.3495, oz: 1, lb: 0.0625 },
-                adj: [{ n: 10 }, { n: 1 }, { d: 2 }]
-            }, {
-                abbr: 'lb',
-                name: 'Pound',
-                to:  { g: 453.592, oz: 16, lb: 1 },
-                adj: [{ n: 1 }, { d: 2 }, { d: 3 }, { d: 4 }]
-            },
-        ]},
-        { type: 'Volume', units: [
-            {
-                abbr: 'tsp',
-                name: 'Teaspoon',
-                to:  { tsp: 1, tbsp: 0.333333, c: 0.0208333, pt: 0.0104167, qt: 0.00520833, gal: 0.00130208 },
-                adj: [{ n: 1 }, { d: 2 }, { d: 4 }]
-            }, {
-                abbr: 'tbsp',
-                name: 'Tablespoon',
-                to:  { tsp: 3, tbsp: 1, c: 0.0625, pt: 0.03125, qt: 0.015625, gal: 0.00390625 },
-                adj: [{ n: 1 }, { d: 2 }]
-            }, {
-                abbr: 'c',
-                name: 'Cup',
-                to:  { tsp: 48, tbsp: 16, c: 1, pt: 0.5, qt: 0.25, gal: 0.0625 },
-                adj: [{ n: 1 }, { d: 2 }, { d: 3 }, { d: 4 }]
-            }, {
-                abbr: 'pt',
-                name: 'Pint',
-                to:  { tsp: 96, tbsp: 32, c: 2, pt: 1, qt: 0.5, gal: 0.125 },
-                adj: [{ n: 1 }, { d: 2 }]
-            }, {
-                abbr: 'qt',
-                name: 'Quart',
-                to:  { tsp: 192, tbsp: 64, c: 4, pt: 2, qt: 1, gal: 0.25 },
-                adj: [{ n: 1 }, { d: 2 }]
-            }, {
-                abbr: 'gal',
-                name: 'Gallon',
-                to:  { tsp: 768, tbsp: 256, c: 16, pt: 8, qt: 4, gal: 1 },
-                adj: [{ n: 1 }, { d: 2 }]
-            },
-        ]},
-        { type: 'Other', units: [
-            {
-                abbr: 'ct',
-                name: 'Count',
-                to:  { ct: 1 },
-                adj: [{ n: 10 }, { n: 1 }]
-            }
-        ]}
-]
-
-
-type Message = { key:number, text:string }
-let messages:Message[] = []
-
-let log:string[] = []
+import './types'
+import { state } from './state'
 
 
 
 export const store = createStore({
-    state: {
-        messages,
-        categories: ['Baking and Spices', 'Canned and Dried', 'Dairy', 'Frozen', 'Meat', 'Produce', 'Spices', 'Other'],
-        units,
-        list,
-        showCompleted: true,
-        defaultRecipes,
-        recipeSearchResults,
-        recipeItemCache,
-        recipe,
-        activeRecipeID: 2,
-        query: '',
-        item,
-        log,
-        version: process.env.PACKAGE_VERSION
-    },
+    state,
+
     mutations: {
+        update(state, data:any) {
+            const path  = data[0].split('.')
+            const name  = path[0]
+            const prop  = path.length > 1 ? path[1] : null
+            const value = data[1]
+
+            if(prop) { state[name][prop] = value }
+            else { state[name] = value }
+        },
         openRecipe(state, id) {
             state.activeRecipeID = id
         },
@@ -136,35 +28,12 @@ export const store = createStore({
             }
         },
         deleteRecipe(state, id) {
-            //Vue.delete(state.defaultRecipes, id)
-            //Vue.delete(state.recipeSearchResults, id)
-            //Vue.delete(state.recipeItemCache, id)
             delete state.defaultRecipes[id]
             delete state.recipeSearchResults[id]
             delete state.recipeItemCache[id]
         },
-        updateQuery(state, query) {
-            state.query = query
-        },
-        setItemName(state, name) {
-            state.item.name = name
-        },
-        setItemCategory(state, category) {
-            state.item.category = category
-        },
-        setItemUnit(state, unit) {
-            state.item.unit = unit
-        },
-        setItemAmount(state, amount) {
-            state.item.amount = amount
-        },
-        setItem(state, item) {
-            //Vue.set(state, 'item', item)
-            state.item = item
-        },
         updateItemAmount(state, amount) {
             const current = state.item.amount ? state.item.amount : 0
-            //Vue.set(state.item, 'amount', current + amount)
             state.item.amount = current + amount
         },
         addNewItem(state) {
@@ -176,14 +45,12 @@ export const store = createStore({
                 if(!cache) { return }
 
                 if(!cache[cat]) {
-                    //Vue.set(state.recipeItemCache[rid], cat, [])
                     state.recipeItemCache[rid][cat] = []
                 }
                 state.recipeItemCache[rid][cat].push(state.item)
             
             } else {
                 if(!state.list[cat]) {
-                    //Vue.set(state.list, cat, [])
                     state.list[cat] = []
                 }
                 state.list[cat].push(state.item)
@@ -280,10 +147,7 @@ export const store = createStore({
                 store = state.list[cat][i]
 
                 if(store.id == id) {
-                    //state.log.push('[' + store.id + '] = [' + id + ']')
-                    //Vue.set(state.list[cat][i], 'done', done ? 0 : 1)
                     state.list[cat][i].done = done ? 0 : 1
-                    //state.log.push('Marked item ' + (done ? 'incomplete' : 'done'))
                 }
             }
         },
@@ -298,7 +162,6 @@ export const store = createStore({
                 amount:   0,
                 recipe:   rid && rid > 0 ? rid : 0
             }
-            //Vue.set(state, 'item', item)
             state.item = item
         },
         setList(state, items) {
@@ -307,40 +170,33 @@ export const store = createStore({
                 const cat  = item.category
 
                 if(!state.list[cat]) {
-                    //Vue.set(state.list, cat, [])
                     state.list[cat] = []
                 }
                 state.list[cat].push(item)
             }
         },
         deleteList(state) {
-            //Vue.set(state, 'list', {})
             state.list = {}
         },
         deleteCompleted(state) {
             let remaining
             for(let cat in state.list) {
-                remaining = state.list[cat].filter(item => !item.done)
-                //Vue.set(state.list, cat, remaining)
+                remaining = state.list[cat].filter((item:Item) => !item.done)
                 state.list[cat] = remaining
             }
         },
         setDefaultRecipes(state, recipes) {
-            //Vue.set(state, 'defaultRecipes', {})
             state.defaultRecipes = {}
 
             for(let i in recipes) {
                 const recipe = recipes[i]
-                //Vue.set(state.defaultRecipes, recipe.id, recipe)
                 state.defaultRecipes[recipe.id] = recipe
             }
         },
         addRecipe(state, recipe) {
-            //Vue.set(state.defaultRecipes, recipe.id, recipe)
             state.defaultRecipes[recipe.id] = recipe
         },
         addToRecipeItemCache(state, data) {
-            //Vue.set(state.recipeItemCache, data.id, {})
             state.recipeItemCache[data.id] = {}
 
             for(let i in data.items) {
@@ -348,16 +204,9 @@ export const store = createStore({
                 const cat  = item.category
 
                 if(!state.recipeItemCache[data.id][cat]) {
-                    //Vue.set(state.recipeItemCache[data.id], cat, [])
                     state.recipeItemCache[data.id][cat] = []
                 }
                 state.recipeItemCache[data.id][cat].push(item)
-            }
-        },
-        log(state, msg) {
-            state.log.push(msg)
-            if(state.log.length > 10) {
-                state.log.splice(0, state.log.length - 10)
             }
         },
         addMessage(state, msg) {
@@ -368,14 +217,16 @@ export const store = createStore({
             state.messages.shift()
         }
     },
+
+
     actions: {
         message(context, msg) {
             context.commit('addMessage', msg)
             window.setTimeout(() => context.commit('clearMessage'), 2000)
         }
     },
-    modules: {
-    },
+
+
     getters: {
         defaultRecipes: (state) => {
             return Object.values(state.defaultRecipes)

@@ -35,7 +35,7 @@
         },
         methods: {
             selectUnit(unit) {
-                this.$store.commit('setItemUnit', unit.abbr)
+                this.$store.commit('update', ['item.unit', unit.abbr])
                 this.$router.push('amount')
             },
             back() {

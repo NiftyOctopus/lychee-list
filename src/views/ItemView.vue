@@ -34,7 +34,7 @@
         },
         methods: {
             updateItem(name) {
-                this.$store.commit('setItemName', name)
+                this.$store.commit('update', ['item.name', name])
             },
             navToCategory() {
                 this.$router.push('category')

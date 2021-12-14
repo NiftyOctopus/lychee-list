@@ -49,7 +49,7 @@
         },
         methods: {
             updateQuery(query) {
-                this.$store.commit('updateQuery', query)
+                this.$store.commit('update', ['query', query])
             },
             async addRecipe() {
                 try {

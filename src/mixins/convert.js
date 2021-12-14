@@ -33,15 +33,15 @@ export const convert = {
             }
 
             if(!this.item.category) {
-                this.$store.commit('setItemCategory', 'Other')
+                this.$store.commit('update', ['item.category', 'Other'])
             }
 
             if(!this.item.unit) {
-                this.$store.commit('setItemAmount', null)
+                this.$store.commit('update', ['item.amount', null])
             }
 
             if(!this.item.amount) {
-                this.$store.commit('setItemUnit', null)
+                this.$store.commit('update', ['item.unit', null])
             }
         },
         getExistingItem() {
@@ -60,8 +60,8 @@ export const convert = {
             existing.amount = amount
             await this.$db.items.update(existing.id, existing)
         
-            this.$store.commit('setItemAmount', amount)
-            this.$store.commit('setItemUnit', existing.unit)
+            this.$store.commit('update', ['item.amount', amount])
+            this.$store.commit('update', ['item.unit', existing.unit])
             this.$store.commit('appendExistingItem')
         },
         getNewAmount(existing) {
