@@ -21,7 +21,7 @@ export const convert = {
                         await this.appendExistingItem(existing)
 
                     } else {
-                        await this.addNewItem()
+                        await this.addItem()
                     }
                 }
             }
@@ -74,9 +74,11 @@ export const convert = {
             
             return existing.amount + (this.item.amount * conv)
         },
-        async addNewItem() {
+        async addItem() {
             await this.$db.items.add(this.item)
-            this.$store.commit('addNewItem')
+
+            const mutation = this.item.recipe ? 'addItemToRecipe' : 'addItemToList'
+            this.$store.commit(mutation)
         }
     }
 }

@@ -21,7 +21,7 @@ export const store = createStore({
         openRecipe(state, id) {
             state.activeRecipeID = id
         },
-        saveRecipeName(state, recipe) {
+        saveRecipeName(state, recipe) { // ***
             const id = recipe.id
             if(state.defaultRecipes[id]) {
                 state.defaultRecipes[id].name = recipe.name
@@ -32,31 +32,27 @@ export const store = createStore({
             delete state.recipeSearchResults[id]
             delete state.recipeItemCache[id]
         },
-        updateItemAmount(state, amount) {
+        updateItemAmount(state, amount) { // ***
             const current = state.item.amount ? state.item.amount : 0
             state.item.amount = current + amount
         },
-        addNewItem(state) {
+        addItemToList(state) {
             const cat = state.item.category
-            const rid = state.item.recipe
 
-            if(rid > 0) {
-                const cache = state.recipeItemCache[rid]
-                if(!cache) { return }
-
-                if(!cache[cat]) {
-                    state.recipeItemCache[rid][cat] = []
-                }
-                state.recipeItemCache[rid][cat].push(state.item)
-            
-            } else {
-                if(!state.list[cat]) {
-                    state.list[cat] = []
-                }
-                state.list[cat].push(state.item)
-            }
+            if(!state.list[cat]) { state.list[cat] = [] }
+            state.list[cat].push(state.item)
         },
-        appendExistingItem(state) {
+        addItemToRecipe(state) {
+            const cat = state.item.category
+            const id  = state.item.recipe
+
+            if(!state.recipeItemCache[id][cat]) {
+                state.recipeItemCache[id][cat] = []
+            }
+
+            state.recipeItemCache[id][cat].push(state.item)
+        },
+        appendExistingItem(state) { // ***
             const cat = state.item.category
             const rid = state.item.recipe
             if(!state.list[cat] || (rid > 0)) { return }
@@ -71,7 +67,7 @@ export const store = createStore({
                 }
             }
         },
-        editExistingItem(state) {
+        editExistingItem(state) { // ***
             try {
                 if(!state.item.id) { throw 'Item id missing' }
                 
@@ -116,7 +112,7 @@ export const store = createStore({
                 alert(e)
             }
         },
-        deleteItem(state, item) {
+        deleteItem(state, item) { // ***
             try {
                 if(!item.id) { throw('Item id missing') }
                 
@@ -137,7 +133,7 @@ export const store = createStore({
                 alert(e)
             }
         },
-        toggleItem(state, item) {
+        toggleItem(state, item) { // ***
             const id   = item.id
             const cat  = item.category
             const done = item.done
@@ -151,10 +147,10 @@ export const store = createStore({
                 }
             }
         },
-        toggleDoneFilter(state) {
+        toggleDoneFilter(state) { // ***
             state.showCompleted = !state.showCompleted
         },
-        clearItem(state, rid) {
+        clearItem(state, rid) { // ***
             const item = {
                 name:     '',
                 category: 'Other',
@@ -164,7 +160,7 @@ export const store = createStore({
             }
             state.item = item
         },
-        setList(state, items) {
+        setList(state, items) { // ***
             for(let i in items) {
                 const item = items[i]
                 const cat  = item.category
@@ -175,17 +171,17 @@ export const store = createStore({
                 state.list[cat].push(item)
             }
         },
-        deleteList(state) {
+        deleteList(state) { // ***
             state.list = {}
         },
-        deleteCompleted(state) {
+        deleteCompleted(state) { // ***
             let remaining
             for(let cat in state.list) {
                 remaining = state.list[cat].filter((item:Item) => !item.done)
                 state.list[cat] = remaining
             }
         },
-        setDefaultRecipes(state, recipes) {
+        setDefaultRecipes(state, recipes) { // ***
             state.defaultRecipes = {}
 
             for(let i in recipes) {
@@ -193,10 +189,10 @@ export const store = createStore({
                 state.defaultRecipes[recipe.id] = recipe
             }
         },
-        addRecipe(state, recipe) {
+        addRecipe(state, recipe) { // ***
             state.defaultRecipes[recipe.id] = recipe
         },
-        addToRecipeItemCache(state, data) {
+        addToRecipeItemCache(state, data) { // ***
             state.recipeItemCache[data.id] = {}
 
             for(let i in data.items) {
