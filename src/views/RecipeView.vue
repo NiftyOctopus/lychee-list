@@ -2,7 +2,6 @@
     <div class='recipe-view view'>
         <recipe-name :recipe='recipe'></recipe-name>
 
-        
         <div v-if='recipeItems'>
             <div v-for='category in categories' :key='category'>
                 <div v-if='recipeItems[category] && recipeItems[category].length'>
@@ -12,6 +11,7 @@
             </div>
         </div>
 
+        <recipe-link :recipe='recipe'></recipe-link>
         <view-footer :allowAdd=true @add='addRecipeItem' :allowDelete=true @delete='deleteRecipe'></view-footer>
     </div>
 </template>
@@ -20,6 +20,7 @@
 
 <script>
     import RecipeName from '../components/RecipeName'
+    import RecipeLink from '../components/RecipeLink'
     import Item       from '../components/Item'
     import ViewFooter from '../components/ViewFooter'
     
@@ -30,7 +31,7 @@
 
     export default {
         name: 'recipe-view',
-        components: { RecipeName, Item, ViewFooter },
+        components: { RecipeName, RecipeLink, Item, ViewFooter },
         mixins: [margin],
         data() { return { id: null }},
         created() {

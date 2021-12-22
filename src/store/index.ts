@@ -27,6 +27,12 @@ export const store = createStore({
                 state.defaultRecipes[id].name = recipe.name
             }
         },
+        updateRecipeURL(state, recipe) { // ***
+            const id = recipe.id
+            if(state.defaultRecipes[id]) {
+                state.defaultRecipes[id].url = recipe.url
+            }
+        },
         deleteRecipe(state, id) {
             delete state.defaultRecipes[id]
             delete state.recipeSearchResults[id]
