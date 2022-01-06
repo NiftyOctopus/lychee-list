@@ -51,13 +51,13 @@
         margin:      8px;
         font-size:   16px;
         font-weight: bold;
-        color:     #33704e;
+        color:     #0d5173;
     }
 
     .msg > span {
         padding: 2px 8px;
         border-radius: 20px;
-        background-color: #f2f2f2;
+        background-color: #faf3d1;
     }
 
     .msg-enter-active, .msg-leave-active {

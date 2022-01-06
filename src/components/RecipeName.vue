@@ -38,17 +38,17 @@
         font-family:  'Roboto', sans-serif;
         font-size:     18px;
         font-weight:   bold;
-        color:       white;
+        color:       #262626;
         text-align:    center;
         background:    none;
         outline:       none;
         border:        none;
-        border-top:    2px solid #54ce8b;
-        border-bottom: 2px solid #54ce8b;
+        border-top:    2px solid #fad1d8;
+        border-bottom: 2px solid #fad1d8;
         border-radius: 0;
     }
 
     input:focus {
-        border-bottom: 2px solid white;
+        border-bottom: 2px solid #0d5173;
     }
 </style>

@@ -63,6 +63,6 @@
     }
 
     input:focus {
-        border: 2px solid #e8385b;
+        border: 2px solid #ec4662;
     }
 </style>
