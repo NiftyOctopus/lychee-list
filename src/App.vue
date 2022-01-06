@@ -10,6 +10,10 @@
             <router-link to='/recipes'>
                 <img class='icon' v-bind:class="{ active: this.recipesActive }" src='./assets/icons/archive.svg'>
             </router-link>
+
+            <router-link to='/settings'>
+                <img class='icon' v-bind:class="{ active: this.settingsActive }" src='./assets/icons/settings.svg'>
+            </router-link>
         </div>
         
         <router-view/>
@@ -39,12 +43,14 @@
             groceriesActive() {
                 const route = this.$route.name
                 if(route == 'GroceryList') { return true }
-                //return this.item.recipe === 0
             },
             recipesActive() {
                 const route = this.$route.name
                 if(route == 'RecipeList') { return true }
-                //return this.item.recipe > 0
+            },
+            settingsActive() {
+                const route = this.$route.name
+                if(route == 'Settings') { return true }
             }
         },
         watch: { /*
