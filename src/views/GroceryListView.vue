@@ -77,7 +77,8 @@
             async deleteCompleted() {
                 try {
                     this.confirm = false
-                    const result = await this.$db.items.where({ recipe: 0, done: 1 }).delete()
+                    //await this.$db.items.where({ recipe: 0, done: 1 }).delete()
+                    await this.$db.items.where({ recipe: 0, done: 1 }).modify({ deleted: true })
                     this.$store.commit('deleteCompleted')
 
                 } catch(e) {
@@ -86,7 +87,8 @@
             },
             async deleteAll() {
                 this.confirm = false
-                await this.$db.items.where('recipe').equals(0).delete()
+                //await this.$db.items.where('recipe').equals(0).delete()
+                await this.$db.items.where('recipe').equals(0).modify({ deleted: true })
                 this.$store.commit('deleteList')
             }
         }

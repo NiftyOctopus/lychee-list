@@ -88,7 +88,8 @@
                     const item = Object.assign({ i: this.i }, this.item)
 
                     this.$store.commit('deleteItem', item)
-                    await this.$db.items.delete(this.item.id)
+                    //await this.$db.items.delete(this.item.id)
+                    await this.$db.items.update(this.item.id, { deleted: true })
                 
                 } catch(e) { alert(e) }
             }
