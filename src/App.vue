@@ -14,6 +14,8 @@
             <router-link to='/settings'>
                 <img class='icon' v-bind:class="{ active: this.settingsActive }" src='./assets/icons/settings.svg'>
             </router-link>
+
+            <img class='icon' src='./assets/icons/settings.svg' @click='syncWithCloud'>
         </div>
         
         <router-view/>
@@ -63,6 +65,11 @@
                     items:   '++id, recipe, done, &[name+category+recipe]',
                     recipes: '++id'
                 });
+
+                this.$db.version(2).stores({
+                    items:   '++id, recipe, done, &[name+category+recipe], updated',
+                    recipes: '++id, updated'
+                });
             },
             async loadList() {
                 const items = await this.$db.items.where('recipe').equals(0).filter((item) => {
@@ -77,6 +84,40 @@
                 }).toArray()
                 //this.$store.commit('log', 'Loaded ' + recipes.length + ' recipes from db')
                 this.$store.commit('setDefaultRecipes', recipes)
+            },
+            async syncWithCloud() {
+                //this.$store.dispatch('message', { text: 'Syncing' })
+
+                // Get last sync timestamp
+                const synced = localStorage.getItem('synced')
+                const last = synced ? parseInt(synced) : 0
+                //console.log(last)
+
+                // Get items updated since last sync
+                const items = await this.$db.items.where('updated').above(last).toArray()
+                //console.log(items)
+
+                // Get recipes updated since last sync
+                const recipes = await this.$db.recipes.where('updated').above(last).toArray()
+                //console.log(recipes)
+
+
+                // What if the entire request failed?
+                // Just don't update the last sync timestamp. Easy peasy.
+
+                // What if only some of the records failed to sync?
+                // We want those records to try syncing next time...
+                // Change the updated timestamp of just those records to slightly after the failed attempt. Noice.
+
+                // What if it succeeded?
+                // Update the last sync timestamp normally
+                // Also, remove any soft deleted records from the db.
+
+                // So then the response should have this data...
+                // Array of any specific records that failed to sync
+                // Array of successfully deleted records
+
+                localStorage.setItem('synced', new Date().getTime())
             }
         }
     }
