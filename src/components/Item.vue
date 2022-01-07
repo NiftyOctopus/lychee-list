@@ -89,7 +89,8 @@
 
                     this.$store.commit('deleteItem', item)
                     //await this.$db.items.delete(this.item.id)
-                    await this.$db.items.update(this.item.id, { deleted: true })
+                    const updated = new Date().getTime()
+                    await this.$db.items.update(this.item.id, { deleted: true, updated })
                 
                 } catch(e) { alert(e) }
             }

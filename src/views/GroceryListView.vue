@@ -78,7 +78,8 @@
                 try {
                     this.confirm = false
                     //await this.$db.items.where({ recipe: 0, done: 1 }).delete()
-                    await this.$db.items.where({ recipe: 0, done: 1 }).modify({ deleted: true })
+                    const updated = new Date().getTime()
+                    await this.$db.items.where({ recipe: 0, done: 1 }).modify({ deleted: true, updated })
                     this.$store.commit('deleteCompleted')
 
                 } catch(e) {
@@ -88,7 +89,8 @@
             async deleteAll() {
                 this.confirm = false
                 //await this.$db.items.where('recipe').equals(0).delete()
-                await this.$db.items.where('recipe').equals(0).modify({ deleted: true })
+                const updated = new Date().getTime()
+                await this.$db.items.where('recipe').equals(0).modify({ deleted: true, updated })
                 this.$store.commit('deleteList')
             }
         }

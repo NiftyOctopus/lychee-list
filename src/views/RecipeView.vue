@@ -65,7 +65,8 @@
                     this.$router.push('/recipes')
                     window.setTimeout(() => this.$store.commit('deleteRecipe', this.id), 0)
                     //await this.$db.recipes.delete(this.id)
-                    await this.$db.recipes.update(this.id, { deleted: true })
+                    const updated = new Date().getTime()
+                    await this.$db.recipes.update(this.id, { deleted: true, updated })
                 
                 } catch(e) {
                     alert(e)
