@@ -40,7 +40,8 @@
             },
             async save() {
                 try {
-                    await this.$db.recipes.update(this.recipe.id, { url: this.url })
+                    const updated = new Date().getTime()
+                    await this.$db.recipes.update(this.recipe.id, { url: this.url, updated })
                     this.$store.commit('updateRecipeURL', { id: this.recipe.id, url: this.url })
                 
                 } catch(e) {

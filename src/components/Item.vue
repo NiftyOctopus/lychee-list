@@ -55,7 +55,9 @@
                     try {
                         const done = this.item.done ? 0 : 1
                         this.$store.commit('toggleItem', this.item)
-                        await this.$db.items.update(this.item.id, { done })
+
+                        const updated = new Date().getTime()
+                        await this.$db.items.update(this.item.id, { done, updated })
                     
                     } catch(e) { alert(e) }
                 }

@@ -50,14 +50,18 @@ export const convert = {
             return this.$db.items.where(index).equals(filters).first()
         },
         async editExistingItem() {
-            await this.$db.items.update(this.item.id, this.item)
+            let existing = Object.assign({}, this.item)
+            existing.updated = new Date().getTime()
+
+            await this.$db.items.update(this.item.id, existing)
             this.$store.commit('editExistingItem')
         },
         async appendExistingItem(existing) {
             if(this.item.recipe) { throw 'This item already exists in the recipe' }
 
-            const amount    = this.getNewAmount(existing)
-            existing.amount = amount
+            const amount     = this.getNewAmount(existing)
+            existing.amount  = amount
+            existing.updated = new Date().getTime()
             await this.$db.items.update(existing.id, existing)
         
             this.$store.commit('update', ['item.amount', amount])
@@ -75,7 +79,9 @@ export const convert = {
             return existing.amount + (this.item.amount * conv)
         },
         async addItem() {
-            await this.$db.items.add(this.item)
+            let existing = Object.assign({}, this.item)
+            existing.updated = new Date().getTime()
+            await this.$db.items.add(existing)
 
             const mutation = this.item.recipe ? 'addItemToRecipe' : 'addItemToList'
             this.$store.commit(mutation)

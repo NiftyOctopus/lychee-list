@@ -17,7 +17,8 @@
         methods: {
             async saveName() {
                 try {
-                    await this.$db.recipes.update(this.recipe.id, { name: this.name })
+                    const updated = new Date().getTime()
+                    await this.$db.recipes.update(this.recipe.id, { name: this.name, updated })
                     this.$store.commit('saveRecipeName', { id: this.recipe.id, name: this.name })
                 
                 } catch(e) {
