@@ -86,7 +86,10 @@
                 this.$store.commit('setDefaultRecipes', recipes)
             },
             async syncWithCloud() {
-                //this.$store.dispatch('message', { text: 'Syncing' })
+                this.$http.get('https://catfact.ninja/fact?max_length=40').then((res) => {
+                    console.log(res.data.fact)
+                    this.$store.dispatch('message', { text: res.data.fact })
+                })
 
                 // Get last sync timestamp
                 const synced = localStorage.getItem('synced')
