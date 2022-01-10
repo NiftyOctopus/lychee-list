@@ -15,7 +15,7 @@
                 <img class='icon' v-bind:class="{ active: this.settingsActive }" src='./assets/icons/settings.svg'>
             </router-link>
 
-            <img class='icon' src='./assets/icons/settings.svg' @click='syncWithCloud'>
+            <img class='icon' src='./assets/icons/cloud.svg' @click='syncWithCloud'>
         </div>
         
         <router-view/>
