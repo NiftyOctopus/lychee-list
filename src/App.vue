@@ -86,10 +86,11 @@
                 this.$store.commit('setDefaultRecipes', recipes)
             },
             async syncWithCloud() {
+                /*
                 this.$http.get('https://catfact.ninja/fact?max_length=40').then((res) => {
                     console.log(res.data.fact)
                     this.$store.dispatch('message', { text: res.data.fact })
-                })
+                })*/
 
                 // Get last sync timestamp
                 const synced = localStorage.getItem('synced')
@@ -104,6 +105,11 @@
                 const recipes = await this.$db.recipes.where('updated').above(last).toArray()
                 //console.log(recipes)
 
+                const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
+                this.$http.post(endpoint + 'sync', JSON.stringify({ items })).then((res) => {
+                    console.log(res)
+                    this.$store.dispatch('message', { text: res.data })
+                })
 
                 // What if the entire request failed?
                 // Just don't update the last sync timestamp. Easy peasy.
