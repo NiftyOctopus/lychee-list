@@ -53,7 +53,7 @@
             },
             async addRecipe() {
                 try {
-                    let recipe = { name: '', updated: new Date().getTime() }
+                    let recipe = { name: '', updated: new Date().toISOString() }
                     const id   = await this.$db.recipes.add(recipe)
                     recipe.id  = id
 

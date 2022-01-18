@@ -17,7 +17,7 @@
         methods: {
             async saveName() {
                 try {
-                    const updated = new Date().getTime()
+                    const updated = new Date().toISOString()
                     await this.$db.recipes.update(this.recipe.id, { name: this.name, updated })
                     this.$store.commit('saveRecipeName', { id: this.recipe.id, name: this.name })
                 

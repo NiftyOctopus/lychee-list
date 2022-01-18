@@ -93,12 +93,12 @@
 
                 // Get last sync timestamp
                 const synced = localStorage.getItem('synced')
-                const last = synced ? parseInt(synced) : 0
-                //console.log(last)
+                const last   = synced ? synced : ''
+                console.log(last)
 
                 // Get items updated since last sync
                 const items = await this.$db.items.where('updated').above(last).toArray()
-                //console.log(items)
+                console.log(items)
 
                 // Get recipes updated since last sync
                 const recipes = await this.$db.recipes.where('updated').above(last).toArray()
@@ -120,7 +120,7 @@
                 // Array of any specific records that failed to sync
                 // Array of successfully deleted records
 
-                localStorage.setItem('synced', new Date().getTime())
+                localStorage.setItem('synced', new Date().toISOString())
             }
         }
     }

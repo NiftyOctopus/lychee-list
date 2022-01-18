@@ -40,7 +40,7 @@
             },
             async save() {
                 try {
-                    const updated = new Date().getTime()
+                    const updated = new Date().toISOString()
                     await this.$db.recipes.update(this.recipe.id, { url: this.url, updated })
                     this.$store.commit('updateRecipeURL', { id: this.recipe.id, url: this.url })
                 

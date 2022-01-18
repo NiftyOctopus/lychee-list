@@ -56,7 +56,7 @@
                         const done = this.item.done ? 0 : 1
                         this.$store.commit('toggleItem', this.item)
 
-                        const updated = new Date().getTime()
+                        const updated = new Date().toISOString()
                         await this.$db.items.update(this.item.id, { done, updated })
                     
                     } catch(e) { alert(e) }
@@ -89,7 +89,7 @@
 
                     this.$store.commit('deleteItem', item)
                     //await this.$db.items.delete(this.item.id)
-                    const updated = new Date().getTime()
+                    const updated = new Date().toISOString()
                     await this.$db.items.update(this.item.id, { deleted: true, updated })
                 
                 } catch(e) { alert(e) }

@@ -51,7 +51,7 @@ export const convert = {
         },
         async editExistingItem() {
             let existing = Object.assign({}, this.item)
-            existing.updated = new Date().getTime()
+            existing.updated = new Date().toISOString()
 
             await this.$db.items.update(this.item.id, existing)
             this.$store.commit('editExistingItem')
@@ -61,7 +61,7 @@ export const convert = {
 
             const amount     = this.getNewAmount(existing)
             existing.amount  = amount
-            existing.updated = new Date().getTime()
+            existing.updated = new Date().toISOString()
             await this.$db.items.update(existing.id, existing)
         
             this.$store.commit('update', ['item.amount', amount])
@@ -80,7 +80,7 @@ export const convert = {
         },
         async addItem() {
             let existing = Object.assign({}, this.item)
-            existing.updated = new Date().getTime()
+            existing.updated = new Date().toISOString()
             await this.$db.items.add(existing)
 
             const mutation = this.item.recipe ? 'addItemToRecipe' : 'addItemToList'
