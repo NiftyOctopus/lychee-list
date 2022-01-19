@@ -42,21 +42,25 @@ export const store = createStore({
             const current = state.item.amount ? state.item.amount : 0
             state.item.amount = current + amount
         },
-        addItemToList(state) {
+        addItemToList(state, id) {
+            console.log(id)
+            console.log(state.item)
+            state.item.id = id
             const cat = state.item.category
 
             if(!state.list[cat]) { state.list[cat] = [] }
             state.list[cat].push(state.item)
         },
-        addItemToRecipe(state) {
+        addItemToRecipe(state, id) {
+            state.item.id = id
             const cat = state.item.category
-            const id  = state.item.recipe
+            const rid = state.item.recipe
 
-            if(!state.recipeItemCache[id][cat]) {
-                state.recipeItemCache[id][cat] = []
+            if(!state.recipeItemCache[rid][cat]) {
+                state.recipeItemCache[rid][cat] = []
             }
 
-            state.recipeItemCache[id][cat].push(state.item)
+            state.recipeItemCache[rid][cat].push(state.item)
         },
         appendExistingItem(state) { // ***
             const cat = state.item.category

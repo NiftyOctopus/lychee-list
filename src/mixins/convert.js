@@ -81,10 +81,11 @@ export const convert = {
         async addItem() {
             let existing = Object.assign({}, this.item)
             existing.updated = new Date().toISOString()
-            await this.$db.items.add(existing)
-
+            
+            const id = await this.$db.items.add(existing)
+            
             const mutation = this.item.recipe ? 'addItemToRecipe' : 'addItemToList'
-            this.$store.commit(mutation)
+            this.$store.commit(mutation, id)
         }
     }
 }
