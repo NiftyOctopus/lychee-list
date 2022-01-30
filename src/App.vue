@@ -86,12 +86,6 @@
                 this.$store.commit('setDefaultRecipes', recipes)
             },
             async syncWithCloud() {
-                /*
-                this.$http.get('https://catfact.ninja/fact?max_length=40').then((res) => {
-                    console.log(res.data.fact)
-                    this.$store.dispatch('message', { text: res.data.fact })
-                })*/
-
                 // Get last sync timestamp
                 const synced = localStorage.getItem('synced')
                 const last   = synced ? synced : ''
@@ -99,16 +93,19 @@
 
                 // Get items updated since last sync
                 const items = await this.$db.items.where('updated').above(last).toArray()
-                console.log(items)
+                //console.log(items)
 
                 // Get recipes updated since last sync
                 const recipes = await this.$db.recipes.where('updated').above(last).toArray()
                 //console.log(recipes)
 
                 const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
-                this.$http.post(endpoint + 'sync', JSON.stringify({ items })).then((res) => {
-                    console.log(res)
-                    this.$store.dispatch('message', { text: res.data })
+                //const endpoint = 'http://127.0.0.1:8787/'
+
+                this.$http.post(endpoint + 'sync', { items, recipes }).then((res) => {
+                    console.log(res.data)
+                    const msg = res.data.failed.length + ':' + res.data.deleted.length
+                    this.$store.dispatch('message', { text: msg })
                 })
 
                 // What if the entire request failed?
