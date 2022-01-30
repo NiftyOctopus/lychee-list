@@ -40,7 +40,7 @@
     .messages {
         z-index:  200;
         position: fixed;
-        top:   0;
+        top:   2px;
         left:  0;
         right: 0;
         text-align: center;
@@ -48,24 +48,28 @@
     }
 
     .msg {
-        margin:      8px;
+        margin:      0;
         font-size:   16px;
         font-weight: bold;
         color:     #0d5173;
+        max-height: 100px;
     }
 
     .msg > span {
+        display: inline-block;
+        margin: 2px;
         padding: 2px 8px;
         border-radius: 20px;
         background-color: #faf3d1;
     }
 
     .msg-enter-active, .msg-leave-active {
-        transition: all 0.5s;
+        transition: all 0.75s ease-out;
     }
 
-    .msg-enter, .msg-leave-to {
+    .msg-enter-from, .msg-leave-to {
         opacity: 0;
+        max-height: 0;
         transform: translateY(-30px);
     }
 </style>
