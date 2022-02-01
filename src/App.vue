@@ -70,6 +70,8 @@
                     items:   '++id, recipe, done, &[name+category+recipe], updated',
                     recipes: '++id, updated'
                 });
+
+                this.$store.dispatch('message', { text: 'Hello there' })
             },
             async loadList() {
                 const items = await this.$db.items.where('recipe').equals(0).filter((item) => {
