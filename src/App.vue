@@ -101,13 +101,27 @@
                 const recipes = await this.$db.recipes.where('updated').above(last).toArray()
                 //console.log(recipes)
 
-                const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
-                //const endpoint = 'http://127.0.0.1:8787/'
+                //const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
+                const endpoint = 'http://127.0.0.1:8787/'
 
                 this.$http.post(endpoint + 'sync', { items, recipes }).then((res) => {
                     console.log(res.data)
-                    const msg = res.data.failed.length + ':' + res.data.deleted.length
-                    this.$store.dispatch('message', { text: msg })
+                    //const msg = res.data.failed.length + ':' + res.data.deleted.length
+                    this.$store.dispatch('message', { text: 'Sync complete' })
+
+                    let deleted = res.data.items.deleted
+                    let n = deleted.length
+                    if(n > 0) {
+                        this.$db.items.bulkDelete(deleted)
+                        this.$store.dispatch('message', { text: 'Deleted ' + n + ' items' })
+                    }
+
+                    deleted = res.data.recipes.deleted
+                    n = deleted.length
+                    if(n > 0) {
+                        this.$db.recipes.bulkDelete(deleted)
+                        this.$store.dispatch('message', { text: 'Deleted ' + n + ' recipes' })
+                    }
                 })
 
                 // What if the entire request failed?
