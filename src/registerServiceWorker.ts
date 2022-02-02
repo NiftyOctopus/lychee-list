@@ -23,11 +23,10 @@ if(process.env.NODE_ENV === 'production') {
             console.log(text)
             store.dispatch('message', { text })
         },
-        updated(reg) {
+        updated() {
             const text = 'Updates available'
             console.log(text)
             store.dispatch('message', { text })
-            window.setTimeout(() => reg.update(), 1000)
         },
         offline () {
             const text = 'Offline mode'
