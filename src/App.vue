@@ -16,6 +16,7 @@
             </router-link>
 
             <img class='icon' src='./assets/icons/cloud.svg' @click='syncWithCloud'>
+            <img class='icon' src='./assets/icons/refresh-cw.svg' @click='refresh'>
         </div>
         
         <router-view/>
@@ -140,6 +141,9 @@
                 // Array of successfully deleted records
 
                 localStorage.setItem('synced', new Date().toISOString())
+            },
+            refresh() {
+                window.location.reload(true)
             }
         }
     }
