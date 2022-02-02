@@ -12,7 +12,6 @@ if(process.env.NODE_ENV === 'production') {
         registered() {
             const text = 'Service worker registered'
             console.log(text)
-            store.dispatch('message', { text })
         },
         cached() {
             const text = 'Cached for offline use'
