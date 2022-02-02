@@ -4,7 +4,7 @@ import { store } from './store'
 if(process.env.NODE_ENV === 'production') {
     register(`${process.env.BASE_URL}service-worker.js`, {
         
-        ready () {
+        ready() {
             const text = 'Loaded from cache'
             console.log(text)
             store.dispatch('message', { text })
@@ -23,10 +23,11 @@ if(process.env.NODE_ENV === 'production') {
             console.log(text)
             store.dispatch('message', { text })
         },
-        updated() {
+        updated(reg) {
             const text = 'Updates available'
             console.log(text)
             store.dispatch('message', { text })
+            window.setTimeout(() => reg.update(), 1000)
         },
         offline () {
             const text = 'Offline mode'
