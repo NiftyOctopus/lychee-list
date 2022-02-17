@@ -7,6 +7,8 @@
         </div>
 
         <div>Some settings</div>
+        <router-link to='/auth/signup'><button>Signup</button></router-link>
+        <router-link to='/auth/login'><button>Login</button></router-link>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -16,15 +18,19 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
+    import { margin } from '../mixins/margin'
 
     export default {
         name: 'settings-view',
         components: { /* Subcomponents */ },
+        mixins: [margin],
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         beforeCreate() {},
         created() {},
-        mounted() {},
+        mounted() {
+            this.updateViewMargin()
+        },
         updated() {},
         computed: { /*
             Creates a new property

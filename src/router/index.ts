@@ -35,6 +35,9 @@ const routes = [
     }, {
         name: 'Settings', path: '/settings',
         component: () => import('../views/SettingsView.vue')
+    }, {
+        name: 'Auth', path: '/auth/:type',
+        component: () => import('../views/AuthView.vue')
     }
 ]
 
