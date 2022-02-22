@@ -49,8 +49,8 @@
         },
         methods: {
             requestCode() {
-                //const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
-                const endpoint = 'http://127.0.0.1:8787/'
+                const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
+                //const endpoint = 'http://127.0.0.1:8787/'
 
                 this.$store.dispatch('message', { text: 'Requesting code' })
                 
