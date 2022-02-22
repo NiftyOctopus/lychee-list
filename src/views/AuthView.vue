@@ -52,8 +52,10 @@
                 //const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
                 const endpoint = 'http://127.0.0.1:8787/'
 
-                this.$http.post(endpoint + this.type, { email: this.email }).then((res) => {
-                    this.$store.dispatch('message', { text: 'Code sent' })
+                this.$store.dispatch('message', { text: 'Requesting code' })
+                
+                this.$http.post(endpoint + 'code', { email: this.email }).then((res) => {
+                    this.$store.dispatch('message', { text: 'Client Code: ' + res.data.code })
                 })
             }
         }
