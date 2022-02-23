@@ -102,8 +102,7 @@
                 const recipes = await this.$db.recipes.where('updated').above(last).toArray()
                 //console.log(recipes)
 
-                const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
-                //const endpoint = 'http://127.0.0.1:8787/'
+                const endpoint = process.env.VUE_APP_API
 
                 this.$http.post(endpoint + 'sync', { items, recipes }).then((res) => {
                     console.log(res.data)
