@@ -50,29 +50,35 @@
         },
         methods: {
             requestCode() {
-                //const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
-                const endpoint = 'http://127.0.0.1:8787/'
-
                 this.$store.dispatch('message', { text: 'Requesting code' })
+
+                const url  = process.env.VUE_APP_API + 'code'
+                const data = { email: this.email }
                 
-                this.$http.post(endpoint + 'code', { email: this.email }).then((res) => {
+                this.$http.post(url, data).then((res) => {
                     this.code.client = res.data.code
-                    this.$store.dispatch('message', { text: 'Client Code: ' + res.data.code })
+                    this.$store.dispatch('message', { text: 'Code sent' })
+                
+                }).catch((error) => {
+                    console.log(error)
+                    this.$store.dispatch('message', { text: error.toString() })
                 })
             },
             auth() {
-                //const endpoint = 'https://lychee-api.niftyoctopus.workers.dev/'
-                const endpoint = 'http://127.0.0.1:8787/'
-
                 this.$store.dispatch('message', { text: 'Authenticating' })
+
+                const url  = process.env.VUE_APP_API + this.type
+                const code = this.code
+                code.email = parseInt(code.email)
+                const data = { email: this.email, code }
                 
-                const creds = { email: this.email, code: this.code }
-                this.$http.post(endpoint + this.type, creds).then((res) => {
-                    console.log(res.data)
-                    this.$store.dispatch('message', { text: res.data.auth })
-                }).catch((e) => {
-                    console.log(e.toString())
-                    this.$store.dispatch('message', { text: e.toString() })
+                this.$http.post(url, data).then((res) => {
+                    const text = res.data.success ? 'Yay!' : res.data.error
+                    this.$store.dispatch('message', { text })
+                
+                }).catch((error) => {
+                    console.log(error)
+                    this.$store.dispatch('message', { text: error.toString() })
                 })
             }
         }
