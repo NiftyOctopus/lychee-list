@@ -68,13 +68,14 @@
                 this.$store.dispatch('message', { text: 'Authenticating' })
 
                 const url  = process.env.VUE_APP_API + this.type
+                this.$store.dispatch('message', { text: url })
                 const code = this.code
                 code.email = parseInt(code.email)
                 const data = { email: this.email, code }
                 
                 this.$http.post(url, data).then((res) => {
                     const text = res.data.success ? 'Yay!' : res.data.error
-                    this.$store.dispatch('message', { text })
+                    this.$store.dispatch('message', { text: JSON.stringify(res.data) })
                 
                 }).catch((error) => {
                     console.log(error)
