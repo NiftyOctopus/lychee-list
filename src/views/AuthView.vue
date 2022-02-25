@@ -55,7 +55,7 @@
                 const url  = process.env.VUE_APP_API + 'code'
                 const data = { email: this.email }
                 
-                this.$http.post(url, data).then((res) => {
+                this.$http.post(url, data, { withCredentials: true }).then((res) => {
                     this.code.client = res.data.code
                     this.$store.dispatch('message', { text: 'Code sent' })
                 
@@ -72,7 +72,7 @@
                 code.email = parseInt(code.email)
                 const data = { email: this.email, code }
                 
-                this.$http.post(url, data).then((res) => {
+                this.$http.post(url, data, { withCredentials: true }).then((res) => {
                     const text = res.data.success ? 'Yay!' : res.data.error
                     this.$store.dispatch('message', { text })
                 
