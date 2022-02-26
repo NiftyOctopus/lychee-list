@@ -104,9 +104,12 @@
 
                 const endpoint = process.env.VUE_APP_API
 
-                this.$http.post(endpoint + 'sync', { items, recipes }).then((res) => {
+                this.$http.post(endpoint + 'sync', { items, recipes }, { withCredentials: true }).then((res) => {
                     console.log(res.data)
-                    //const msg = res.data.failed.length + ':' + res.data.deleted.length
+                    if(res.data.error) {
+                        this.$store.dispatch('message', { text: res.data.error })
+                        return
+                    }
                     this.$store.dispatch('message', { text: 'Sync complete' })
 
                     let deleted = res.data.items.deleted
