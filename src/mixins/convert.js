@@ -1,4 +1,5 @@
 import { mapGetters } from 'vuex'
+import { genid } from './genid'
 
 export const convert = {
     data() { return {
@@ -79,13 +80,14 @@ export const convert = {
             return existing.amount + (this.item.amount * conv)
         },
         async addItem() {
-            let existing = Object.assign({}, this.item)
-            existing.updated = new Date().toISOString()
+            let id = genid.methods.createID()
+            let updated = new Date().toISOString()
+
+            let newItem = Object.assign({ id, updated }, this.item)
             
-            const id = await this.$db.items.add(existing)
-            
+            await this.$db.items.add(newItem)
             const mutation = this.item.recipe ? 'addItemToRecipe' : 'addItemToList'
-            this.$store.commit(mutation, id)
+            this.$store.commit(mutation, newItem.id)
         }
     }
 }

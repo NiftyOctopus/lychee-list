@@ -47,7 +47,7 @@
         },
         methods: {
             openRecipe(id) {
-                this.id = parseInt(id)
+                this.id = id
                 this.$store.commit('openRecipe', this.id)
             },
             async loadRecipeItems() {

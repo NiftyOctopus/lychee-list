@@ -31,6 +31,7 @@
     import Recipe     from '../components/Recipe'
     import ViewFooter from '../components/ViewFooter'
     import { margin } from '../mixins/margin'
+    import { genid }  from '../mixins/genid'
 
     import { mapState }   from 'vuex'
     import { mapGetters } from 'vuex'
@@ -39,7 +40,7 @@
     export default {
         name: 'recipe-list-view',
         components: { Search, Recipe, ViewFooter },
-        mixins: [margin],
+        mixins: [margin, genid],
         mounted() {
             this.updateViewMargin()
         },
@@ -53,12 +54,16 @@
             },
             async addRecipe() {
                 try {
-                    let recipe = { name: '', updated: new Date().toISOString() }
-                    const id   = await this.$db.recipes.add(recipe)
-                    recipe.id  = id
+                    let recipe = {
+                        id: this.createID(),
+                        name: '',
+                        updated: new Date().toISOString()
+                    }
+
+                    await this.$db.recipes.add(recipe)
 
                     this.$store.commit('addRecipe', recipe)
-                    this.$router.push('/recipe/' + id)
+                    this.$router.push('/recipe/' + recipe.id)
                 
                 } catch(e) {
                     alert(e)
