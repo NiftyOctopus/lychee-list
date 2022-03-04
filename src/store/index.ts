@@ -166,7 +166,7 @@ export const store = createStore({
                 category: 'Other',
                 unit:     '',
                 amount:   0,
-                recipe:   rid && rid > 0 ? rid : 0
+                recipe:   rid ? rid : 0
             }
             state.item = item
         },
