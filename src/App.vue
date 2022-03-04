@@ -112,6 +112,14 @@
                     }
                     this.$store.dispatch('message', { text: 'Sync complete' })
 
+                    let updated = res.data.items.updated
+                    let text = 'Updated ' + updated.length + ' items'
+                    if(n > 0) { this.$store.dispatch('message', { text }) }
+
+                    let updated = res.data.recipes.updated
+                    let text = 'Updated ' + updated.length + ' recipes'
+                    if(n > 0) { this.$store.dispatch('message', { text }) }
+
                     let deleted = res.data.items.deleted
                     let n = deleted.length
                     if(n > 0) {
