@@ -116,8 +116,8 @@
                     let text = 'Updated ' + updated.length + ' items'
                     if(n > 0) { this.$store.dispatch('message', { text }) }
 
-                    let updated = res.data.recipes.updated
-                    let text = 'Updated ' + updated.length + ' recipes'
+                    updated = res.data.recipes.updated
+                    text = 'Updated ' + updated.length + ' recipes'
                     if(n > 0) { this.$store.dispatch('message', { text }) }
 
                     let deleted = res.data.items.deleted
