@@ -114,11 +114,11 @@
 
                     let updated = res.data.items.updated
                     let text = 'Updated ' + updated.length + ' items'
-                    if(n > 0) { this.$store.dispatch('message', { text }) }
+                    if(updated.length > 0) { this.$store.dispatch('message', { text }) }
 
                     updated = res.data.recipes.updated
                     text = 'Updated ' + updated.length + ' recipes'
-                    if(n > 0) { this.$store.dispatch('message', { text }) }
+                    if(updated.length > 0) { this.$store.dispatch('message', { text }) }
 
                     let deleted = res.data.items.deleted
                     let n = deleted.length
