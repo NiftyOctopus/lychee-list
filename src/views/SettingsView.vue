@@ -10,6 +10,7 @@
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><button @click='assignNewIDs()'>Assign New IDs</button></div>
         <div><button @click='checkIDs()'>Check IDs</button></div>
+        <div><button @click='permDelete()'>Delete permanently</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -93,6 +94,19 @@
 
                 const text = ints.length + ' ints of ' + ids.length + ' total'
                 this.$store.dispatch('message', { text })
+            },
+            async permDelete() {
+                const recipes = await this.$db.recipes.filter((recipe) => {
+                    return recipe.deleted
+                }).count()
+
+                this.$store.dispatch('message', { text: 'Would delete ' + recipes + ' recipes' })
+
+                const items = await this.$db.items.where('recipe').equals(0).filter((item) => {
+                    return item.deleted
+                }).count()
+
+                this.$store.dispatch('message', { text: 'Would delete ' + items + ' items' })
             }
         }
     }
