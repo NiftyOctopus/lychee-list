@@ -52,7 +52,9 @@
             },
             async loadRecipeItems() {
                 if(!this.recipeItems) {
+                    this.$store.dispatch('message', { text: 'Loading recipe ' + this.id })
                     const items = await this.$db.items.where('recipe').equals(this.id).toArray()
+                    this.$store.dispatch('message', { text: 'Items: ' + items.length })
                     this.$store.commit('addToRecipeItemCache', { id: this.id, items })
                 }
             },
