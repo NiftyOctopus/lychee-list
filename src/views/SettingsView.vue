@@ -8,8 +8,8 @@
 
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
-        <div><button @click='assignNewItemIDs()'>New Items IDs</button></div>
         <div><button @click='checkIDs()'>Check IDs</button></div>
+        <div><button @click='findOrphans()'>Find orphans</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -43,35 +43,6 @@
             Only runs when the watched property changes */
         },
         methods: {
-            async assignNewItemIDs() {
-                const items = await this.$db.items.filter((item) => {
-                    return parseInt(item.id) == item.id
-                }).toArray()
-
-                this.$store.dispatch('message', { text: items.length })
-                let recipes = {}
-                let names   = []
-                
-                for(let item of items) {
-                    const id = this.getIDs(item.id)
-                    recipes[item.recipe] = true
-                    names.push(item.name)
-                    //const updated = Object.assign({}, item)
-                    //updated.id = id.new
-
-                    //await this.$db.items.add(updated)
-                    //await this.$db.items.delete(id.old)
-                }
-
-                this.$store.dispatch('message', { text: JSON.stringify(recipes) })
-                this.$store.dispatch('message', { text: names.join(', ') })
-            },
-            getIDs(id) {
-                return {
-                    old: id,
-                    new: this.createID()
-                }
-            },
             async checkIDs() {
                 const recipes = await this.$db.recipes.toCollection().primaryKeys()
                 const items   = await this.$db.items.toCollection().primaryKeys()
@@ -81,6 +52,35 @@
 
                 const text = ints.length + ' ints of ' + ids.length + ' total'
                 this.$store.dispatch('message', { text })
+            },
+            async findOrphans() {
+                const recipes = await this.getRecipeIDs()
+                const items   = await this.$db.items.toArray()
+
+                let id, list
+                let orphans = []
+
+                for(let item of items) {
+                    id   = item.recipe
+                    list = !id || id === 0 || id === '0' || id === 'none'
+
+                    if(!list && !recipes[id + ''] && !recipes[parseInt(id)]) {
+                        orphans.push(item.name)
+                    }
+                }
+
+                this.$store.dispatch('message', { text: 'Found ' + orphans.length + ' orphans' })
+                this.$store.dispatch('message', { text: orphans.join(', ') })
+            },
+            async getRecipeIDs() {
+                let ids = {}
+                const recipes = await this.$db.recipes.toCollection().primaryKeys()
+
+                for(let id of recipes) {
+                    ids[id] = true
+                }
+
+                return ids
             }
         }
     }
