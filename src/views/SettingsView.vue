@@ -9,8 +9,6 @@
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><button @click='countRecords()'>Count records</button></div>
-        <div><button @click='countUpdated()'>Count updated</button></div>
-        <div><button @click='setUpdated()'>Set updated</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -53,21 +51,6 @@
                 this.$store.dispatch('message', { text: items   + ' Items' })
                 this.$store.dispatch('message', { text: total   + ' Records' })
             },
-            async countUpdated() {
-                const recipes = await this.$db.recipes.where('updated').notEqual('*').count()
-                const items   = await this.$db.items.where('updated').notEqual('*').count()
-                const total   = recipes + items
-                
-                this.$store.dispatch('message', { text: total })
-            },
-            async setUpdated() {
-                const updates = { updated: new Date().toISOString() }
-                const recipes = await this.$db.recipes.toCollection().modify(updates)
-                const items   = await this.$db.items.toCollection().modify(updates)
-                const total   = recipes + items
-
-                this.$store.dispatch('message', { text: 'Modified ' + total + ' records' })
-            }
         }
     }
 </script>
