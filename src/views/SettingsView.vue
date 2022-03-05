@@ -8,7 +8,6 @@
 
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
-        <div><button @click='assignNewRecipeIDs()'>New Recipe IDs</button></div>
         <div><button @click='assignNewItemIDs()'>New Items IDs</button></div>
         <div><button @click='checkIDs()'>Check IDs</button></div>
         <div><button @click='permDelete()'>Delete permanently</button></div>
@@ -45,41 +44,22 @@
             Only runs when the watched property changes */
         },
         methods: {
-            async assignNewRecipeIDs() {
-                const recipes = await this.$db.recipes.filter((recipe) => {
-                    return parseInt(recipe.id) == recipe.id
-                }).toArray()
-
-                this.$store.dispatch('message', { text: recipes.length })
-                return
-
-                for(let recipe of recipes) {
-                    const id = this.getIDs(recipe.id)
-                    const updated = Object.assign({}, recipe)
-                    updated.id = id.new
-                    
-                    await this.$db.recipes.add(updated)
-                    await this.$db.recipes.delete(id.old)
-
-                    await this.assignNewItemIDs(id)
-                }
-            },
             async assignNewItemIDs() {
                 const items = await this.$db.items.filter((item) => {
                     return parseInt(item.id) == item.id
                 }).toArray()
 
                 this.$store.dispatch('message', { text: items.length })
-                return
+                let recipes = {}
                 
                 for(let item of items) {
                     const id = this.getIDs(item.id)
-                    
-                    const updated = Object.assign({}, item)
-                    updated.id = id.new
+                    recipes[item.recipe] = true
+                    //const updated = Object.assign({}, item)
+                    //updated.id = id.new
 
-                    await this.$db.items.add(updated)
-                    await this.$db.items.delete(id.old)
+                    //await this.$db.items.add(updated)
+                    //await this.$db.items.delete(id.old)
                 }
             },
             getIDs(id) {
@@ -107,9 +87,9 @@
 
                 const items = await this.$db.items.filter((item) => {
                     return item.deleted
-                }).count()
+                }).delete()
 
-                this.$store.dispatch('message', { text: 'Would delete ' + items + ' items' })
+                this.$store.dispatch('message', { text: 'Deleted ' + items + ' items' })
             }
         }
     }
