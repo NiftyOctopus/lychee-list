@@ -10,7 +10,6 @@
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><button @click='assignNewItemIDs()'>New Items IDs</button></div>
         <div><button @click='checkIDs()'>Check IDs</button></div>
-        <div><button @click='permDelete()'>Delete permanently</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -51,10 +50,12 @@
 
                 this.$store.dispatch('message', { text: items.length })
                 let recipes = {}
+                let names   = []
                 
                 for(let item of items) {
                     const id = this.getIDs(item.id)
                     recipes[item.recipe] = true
+                    names.push(item.name)
                     //const updated = Object.assign({}, item)
                     //updated.id = id.new
 
@@ -63,6 +64,7 @@
                 }
 
                 this.$store.dispatch('message', { text: JSON.stringify(recipes) })
+                this.$store.dispatch('message', { text: names.join(', ') })
             },
             getIDs(id) {
                 return {
@@ -79,19 +81,6 @@
 
                 const text = ints.length + ' ints of ' + ids.length + ' total'
                 this.$store.dispatch('message', { text })
-            },
-            async permDelete() {
-                const recipes = await this.$db.recipes.filter((recipe) => {
-                    return recipe.deleted
-                }).delete()
-
-                this.$store.dispatch('message', { text: 'Deleted ' + recipes + ' recipes' })
-
-                const items = await this.$db.items.filter((item) => {
-                    return item.deleted
-                }).delete()
-
-                this.$store.dispatch('message', { text: 'Deleted ' + items + ' items' })
             }
         }
     }
