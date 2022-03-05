@@ -9,7 +9,7 @@
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><button @click='checkIDs()'>Check IDs</button></div>
-        <div><button @click='findOrphans()'>Find orphans</button></div>
+        <div><button @click='killOrphans()'>Kill orphans</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -53,7 +53,7 @@
                 const text = ints.length + ' ints of ' + ids.length + ' total'
                 this.$store.dispatch('message', { text })
             },
-            async findOrphans() {
+            async killOrphans() {
                 const recipes = await this.getRecipeIDs()
                 const items   = await this.$db.items.toArray()
 
@@ -65,12 +65,12 @@
                     list = !id || id === 0 || id === '0' || id === 'none'
 
                     if(!list && !recipes[id + ''] && !recipes[parseInt(id)]) {
-                        orphans.push(item.name)
+                        orphans.push(item.id)
                     }
                 }
 
-                this.$store.dispatch('message', { text: 'Found ' + orphans.length + ' orphans' })
-                this.$store.dispatch('message', { text: orphans.join(', ') })
+                if(orphans.length <= 10) { await this.$db.items.bulkDelete(orphans) }
+                this.$store.dispatch('message', { text: 'Killed ' + orphans.length + ' orphans' })
             },
             async getRecipeIDs() {
                 let ids = {}
