@@ -9,6 +9,7 @@
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><button @click='assignNewIDs()'>Assign New IDs</button></div>
+        <div><button @click='checkIDs()'>Check IDs</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -43,16 +44,17 @@
         },
         methods: {
             async assignNewIDs() {
-                const recipes = await this.$db.recipes.toArray()
+                const recipes = await this.$db.recipes.limit(1).toArray()
                 this.$store.dispatch('message', { text: recipes.length + ' Recipes' })
 
                 for(let recipe of recipes) {
+                    this.$store.dispatch('message', { text: recipe.name })
                     const id = this.getIDs(recipe.id)
                     const updated = Object.assign({}, recipe)
                     updated.id = id.new
                     
-                    //await this.$db.recipes.add(updated)
-                    //await this.$db.recipes.delete(id.old)
+                    await this.$db.recipes.add(updated)
+                    await this.$db.recipes.delete(id.old)
 
                     await this.assignNewItemIDs(id)
                 }
@@ -71,9 +73,9 @@
                     const updated = Object.assign({}, item)
                     updated.id = id.new
                     updated.recipe = recipe.new
-                    
-                    //await this.$db.items.add(updated)
-                    //await this.$db.items.delete(id.old)
+
+                    await this.$db.items.add(updated)
+                    await this.$db.items.delete(id.old)
                 }
             },
             getIDs(id) {
@@ -81,6 +83,16 @@
                     old: id,
                     new: this.createID()
                 }
+            },
+            async checkIDs() {
+                const recipes = await this.$db.recipes.toCollection().primaryKeys()
+                const items   = await this.$db.items.toCollection().primaryKeys()
+                
+                const ids  = recipes.concat(items)
+                const ints = ids.filter(id => parseInt(id) == id)
+
+                const text = ints.length + ' ints of ' + ids.length + ' total'
+                this.$store.dispatch('message', { text })
             }
         }
     }

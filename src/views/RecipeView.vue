@@ -55,7 +55,7 @@
                     const id = parseInt(this.id) == this.id ? parseInt(this.id) : this.id
                     this.$store.dispatch('message', { text: 'Loading recipe ' + id })
                     const items = await this.$db.items.where('recipe').equals(id).toArray()
-                    this.$store.dispatch('message', { text: 'Items: ' + items.length })
+                
                     this.$store.commit('addToRecipeItemCache', { id: id, items })
                 }
             },
