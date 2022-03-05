@@ -61,6 +61,8 @@
                     //await this.$db.items.add(updated)
                     //await this.$db.items.delete(id.old)
                 }
+
+                this.$store.dispatch('message', { text: JSON.stringify(recipes) })
             },
             getIDs(id) {
                 return {
