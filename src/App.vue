@@ -92,51 +92,31 @@
                 // Get last sync timestamp
                 const synced = localStorage.getItem('synced')
                 const last   = synced ? synced : ''
-                console.log(last)
+                const now    = new Date().toISOString()
 
-                // Get items updated since last sync
-                const items = await this.$db.items.where('updated').above(last).toArray()
-                //console.log(items)
-
-                // Get recipes updated since last sync
+                // Get records updated since last sync
+                const items   = await this.$db.items.where('updated').above(last).toArray()
                 const recipes = await this.$db.recipes.where('updated').above(last).toArray()
-                //console.log(recipes)
+                
+                this.$store.dispatch('message', { text: 'Syncing' })
+                const url = process.env.VUE_APP_API + 'sync'
 
-                const endpoint = process.env.VUE_APP_API
-
-                this.$http.post(endpoint + 'sync', { items, recipes }, { withCredentials: true }).then((res) => {
-                    console.log(res.data)
+                this.$http.post(url, { items, recipes }, { withCredentials: true }).then((res) => {
                     if(res.data.error) {
                         this.$store.dispatch('message', { text: res.data.error })
                         return
                     }
-                    this.$store.dispatch('message', { text: 'Sync complete' })
 
-                    let updated = res.data.items.updated
-                    let text = 'Updated ' + updated.length + ' items'
-                    if(updated.length > 0) { this.$store.dispatch('message', { text }) }
+                    // Only update the last sync timestamp if request succeeds
+                    localStorage.setItem('synced', now)
+                    this.$store.dispatch('message', { text: 'Done' })
 
-                    updated = res.data.recipes.updated
-                    text = 'Updated ' + updated.length + ' recipes'
-                    if(updated.length > 0) { this.$store.dispatch('message', { text }) }
+                    this.deleteAfterSync(res.data, 'items')
+                    this.deleteAfterSync(res.data, 'recipes')
 
-                    let deleted = res.data.items.deleted
-                    let n = deleted.length
-                    if(n > 0) {
-                        this.$db.items.bulkDelete(deleted)
-                        this.$store.dispatch('message', { text: 'Deleted ' + n + ' items' })
-                    }
-
-                    deleted = res.data.recipes.deleted
-                    n = deleted.length
-                    if(n > 0) {
-                        this.$db.recipes.bulkDelete(deleted)
-                        this.$store.dispatch('message', { text: 'Deleted ' + n + ' recipes' })
-                    }
+                    this.showSyncResults(res.data, 'items')
+                    this.showSyncResults(res.data, 'recipes')
                 })
-
-                // What if the entire request failed?
-                // Just don't update the last sync timestamp. Easy peasy.
 
                 // What if only some of the records failed to sync?
                 // We want those records to try syncing next time...
@@ -149,8 +129,27 @@
                 // So then the response should have this data...
                 // Array of any specific records that failed to sync
                 // Array of successfully deleted records
+            },
+            deleteAfterSync(data, table) {
+                const ids = data[table].deleted
+                if(ids.length === 0) { return }
+                this.$db[table].bulkDelete(ids)
+            },
+            showSyncResults(data, table) {
+                this.showResult(data[table], table, 'updated')
+                this.showResult(data[table], table, 'deleted')
+            },
+            showResult(data, name, action) {
+                const n = data[action].length
+                if(n === 0) { return }
 
-                localStorage.setItem('synced', new Date().toISOString())
+                const msg = [
+                    action[0].toUpperCase() + action.substring(1),
+                    n,
+                    n === 1 ? name.substring(0, name.length - 1) : name
+                ]
+
+                this.$store.dispatch('message', { text: msg.join(' ') })
             },
             refresh() {
                 window.location.reload(true)
