@@ -27,12 +27,12 @@
             async addRecipeItems() {
                 try {
                     const items = await this.$db.items.where('recipe').equals(this.recipe.id).toArray()
-                    let item
-                
-                    for(let i in items) {
-                        item = items[i]
+                    const now   = new Date().toISOString()
+
+                    for(let item of items) {
                         delete item.id
-                        item.recipe = 0
+                        item.recipe  = 0
+                        item.updated = now
                     
                         this.$store.commit('update', ['item', item])
                         await this.saveItem()
