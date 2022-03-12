@@ -101,7 +101,8 @@
                 this.$store.dispatch('message', { text: 'Syncing' })
                 const url = process.env.VUE_APP_API + 'sync'
 
-                this.$http.post(url, { items, recipes }, { withCredentials: true }).then((res) => {
+                const data = { last, items, recipes }
+                this.$http.post(url, data, { withCredentials: true }).then((res) => {
                     if(res.data.error) {
                         this.$store.dispatch('message', { text: res.data.error })
                         return
