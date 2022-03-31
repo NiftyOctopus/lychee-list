@@ -13,9 +13,9 @@ module.exports = {
         ]
     },
     pwa: {
-        workboxPluginMode: 'GenerateSW',
+        workboxPluginMode: 'InjectManifest',
         workboxOptions: {
-            skipWaiting: true
+            swSrc: 'src/sw.js'
         }
     }
 }
