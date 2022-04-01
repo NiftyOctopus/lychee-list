@@ -153,7 +153,7 @@
                 this.$store.dispatch('message', { text: msg.join(' ') })
             },
             refresh() {
-                console.log('Refreshing app')
+                console.log('Refreshing app y72wx')
                 window.location.reload(true)
             }
         }
