@@ -8,7 +8,7 @@
 
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
-        <div><button @click='countRecords()'>Count records</button></div>
+        <div><button @click='messageSW()'>Message SW</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -42,15 +42,11 @@
             Only runs when the watched property changes */
         },
         methods: {
-            async countRecords() {
-                const recipes = await this.$db.recipes.count()
-                const items   = await this.$db.items.count()
-                const total   = recipes + items
-                
-                this.$store.dispatch('message', { text: recipes + ' Recipes' })
-                this.$store.dispatch('message', { text: items   + ' Items' })
-                this.$store.dispatch('message', { text: total   + ' Records' })
-            },
+            messageSW() {
+                const sw = navigator.serviceWorker.controller
+                if(sw) sw.postMessage('Hello there')
+                else this.$store.dispatch('message', { text: 'No service worker' })
+            }
         }
     }
 </script>
