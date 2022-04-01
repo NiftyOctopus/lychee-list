@@ -18,5 +18,5 @@ const API = ENDPOINTS[ENV]
 
 self.addEventListener('message', event => {
     console.log('Hello from service worker')
-    self.setTimeout(() => fetch(API + 'ping'), 10000)
+    fetch(API + 'ping')
 })
