@@ -75,10 +75,13 @@
                 this.$store.dispatch('message', { text: 'Lychee List' })
 
                 document.addEventListener('visibilitychange', () => {
+                    /*
                     console.log(document.visibilityState)
                     const sw = navigator.serviceWorker.controller
                     if(sw) sw.postMessage('Hello there')
                     else this.$store.dispatch('message', { text: 'No service worker' })
+                    */
+                    this.syncWithCloud()
                 })
             },
             async loadList() {
