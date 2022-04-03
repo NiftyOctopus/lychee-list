@@ -120,8 +120,8 @@
 
                     console.log(res.data)
 
-                    this.deleteAfterSync(res.data, 'items')
-                    this.deleteAfterSync(res.data, 'recipes')
+                    this.deleteAfterSync(res.data)
+                    this.updateAfterSync(res.data)
 
                     this.showSyncResults(res.data, 'items')
                     this.showSyncResults(res.data, 'recipes')
@@ -134,19 +134,26 @@
                 // What if only some of the records failed to sync?
                 // We want those records to try syncing next time...
                 // Change the updated timestamp of just those records to slightly after the failed attempt. Noice.
-
-                // What if it succeeded?
-                // Update the last sync timestamp normally
-                // Also, remove any soft deleted records from the db.
-
-                // So then the response should have this data...
-                // Array of any specific records that failed to sync
-                // Array of successfully deleted records
             },
-            deleteAfterSync(data, table) {
-                const ids = data[table].deleted
-                if(ids.length === 0) { return }
-                this.$db[table].bulkDelete(ids)
+            deleteAfterSync(data) {
+                let local, cloud
+
+                for(let table of ['items', 'recipes']) {
+                    local = data[table].deleted
+                    cloud = data[table].cloud.deleted
+                    this.$db[table].bulkDelete([...local, ...cloud])
+                }
+            },
+            updateAfterSync(data) {
+                let records
+
+                for(let table of ['items', 'recipes']) {
+                    records = data[table].cloud.updated
+                    
+                    for(let record of records) {
+                        this.$db[table].put(record)
+                    }
+                }
             },
             showSyncResults(data, table) {
                 this.showResult(data[table], table, 'updated')
