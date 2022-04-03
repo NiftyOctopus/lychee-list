@@ -118,15 +118,17 @@
                         return
                     }
 
-                    // Only update the last sync timestamp if request succeeds
-                    localStorage.setItem('synced', now)
-                    this.$store.dispatch('message', { text: 'Done' })
+                    console.log(res.data)
 
                     this.deleteAfterSync(res.data, 'items')
                     this.deleteAfterSync(res.data, 'recipes')
 
                     this.showSyncResults(res.data, 'items')
                     this.showSyncResults(res.data, 'recipes')
+
+                    // Only update the last sync timestamp if request succeeds
+                    localStorage.setItem('synced', now)
+                    this.$store.dispatch('message', { text: 'Done' })
                 })
 
                 // What if only some of the records failed to sync?
