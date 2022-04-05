@@ -75,12 +75,6 @@
                 this.$store.dispatch('message', { text: 'Lychee List' })
 
                 document.addEventListener('visibilitychange', () => {
-                    /*
-                    console.log(document.visibilityState)
-                    const sw = navigator.serviceWorker.controller
-                    if(sw) sw.postMessage('Hello there')
-                    else this.$store.dispatch('message', { text: 'No service worker' })
-                    */
                     this.syncWithCloud()
                 })
             },
@@ -88,14 +82,14 @@
                 const items = await this.$db.items.where('recipe').equals(0).filter((item) => {
                     return !item.deleted
                 }).toArray()
-                //this.$store.commit('log', 'Loaded ' + items.length + ' items from db')
+                
                 this.$store.commit('setList', items)
             },
             async loadRecipes() {
                 const recipes = await this.$db.recipes.filter((recipe) => {
                     return !recipe.deleted
                 }).toArray()
-                //this.$store.commit('log', 'Loaded ' + recipes.length + ' recipes from db')
+                
                 this.$store.commit('setDefaultRecipes', recipes)
             },
             async syncWithCloud() {
@@ -123,12 +117,12 @@
                     this.deleteAfterSync(res.data)
                     this.updateAfterSync(res.data)
 
-                    this.showSyncResults(res.data, 'items')
-                    this.showSyncResults(res.data, 'recipes')
+                    //this.showSyncResults(res.data, 'items')
+                    //this.showSyncResults(res.data, 'recipes')
 
                     // Only update the last sync timestamp if request succeeds
                     localStorage.setItem('synced', now)
-                    this.$store.dispatch('message', { text: 'Done' })
+                    this.$store.dispatch('message', { text: 'Sync complete' })
                 })
 
                 // What if only some of the records failed to sync?

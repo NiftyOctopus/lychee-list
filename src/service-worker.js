@@ -18,5 +18,4 @@ const API = ENDPOINTS[ENV]
 
 self.addEventListener('message', event => {
     console.log('Hello from service worker')
-    fetch(API + 'ping')
 })
