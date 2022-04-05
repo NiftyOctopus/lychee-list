@@ -38,6 +38,9 @@ const routes = [
     }, {
         name: 'Auth', path: '/auth/:type',
         component: () => import('../views/AuthView.vue')
+    }, {
+        name: 'AddUser', path: '/users/add',
+        component: () => import('../views/AddUserView.vue')
     }
 ]
 

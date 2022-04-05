@@ -8,7 +8,7 @@
 
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
-        <div><button @click='messageSW()'>Message SW</button></div>
+        <div><router-link to='/users/add'><button>Add User</button></router-link></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
