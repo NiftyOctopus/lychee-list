@@ -7,7 +7,6 @@ if(process.env.NODE_ENV === 'production') {
         ready() {
             const text = 'Loaded from cache'
             console.log(text)
-            store.dispatch('message', { text })
         },
         registered() {
             const text = 'Service worker registered'
@@ -21,10 +20,9 @@ if(process.env.NODE_ENV === 'production') {
         updatefound() {
             const text = 'Downloading updates'
             console.log(text)
-            store.dispatch('message', { text })
         },
         updated() {
-            const text = 'Updates available'
+            const text = 'Updates available; Please refresh app'
             console.log(text)
             store.dispatch('message', { text })
         },
