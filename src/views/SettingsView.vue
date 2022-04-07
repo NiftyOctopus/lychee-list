@@ -9,6 +9,7 @@
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><router-link to='/users/add'><button>Add User</button></router-link></div>
+        <div><button @click='syncWithCloud'>Sync Now</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -19,12 +20,13 @@
 <script>
     //import SubComponent from '../components/SubComponent'
     import { margin } from '../mixins/margin'
-    import { genid }  from '../mixins/genid'
+    import { genid  } from '../mixins/genid'
+    import { sync   } from '../mixins/sync'
 
     export default {
         name: 'settings-view',
         components: { /* Subcomponents */ },
-        mixins: [margin, genid],
+        mixins: [margin, genid, sync],
         props: [/* Inputs */],
         data() { return { }},
         beforeCreate() {},
