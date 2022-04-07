@@ -90,10 +90,6 @@
                 }).toArray()
                 
                 this.$store.commit('setDefaultRecipes', recipes)
-            },
-            refresh() {
-                console.log('Refreshing app y72wx')
-                window.location.reload(true)
             }
         }
     }

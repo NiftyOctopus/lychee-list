@@ -10,6 +10,7 @@
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><router-link to='/users/add'><button>Add User</button></router-link></div>
         <div><button @click='syncWithCloud'>Sync Now</button></div>
+        <div><button @click='refresh'>Refresh App</button></div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -48,6 +49,10 @@
                 const sw = navigator.serviceWorker.controller
                 if(sw) sw.postMessage('Hello there')
                 else this.$store.dispatch('message', { text: 'No service worker' })
+            },
+            refresh() {
+                console.log('Refreshing app')
+                window.location.reload(true)
             }
         }
     }
