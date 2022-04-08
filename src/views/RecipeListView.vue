@@ -6,11 +6,11 @@
             </div>
         </div>
 
-        <search
+        <!-- <search
             :init='query'
             showIcon=true
             @update='updateQuery'>
-        </search>
+        </search> -->
 
         <div>
             <recipe
