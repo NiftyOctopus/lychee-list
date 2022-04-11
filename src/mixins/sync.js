@@ -4,6 +4,8 @@ export const sync = {
     }},
     methods: {
         async syncWithCloud() {
+            this.$store.commit('update', ['syncing', true])
+
             // Get last sync timestamp
             const synced = localStorage.getItem('synced')
             const last   = synced ? synced : ''
@@ -13,13 +15,16 @@ export const sync = {
             const items   = await this.$db.items.where('updated').above(last).toArray()
             const recipes = await this.$db.recipes.where('updated').above(last).toArray()
             
-            this.$store.dispatch('message', { text: 'Syncing' })
             const url = process.env.VUE_APP_API + 'sync'
 
             const data = { last, items, recipes }
             this.$http.post(url, data, { withCredentials: true }).then((res) => {
                 if(res.data.error) {
-                    this.$store.dispatch('message', { text: res.data.error })
+                    this.$store.commit('update', ['syncing', false])
+                    const error = res.data.error
+                    if(error !== 'No session cookie') {
+                        this.$store.dispatch('message', { text: error })
+                    }
                     return
                 }
 
@@ -30,7 +35,7 @@ export const sync = {
 
                 // Only update the last sync timestamp if request succeeds
                 localStorage.setItem('synced', now)
-                this.$store.dispatch('message', { text: 'Sync complete' })
+                this.$store.commit('update', ['syncing', false])
             })
 
             // What if only some of the records failed to sync?

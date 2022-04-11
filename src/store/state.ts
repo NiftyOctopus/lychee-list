@@ -35,5 +35,6 @@ export let state:{[key:string]:any} = {
     recipe,
     activeRecipeID: 2,
     query: '',
+    syncing: false,
     version: process.env.PACKAGE_VERSION
 }

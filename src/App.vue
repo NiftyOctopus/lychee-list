@@ -3,19 +3,25 @@
         <messages></messages>
 
         <div id='primary-nav'>
-            <router-link to='/'>
-                <img class='icon' v-bind:class="{ active: this.groceriesActive }" src='./assets/icons/shopping-cart.svg'>
-            </router-link>
+            <div class='left'></div>
 
-            <router-link to='/recipes'>
-                <img class='icon' v-bind:class="{ active: this.recipesActive }" src='./assets/icons/archive.svg'>
-            </router-link>
+            <div class='middle'>
+                <router-link to='/'>
+                    <img class='icon' v-bind:class="{ active: this.groceriesActive }" src='./assets/icons/shopping-cart.svg'>
+                </router-link>
 
-            <router-link to='/settings'>
-                <img class='icon' v-bind:class="{ active: this.settingsActive }" src='./assets/icons/settings.svg'>
-            </router-link>
+                <router-link to='/recipes'>
+                    <img class='icon' v-bind:class="{ active: this.recipesActive }" src='./assets/icons/archive.svg'>
+                </router-link>
 
-            <img style='float: right; margin: 0 10px' v-bind:class="{ active: false }" src='./assets/icons/loader.svg'>
+                <router-link to='/settings'>
+                    <img class='icon' v-bind:class="{ active: this.settingsActive }" src='./assets/icons/settings.svg'>
+                </router-link>
+            </div>
+
+            <div class='right'>
+                <img class='spinner' v-bind:class="{ spin: this.syncing, clear: !this.syncing }" src='./assets/icons/loader.svg'>
+            </div>
         </div>
         
         <router-view/>
@@ -43,7 +49,7 @@
             this.loadRecipes()    
         },
         computed: {
-            ...mapState(['version', 'item']),
+            ...mapState(['version', 'item', 'syncing']),
             groceriesActive() {
                 const route = this.$route.name
                 if(route == 'GroceryList') { return true }
@@ -127,12 +133,14 @@
         top:        0;
         left:       0;
         right:      0;
-        height:     30px;
+        /* height:     30px; */
         padding:    5px 0 0 0;
-        text-align: center;
+        /* text-align: center; */
 
-        /* background-color: #33704e; */
         background-color: #0d5173;
+
+        display: flex;
+        justify-content: space-between;
     }
 
     #primary-nav .icon {
@@ -142,6 +150,32 @@
 
     #primary-nav .active {
         opacity: 1;
+    }
+
+    .left, .middle, .right {
+        width: 100%;
+    }
+
+    .left   { text-align: left;   }
+    .middle { text-align: center; }
+    .right  { text-align: right;  }
+
+    .spin {
+        animation: spin 3s infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes spin {
+        0%   { transform: rotate(0deg);   }
+        100% { transform: rotate(360deg); }
+    }
+
+    .clear {
+        opacity: 0;
+    }
+
+    .spinner {
+        transition: opacity 1s;
     }
 
     .view {
