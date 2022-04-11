@@ -14,6 +14,8 @@
             <router-link to='/settings'>
                 <img class='icon' v-bind:class="{ active: this.settingsActive }" src='./assets/icons/settings.svg'>
             </router-link>
+
+            <img style='float: right; margin: 0 10px' v-bind:class="{ active: false }" src='./assets/icons/loader.svg'>
         </div>
         
         <router-view/>
