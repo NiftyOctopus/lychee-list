@@ -152,8 +152,8 @@
         opacity: 1;
     }
 
-    .left, .middle, .right {
-        width: 100%;
+    .left, .right {
+        width: 0%;
     }
 
     .left   { text-align: left;   }
