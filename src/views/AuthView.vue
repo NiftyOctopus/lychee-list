@@ -73,6 +73,7 @@
                 const data = { email: this.email, code }
                 
                 this.$http.post(url, data, { withCredentials: true }).then((res) => {
+                    localStorage.setItem('email', this.email)
                     const text = res.data.success ? 'Yay!' : res.data.error
                     this.$store.dispatch('message', { text })
                 

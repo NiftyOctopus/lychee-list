@@ -22,7 +22,7 @@ export const sync = {
                 if(res.data.error) {
                     this.$store.commit('update', ['syncing', false])
                     const error = res.data.error
-                    if(error !== 'No session cookie') {
+                    if(localStorage.getItem('email')) {
                         this.$store.dispatch('message', { text: error })
                     }
                     return
