@@ -154,6 +154,7 @@
 
     .left, .right {
         width: 0%;
+        flex-grow: 1;
     }
 
     .left   { text-align: left;   }
