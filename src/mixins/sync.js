@@ -9,7 +9,7 @@ export const sync = {
             // Get last sync timestamp
             const synced = localStorage.getItem('synced')
             const last   = synced ? synced : ''
-            const now    = new Date().toISOString()
+            const now    = new Date()
 
             // Get records updated since last sync
             const items   = await this.$db.items.where('updated').above(last).toArray()
@@ -34,8 +34,9 @@ export const sync = {
                 this.updateAfterSync(res.data)
 
                 // Only update the last sync timestamp if request succeeds
-                localStorage.setItem('synced', now)
-                this.$store.commit('update', ['syncing', false])
+                localStorage.setItem('synced', now.toISOString())
+                this.$store.commit('update', ['lastSync', now])
+                this.$store.commit('update', ['syncing',  false])
             })
 
             // What if only some of the records failed to sync?

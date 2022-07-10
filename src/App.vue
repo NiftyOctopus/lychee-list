@@ -46,7 +46,9 @@
         mounted() {
             this.init()
             this.loadList()
-            this.loadRecipes()    
+            this.loadRecipes()
+            this.loadLastSyncDate()
+            this.syncWithCloud()
         },
         computed: {
             ...mapState(['version', 'item', 'syncing']),
@@ -98,6 +100,13 @@
                 }).toArray()
                 
                 this.$store.commit('setDefaultRecipes', recipes)
+            },
+            loadLastSyncDate() {
+                const synced = localStorage.getItem('synced')
+                if(!synced) return
+
+                const lastSync = new Date(synced)
+                this.$store.commit('update', ['lastSync', lastSync])
             }
         }
     }

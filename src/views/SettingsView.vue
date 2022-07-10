@@ -10,6 +10,7 @@
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
         <div><router-link to='/users/add'><button>Add User</button></router-link></div>
         <div><button @click='syncWithCloud'>Sync Now</button></div>
+        <div id='last-sync'>Last Synced {{ lastSync }}</div>
         <div><button @click='refresh'>Refresh App</button></div>
 
         <!-- <view-footer></view-footer> -->
@@ -20,9 +21,10 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
-    import { margin } from '../mixins/margin'
-    import { genid  } from '../mixins/genid'
-    import { sync   } from '../mixins/sync'
+    import { mapState }  from 'vuex'
+    import { margin }    from '../mixins/margin'
+    import { genid  }    from '../mixins/genid'
+    import { sync   }    from '../mixins/sync'
 
     export default {
         name: 'settings-view',
@@ -36,9 +38,8 @@
             this.updateViewMargin()
         },
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['lastSync'])
         },
         watch: { /*
             Watches an existing property
@@ -61,5 +62,8 @@
 
 
 <style scoped>
-
+    #last-sync {
+        font-family: monospace;
+        font-size: 0.8em;
+    }
 </style>

@@ -19,7 +19,7 @@ let defaultRecipes:RecipeList      = {}
 let recipeSearchResults:RecipeList = {}
 let recipeItemCache:RecipeCache    = {}
 let recipe:Recipe|null = null
-
+let lastSync:Date|null = null
 
 
 export let state:{[key:string]:any} = {
@@ -36,5 +36,6 @@ export let state:{[key:string]:any} = {
     activeRecipeID: 2,
     query: '',
     syncing: false,
+    lastSync,
     version: process.env.PACKAGE_VERSION
 }
