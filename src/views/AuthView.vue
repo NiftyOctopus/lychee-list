@@ -19,8 +19,8 @@
 
 
 <script>
-    //import SubComponent from '../components/SubComponent'
-    import { margin } from '../mixins/margin'
+    import { mapState }  from 'vuex'
+    import { margin }    from '../mixins/margin'
 
     export default {
         name: 'auth-view',
@@ -38,11 +38,11 @@
         },
         mounted() {
             this.updateViewMargin()
+            this.email = this.userEmail
         },
         updated() {},
-        computed: { /*
-            Creates a new property
-            Updates when any dependant property changes */
+        computed: {
+            ...mapState(['userEmail'])
         },
         watch: { /*
             Watches an existing property

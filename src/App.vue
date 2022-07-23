@@ -48,6 +48,7 @@
             this.loadList()
             this.loadRecipes()
             this.loadLastSyncDate()
+            this.loadUserEmail()
             this.syncWithCloud()
         },
         computed: {
@@ -107,6 +108,12 @@
 
                 const lastSync = new Date(synced)
                 this.$store.commit('update', ['lastSync', lastSync])
+            },
+            loadUserEmail() {
+                const email = localStorage.getItem('email')
+                if(!email) return
+
+                this.$store.commit('update', ['userEmail', email])
             }
         }
     }
