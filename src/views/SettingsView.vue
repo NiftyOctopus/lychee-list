@@ -8,9 +8,10 @@
 
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
+        <div id='info'>Session Expires {{ sessionExpires }}</div>
         <div><router-link to='/users/add'><button>Add User</button></router-link></div>
         <div><button @click='syncWithCloud'>Sync Now</button></div>
-        <div id='last-sync'>Last Synced {{ lastSync }}</div>
+        <div id='info'>Last Synced {{ lastSync }}</div>
         <div><button @click='refresh'>Refresh App</button></div>
 
         <!-- <view-footer></view-footer> -->
@@ -39,7 +40,7 @@
         },
         updated() {},
         computed: {
-            ...mapState(['lastSync'])
+            ...mapState(['lastSync', 'sessionExpires'])
         },
         watch: { /*
             Watches an existing property
@@ -62,8 +63,8 @@
 
 
 <style scoped>
-    #last-sync {
+    .info {
         font-family: monospace;
-        font-size: 0.8em;
+        font-size:   0.8em;
     }
 </style>

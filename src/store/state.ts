@@ -18,9 +18,10 @@ const categories:string[] = [
 let defaultRecipes:RecipeList      = {}
 let recipeSearchResults:RecipeList = {}
 let recipeItemCache:RecipeCache    = {}
-let recipe:Recipe   |null = null
-let lastSync:Date   |null = null
-let userEmail:string|null = null
+let recipe:Recipe      |null = null
+let lastSync:Date      |null = null
+let userEmail:string   |null = null
+let sessionExpires:Date|null = null
 
 
 export let state:{[key:string]:any} = {
@@ -39,5 +40,6 @@ export let state:{[key:string]:any} = {
     syncing: false,
     lastSync,
     userEmail,
+    sessionExpires,
     version: process.env.PACKAGE_VERSION
 }

@@ -73,14 +73,21 @@
                 const data = { email: this.email, code }
                 
                 this.$http.post(url, data, { withCredentials: true }).then((res) => {
-                    localStorage.setItem('email', this.email)
                     const text = res.data.success ? 'Yay!' : res.data.error
                     this.$store.dispatch('message', { text })
+                    if(res.data.success) this.handleAuthSuccess(res.data)
                 
                 }).catch((error) => {
                     console.log(error)
                     this.$store.dispatch('message', { text: error.toString() })
                 })
+            },
+            handleAuthSuccess(data) {
+                localStorage.setItem('email', this.email)
+
+                const expires = new Date(data.expires * 1000)
+                this.$store.commit('update', ['sessionExpires', expires])
+                localStorage.setItem('session_expires', expires.toISOString())
             }
         }
     }
