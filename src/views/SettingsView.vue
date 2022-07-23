@@ -8,10 +8,10 @@
 
         <div><router-link to='/auth/signup'><button>Signup</button></router-link></div>
         <div><router-link to='/auth/login'><button>Login</button></router-link></div>
-        <div id='info'>Session Expires {{ sessionExpires }}</div>
+        <div class='info'>Session Expires {{ sessionExpires }}</div>
         <div><router-link to='/users/add'><button>Add User</button></router-link></div>
         <div><button @click='syncWithCloud'>Sync Now</button></div>
-        <div id='info'>Last Synced {{ lastSync }}</div>
+        <div class='info'>Last Synced {{ lastSync }}</div>
         <div><button @click='refresh'>Refresh App</button></div>
 
         <!-- <view-footer></view-footer> -->
