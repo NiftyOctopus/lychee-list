@@ -49,6 +49,7 @@
             this.loadRecipes()
             this.loadLastSyncDate()
             this.loadUserEmail()
+            this.loadSessionExpirationDate()
             this.syncWithCloud()
         },
         computed: {
@@ -114,6 +115,13 @@
                 if(!email) return
 
                 this.$store.commit('update', ['userEmail', email])
+            },
+            loadSessionExpirationDate() {
+                const expires = localStorage.getItem('session_expires')
+                if(!expires) return
+
+                const sessionExpires = new Date(expires)
+                this.$store.commit('update', ['sessionExpires', sessionExpires])
             }
         }
     }
