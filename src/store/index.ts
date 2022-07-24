@@ -171,6 +171,8 @@ export const store = createStore({
             state.item = item
         },
         setList(state, items) { // ***
+            state.list = {}
+            
             for(let i in items) {
                 const item = items[i]
                 const cat  = item.category
