@@ -35,18 +35,18 @@
 <script>
     import Messages from './components/Messages'
     import { mapState } from 'vuex'
+    import { load } from './mixins/load'
     import { sync } from './mixins/sync'
 
     export default {
         name: 'app',
         components: { Messages },
-        mixins: [sync],
+        mixins: [load, sync],
         props: [/* Inputs */],
         data() { return { /* Local variables */ }},
         mounted() {
             this.init()
-            this.loadList()
-            this.loadRecipes()
+            this.load()
             this.loadLastSyncDate()
             this.loadUserEmail()
             this.loadSessionExpirationDate()
@@ -88,20 +88,6 @@
                 document.addEventListener('visibilitychange', () => {
                     this.syncWithCloud()
                 })
-            },
-            async loadList() {
-                const items = await this.$db.items.where('recipe').equals(0).filter((item) => {
-                    return !item.deleted
-                }).toArray()
-                
-                this.$store.commit('setList', items)
-            },
-            async loadRecipes() {
-                const recipes = await this.$db.recipes.filter((recipe) => {
-                    return !recipe.deleted
-                }).toArray()
-                
-                this.$store.commit('setDefaultRecipes', recipes)
             },
             loadLastSyncDate() {
                 const synced = localStorage.getItem('synced')
