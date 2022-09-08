@@ -20,7 +20,7 @@
             </div>
 
             <div class='right' @click='syncWithCloud'>
-                <img class='spinner' v-bind:class="{ spin: this.syncing, clear: !this.syncing }" src='./assets/icons/loader.svg'>
+                <img class='spinner' v-bind:class="{ spin: this.syncing, clear: !this.syncing }" src='./assets/icons/refresh-cw.svg'>
             </div>
         </div>
         
@@ -167,13 +167,12 @@
         flex-grow: 1;
     }
 
-    .left   { text-align: left;   }
+    .left   { text-align: left;  padding-left:  5px; }
     .middle { text-align: center; }
-    .right  { text-align: right;  }
+    .right  { text-align: right; padding-right: 5px; }
 
     .spin {
-        animation: spin 3s infinite;
-        /* animation-timing-function: linear; */
+        transition: opacity 0s;
     }
 
     @keyframes spin {
@@ -182,11 +181,13 @@
     }
 
     .clear {
-        opacity: 0.2;
+        opacity:    0.3;
+        transition: opacity 1s;
+        animation-play-state: paused !important;
     }
 
     .spinner {
-        transition: opacity 1s;
+        animation: spin 2s infinite;
     }
 
     .view {
