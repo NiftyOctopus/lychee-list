@@ -40,7 +40,7 @@ export const sync = {
             this.$store.commit('update', ['lastSync', now])
             this.$store.commit('update', ['syncing',  false])
 
-            this.$store.dispatch('message', { text: 'Sync complete' })
+            this.load()
 
             // What if only some of the records failed to sync?
             // We want those records to try syncing next time...
