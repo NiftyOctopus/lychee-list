@@ -21,27 +21,26 @@ export const sync = {
             const url  = process.env.VUE_APP_API + 'sync'
             const data = { last, items, recipes }
 
-            this.$http.post(url, data, { withCredentials: true }).then((res) => {
-                if(res.data.error) {
-                    this.$store.commit('update', ['syncing', false])
+            const res = await this.$http.post(url, data, { withCredentials: true })
 
-                    if(localStorage.getItem('email')) {
-                        this.$store.dispatch('message', { text: res.data.error })
-                    }
-                    return
+            if(res.data.error) {
+                this.$store.commit('update', ['syncing', false])
+
+                if(localStorage.getItem('email')) {
+                    this.$store.dispatch('message', { text: res.data.error })
                 }
+                return
+            }
 
-                this.deleteAfterSync(res.data)
-                this.updateAfterSync(res.data)
+            await this.deleteAfterSync(res.data)
+            await this.updateAfterSync(res.data)
 
-                // Only update the last sync timestamp if request succeeds
-                localStorage.setItem('synced', now.toISOString())
-                this.$store.commit('update', ['lastSync', now])
-                this.$store.commit('update', ['syncing',  false])
-            
-            }).then(() => {
-                this.load()
-            })
+            // Only update the last sync timestamp if request succeeds
+            localStorage.setItem('synced', now.toISOString())
+            this.$store.commit('update', ['lastSync', now])
+            this.$store.commit('update', ['syncing',  false])
+
+            this.$store.dispatch('message', { text: 'Sync complete' })
 
             // What if only some of the records failed to sync?
             // We want those records to try syncing next time...
