@@ -19,7 +19,7 @@
                 </router-link>
             </div>
 
-            <div class='right'>
+            <div class='right' @click='syncWithCloud'>
                 <img class='spinner' v-bind:class="{ spin: this.syncing, clear: !this.syncing }" src='./assets/icons/loader.svg'>
             </div>
         </div>
@@ -173,7 +173,7 @@
 
     .spin {
         animation: spin 3s infinite;
-        animation-timing-function: linear;
+        /* animation-timing-function: linear; */
     }
 
     @keyframes spin {
@@ -182,7 +182,7 @@
     }
 
     .clear {
-        opacity: 0;
+        opacity: 0.2;
     }
 
     .spinner {
