@@ -46,7 +46,8 @@
                 const d = this.fraction.d
                 if(n > 0) { amt = amt + ' ' + n + '/' + d }
 
-                return amt + ' ' + this.item.unit
+                const unit = this.item.unit
+                return amt + (unit === 'ct' ? '' : ' ' + unit)
             }
         },
         methods: {
