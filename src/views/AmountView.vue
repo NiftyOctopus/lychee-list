@@ -17,8 +17,8 @@
 
         <div id='adjusters'>
             <adjuster
-                v-for='(adj, index) in adjusters[item.unit]'
-                :key='index'
+                v-for='adj in adjusters[item.unit]'
+                :key="adj.n + '/' + adj.d"
                 :n='adj.n'
                 :d='adj.d'>
             </adjuster>

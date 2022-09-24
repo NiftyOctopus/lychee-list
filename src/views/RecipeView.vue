@@ -6,7 +6,13 @@
             <div v-for='category in categories' :key='category'>
                 <div v-if='recipeItems[category] && recipeItems[category].length'>
                     <div class='group-header'>{{ category }}</div>
-                    <item v-for='(item, index) in recipeItems[category]' :key='index' :i='index' :item='item'></item>
+                    
+                    <item
+                        v-for='(item, index) in recipeItems[category]'
+                        :key='item.id'
+                        :i='index'
+                        :item='item'>
+                    </item>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
 
                 <item
                     v-for='(item, index) in list[category]'
-                    :key='index'
+                    :key='item.id'
                     :i='index'
                     :item='item'>
                 </item>
