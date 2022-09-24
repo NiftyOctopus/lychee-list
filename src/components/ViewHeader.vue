@@ -2,7 +2,7 @@
     <div class='view-header'>
         <div id='item-recipe'
             v-if='item.recipe && recipe && item.recipe == recipe.id'>
-            <span>{{ recipe.name }}</span>
+            <span>{{ recipe.name ? recipe.name : recipe.id }}</span>
         </div>
 
         <div id='item-details' v-if="this.$route.path != '/item'">
