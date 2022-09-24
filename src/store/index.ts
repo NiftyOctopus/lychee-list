@@ -122,7 +122,7 @@ export const store = createStore({
                 alert(e)
             }
         },
-        deleteItem(state, item) { // ***
+        deleteItem(state, item) {
             try {
                 if(!item.id) { throw('Item id missing') }
                 
@@ -132,11 +132,16 @@ export const store = createStore({
                 const i = item.i
                 delete item.i
 
+                const list  = rid ? state.recipeItemCache[rid] : state.list
+                const items = [...list[cat]]
+                
+                const filtered = items.filter((i) => i.id !== item.id)
+                
                 if(rid > 0) {
-                    state.recipeItemCache[rid][cat].splice(i, 1)
+                    state.recipeItemCache[rid][cat] = filtered
 
                 } else {
-                    state.list[cat].splice(i, 1)
+                    state.list[cat] = filtered
                 }
 
             } catch(e) {

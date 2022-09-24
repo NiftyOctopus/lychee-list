@@ -85,9 +85,9 @@
             async deleteItem() {
                 try {
                     this.open  = false
-                    const item = Object.assign({ i: this.i }, this.item)
+                    //const item = Object.assign({ i: this.i }, this.item)
 
-                    this.$store.commit('deleteItem', item)
+                    this.$store.commit('deleteItem', this.item)
                     //await this.$db.items.delete(this.item.id)
                     const updated = new Date().toISOString()
                     await this.$db.items.update(this.item.id, { deleted: true, updated })
