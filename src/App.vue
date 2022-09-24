@@ -229,14 +229,14 @@
     }
 
     .option {
-        padding: 3px 0;
+        padding: 5px 0;
     }
 
     .option span {
         /* display: inline-block; */
         padding: 2px 6px;
         border-radius: 20px;
-        /* border: 2px solid #f2f2f2; */
+        border: 2px solid #f2f2f2;
     }
 
     .selected span {

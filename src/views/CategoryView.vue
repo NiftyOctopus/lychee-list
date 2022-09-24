@@ -32,7 +32,7 @@
         methods: {
             selectCategory(category) {
                 this.$store.commit('update', ['item.category', category])
-                this.$router.push('unit')
+                if(!this.item.id) this.$router.push('unit')
             },
             back() {
                 this.$router.push('item')
