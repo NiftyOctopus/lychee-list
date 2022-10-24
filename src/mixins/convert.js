@@ -75,7 +75,10 @@ export const convert = {
             if(!to && !from) { return null }
 
             const conv = to && from ? this.conversions[from][to] : null
-            if(!conv) { throw 'Cannot combine amounts with different unit types' }
+            if(!conv) {
+                const desc = this.item.amount + ' ' + from + ' of ' + this.item.name
+                throw 'Could not add ' + desc + ' because it is already on the list with a different unit'
+            }
             
             return existing.amount + (this.item.amount * conv)
         },
