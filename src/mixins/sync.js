@@ -69,9 +69,7 @@ export const sync = {
                 for(let record of records) {
                     try { await this.$db[table].put(record) }
                     catch(e) {
-                        if(e instanceof ConstraintError) {
-                            alert('Constraint Error!')
-                        }
+                        alert(e.name)
                     }
                 }
             }
