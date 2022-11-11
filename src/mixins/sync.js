@@ -41,7 +41,7 @@ export const sync = {
                 this.$store.commit('update', ['lastSync', now])
                 this.$store.commit('update', ['syncing',  false])
                 this.load()
-                return resync
+                if(resync) this.syncWithCloud()
 
             } catch(e) {
                 this.$store.commit('update', ['syncing',  false])
