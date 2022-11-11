@@ -31,9 +31,11 @@ export const sync = {
                 }
                 return
             }
-
+            
+            this.$store.dispatch('message', { text: 'Sync complete' })
             await this.deleteAfterSync(res.data)
             await this.updateAfterSync(res.data)
+            this.$store.dispatch('message', { text: 'Updated local data' })
 
             // Only update the last sync timestamp if request succeeds
             localStorage.setItem('synced', now.toISOString())
