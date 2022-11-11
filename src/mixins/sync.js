@@ -31,13 +31,10 @@ export const sync = {
                 }
                 return
             }
-            this.$store.dispatch('message', { text: 'Sync complete' })
             
             try {
                 await this.deleteAfterSync(res.data)
                 await this.updateAfterSync(res.data)
-
-                this.$store.dispatch('message', { text: 'Updated local data' })
 
                 // Only update the last sync timestamp if request succeeds
                 localStorage.setItem('synced', now.toISOString())
@@ -46,6 +43,7 @@ export const sync = {
                 this.load()
 
             } catch(e) {
+                this.$store.commit('update', ['syncing',  false])
                 alert(e)
             }
 
@@ -69,7 +67,12 @@ export const sync = {
                 records = data[table].cloud.updated
                 
                 for(let record of records) {
-                    await this.$db[table].put(record)
+                    try { await this.$db[table].put(record) }
+                    catch(e) {
+                        if(e instanceof ConstraintError) {
+                            alert('Constraint Error!')
+                        }
+                    }
                 }
             }
         }
