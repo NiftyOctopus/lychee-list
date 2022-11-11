@@ -36,17 +36,18 @@ export const sync = {
             try {
                 await this.deleteAfterSync(res.data)
                 await this.updateAfterSync(res.data)
+
+                this.$store.dispatch('message', { text: 'Updated local data' })
+
+                // Only update the last sync timestamp if request succeeds
+                localStorage.setItem('synced', now.toISOString())
+                this.$store.commit('update', ['lastSync', now])
+                this.$store.commit('update', ['syncing',  false])
+                this.load()
+
             } catch(e) {
-                alert(e.message)
+                alert(e)
             }
-            this.$store.dispatch('message', { text: 'Updated local data' })
-
-            // Only update the last sync timestamp if request succeeds
-            localStorage.setItem('synced', now.toISOString())
-            this.$store.commit('update', ['lastSync', now])
-            this.$store.commit('update', ['syncing',  false])
-
-            this.load()
 
             // What if only some of the records failed to sync?
             // We want those records to try syncing next time...
