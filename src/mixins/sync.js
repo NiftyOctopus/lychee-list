@@ -34,13 +34,14 @@ export const sync = {
             
             try {
                 await this.deleteAfterSync(res.data)
-                await this.updateAfterSync(res.data)
+                const resync = await this.updateAfterSync(res.data)
 
                 // Only update the last sync timestamp if request succeeds
                 localStorage.setItem('synced', now.toISOString())
                 this.$store.commit('update', ['lastSync', now])
                 this.$store.commit('update', ['syncing',  false])
                 this.load()
+                return resync
 
             } catch(e) {
                 this.$store.commit('update', ['syncing',  false])
@@ -61,7 +62,7 @@ export const sync = {
             }
         },
         async updateAfterSync(data) {
-            let records
+            let records, resync
 
             for(let table of ['items', 'recipes']) {
                 records = data[table].cloud.updated
@@ -69,10 +70,17 @@ export const sync = {
                 for(let record of records) {
                     try { await this.$db[table].put(record) }
                     catch(e) {
-                        alert(e.name)
+                        if(e.name === 'ConstraintError') {
+                            record.name    = record.name + '*'
+                            record.updated = new Date().toISOString()
+                            await this.$db[table].put(record)
+                            resync = true
+
+                        } else { throw e }
                     }
                 }
             }
+            return resync
         }
     }
 }
