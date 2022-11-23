@@ -1,6 +1,6 @@
 {
   "name": "lychee-list",
-  "version": "0.32.3",
+  "version": "0.32.4",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
