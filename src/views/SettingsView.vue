@@ -12,10 +12,19 @@
         <div><router-link to='/users/add'><button>Add User</button></router-link></div>
         <div><button @click='syncWithCloud'>Sync Now</button></div>
         <div class='info'>Last Synced {{ lastSync }}</div>
+        <div>Rewind Last Sync</div>
+        <div>
+            <button @click='rewind(1)'>Hour</button>
+            <button @click='rewind(24)'>Day</button>
+            <button @click='rewind(168)'>Week</button>
+            <button @click='rewind(720)'>Month</button>
+        </div>
+
         <div><button @click='refresh'>Refresh App</button></div>
         <div><router-link to='/log'><button>Log</button></router-link></div>
         <div>{{ count.items }} Items</div>
         <div>{{ count.recipes }} Recipes</div>
+
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -65,6 +74,14 @@
             async countRecords() {
                 this.count.items   = await this.$db.items.count()
                 this.count.recipes = await this.$db.recipes.count()
+            },
+            rewind(hrs) {
+                const now   = this.lastSync
+                const delta = 3600000 * hrs
+                const time  = new Date(now - delta)
+
+                localStorage.setItem('synced', time.toISOString())
+                this.$store.commit('update', ['lastSync', time])
             }
         }
     }
