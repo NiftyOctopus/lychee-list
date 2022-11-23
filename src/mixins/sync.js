@@ -32,15 +32,19 @@ export const sync = {
                 return
             }
             this.$store.commit('log', 'Got response from cloud')
+            
+            try {
+                if(res.data.error) {
+                    this.$store.commit('log', res.data.error)
+                    this.$store.commit('update', ['syncing', false])
 
-            if(res.data.error) {
-                this.$store.commit('log', res.data.error)
-                this.$store.commit('update', ['syncing', false])
-
-                if(localStorage.getItem('email')) {
-                    this.$store.dispatch('message', { text: res.data.error })
+                    if(localStorage.getItem('email')) {
+                        this.$store.dispatch('message', { text: res.data.error })
+                    }
+                    return
                 }
-                return
+            } catch(e) {
+                this.$store.commit('log', e)
             }
             
             this.$store.commit('log', 'Updating local db')

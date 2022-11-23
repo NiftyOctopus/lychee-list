@@ -132,7 +132,7 @@
         z-index:   100;
         position:  fixed;
         bottom:    3px;
-        right:     5px;
+        right:     20px;
         font-size: 12px;
         color:   gray;
     }
