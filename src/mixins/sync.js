@@ -22,10 +22,11 @@ export const sync = {
             
             const url  = process.env.VUE_APP_API + 'sync'
             const data = { last, items, recipes }
-
+            
+            let res = null
             this.$store.commit('log', 'Sending request to cloud')
             try {
-                const res = await this.$http.post(url, data, { withCredentials: true })
+                res = await this.$http.post(url, data, { withCredentials: true })
             } catch(e) {
                 this.$store.commit('log', e)
                 this.$store.commit('update', ['syncing', false])
