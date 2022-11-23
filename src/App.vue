@@ -131,7 +131,7 @@
     #version {
         z-index:   100;
         position:  fixed;
-        bottom:    2px;
+        bottom:    3px;
         right:     5px;
         font-size: 12px;
         color:   gray;

@@ -63,7 +63,7 @@
         bottom:     0;
         left:       0;
         right:      0;
-        padding:    5px;
+        padding:    10px;
         z-index:    100;
         display:            flex;
         flex-direction:     row;
