@@ -34,6 +34,7 @@ export const sync = {
             this.$store.commit('log', 'Got response from cloud')
 
             if(res.data.error) {
+                this.$store.commit('log', res.data.error)
                 this.$store.commit('update', ['syncing', false])
 
                 if(localStorage.getItem('email')) {
@@ -42,6 +43,7 @@ export const sync = {
                 return
             }
             
+            this.$store.commit('log', 'Updating local db')
             try {
                 this.$store.commit('log', 'Deleting records')
                 await this.deleteAfterSync(res.data)
