@@ -13,6 +13,7 @@
         <div><button @click='syncWithCloud'>Sync Now</button></div>
         <div class='info'>Last Synced {{ lastSync }}</div>
         <div><button @click='refresh'>Refresh App</button></div>
+        <div><router-link to='/log'><button>Log</button></router-link></div>
 
         <!-- <view-footer></view-footer> -->
     </div>

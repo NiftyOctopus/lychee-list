@@ -8,6 +8,7 @@ export const sync = {
     methods: {
         async syncWithCloud() {
             this.$store.commit('update', ['syncing', true])
+            this.$store.commit('log', 'Starting sync')
 
             // Get last sync timestamp
             const synced = localStorage.getItem('synced')
@@ -15,13 +16,22 @@ export const sync = {
             const now    = new Date()
 
             // Get records updated since last sync
+            this.$store.commit('log', 'Getting records from local db')
             const items   = await this.$db.items.where('updated').above(last).toArray()
             const recipes = await this.$db.recipes.where('updated').above(last).toArray()
             
             const url  = process.env.VUE_APP_API + 'sync'
             const data = { last, items, recipes }
 
-            const res = await this.$http.post(url, data, { withCredentials: true })
+            this.$store.commit('log', 'Sending request to cloud')
+            try {
+                const res = await this.$http.post(url, data, { withCredentials: true })
+            } catch(e) {
+                this.$store.commit('log', e)
+                this.$store.commit('update', ['syncing', false])
+                return
+            }
+            this.$store.commit('log', 'Got response from cloud')
 
             if(res.data.error) {
                 this.$store.commit('update', ['syncing', false])
@@ -33,14 +43,19 @@ export const sync = {
             }
             
             try {
+                this.$store.commit('log', 'Deleting records')
                 await this.deleteAfterSync(res.data)
+                this.$store.commit('log', 'Updating records')
                 const resync = await this.updateAfterSync(res.data)
 
                 // Only update the last sync timestamp if request succeeds
                 localStorage.setItem('synced', now.toISOString())
                 this.$store.commit('update', ['lastSync', now])
                 this.$store.commit('update', ['syncing',  false])
+
+                this.$store.commit('log', 'Sync complete')
                 this.load()
+                this.$store.commit('log', 'Data reloaded')
                 if(resync) this.syncWithCloud()
 
             } catch(e) {

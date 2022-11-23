@@ -228,6 +228,10 @@ export const store = createStore({
         },
         clearMessage(state) {
             state.messages.shift()
+        },
+        log(state, msg) {
+            const t = window.performance.now()
+            state.logs.push({ date: new Date(), t, msg })
         }
     },
 

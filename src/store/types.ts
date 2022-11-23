@@ -17,3 +17,5 @@ type ItemList = {[key:string]:Item[]}
 type Recipe      = {id:number, name:string, url?:string, items?:ItemList}
 type RecipeList  = {[key:number]:Recipe}
 type RecipeCache = {[key:number]:ItemList}
+
+type LogEntry = {date:Date, t:number, msg:string}
