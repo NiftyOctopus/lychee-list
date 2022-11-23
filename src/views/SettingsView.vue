@@ -14,6 +14,8 @@
         <div class='info'>Last Synced {{ lastSync }}</div>
         <div><button @click='refresh'>Refresh App</button></div>
         <div><router-link to='/log'><button>Log</button></router-link></div>
+        <div>{{ count.items }} Items</div>
+        <div>{{ count.recipes }} Recipes</div>
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -33,11 +35,14 @@
         components: { /* Subcomponents */ },
         mixins: [margin, genid, sync],
         props: [/* Inputs */],
-        data() { return { }},
+        data() { return {
+            count: { items: 0, recipes: 0 }
+        }},
         beforeCreate() {},
         created() {},
         mounted() {
             this.updateViewMargin()
+            this.countRecords()
         },
         updated() {},
         computed: {
@@ -56,6 +61,10 @@
             refresh() {
                 console.log('Refreshing app')
                 window.location.reload(true)
+            },
+            async countRecords() {
+                this.count.items   = await this.$db.items.count()
+                this.count.recipes = await this.$db.recipes.count()
             }
         }
     }
