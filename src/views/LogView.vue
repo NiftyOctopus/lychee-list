@@ -6,9 +6,11 @@
             </div>
         </div>
 
+        <div><button @click='clear'>Clear</button></div>
+
         <table style='font-family: monospace'>
             <tr v-for='entry in logs' :key='entry.t'>
-                <td style='background-color: lightgray'>{{ entry.t }}</td>
+                <td style='background-color: lightgray'>{{ entry.t.toFixed(0) }}</td>
                 <td style='text-align: left; padding-left: 0.5em'>{{ entry.msg }}</td>
             </tr>
         </table>
@@ -42,7 +44,9 @@
             Only runs when the watched property changes */
         },
         methods: {
-
+            clear() {
+                this.$store.commit('clearLogs')
+            }
         }
     }
 </script>
