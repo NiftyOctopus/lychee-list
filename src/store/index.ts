@@ -232,6 +232,9 @@ export const store = createStore({
         log(state, msg) {
             const t = window.performance.now()
             state.logs.push({ date: new Date(), t, msg })
+        },
+        addLogs(state, logs) {
+            state.logs.push(...logs)
         }
     },
 

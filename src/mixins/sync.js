@@ -27,6 +27,7 @@ export const sync = {
             this.$store.commit('log', 'Sending request to cloud')
             try {
                 res = await this.$http.post(url, data, { withCredentials: true })
+                this.$store.commit('addLogs', res.data.logs)
             } catch(e) {
                 this.$store.commit('log', e)
                 this.$store.commit('update', ['syncing', false])
