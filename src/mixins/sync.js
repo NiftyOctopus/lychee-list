@@ -24,7 +24,8 @@ export const sync = {
             const data = { last, items, recipes }
             
             let res = null
-            this.$store.commit('log', 'Sending request to cloud')
+            const n = items.length + recipes.length
+            this.$store.commit('log', `Sending ${n} records to cloud`)
             try {
                 res = await this.$http.post(url, data, { withCredentials: true })
                 this.$store.commit('addLogs', res.data.logs)
