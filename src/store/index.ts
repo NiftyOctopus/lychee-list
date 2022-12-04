@@ -234,7 +234,13 @@ export const store = createStore({
             state.logs.push({ date: new Date(), t, msg })
         },
         addLogs(state, logs) {
-            state.logs.push(...logs)
+            const last  = state.logs[state.logs.length - 1]
+            const start = last.date.getTime() - last.date.t
+            
+            state.logs.push(...logs.map((entry:LogEntry) => {
+                entry.t = entry.t - start
+                return entry
+            }))
         }
     },
 
