@@ -59,8 +59,14 @@ export const convert = {
         },
         async appendExistingItem(existing) {
             if(this.item.recipe) { throw 'This item already exists in the recipe' }
+            const amount = this.getNewAmount(existing)
 
-            const amount     = this.getNewAmount(existing)
+            if(amount.conflict) {
+                this.resolveConflict()
+                await this.addItem()
+                return
+            }
+
             existing.amount  = amount
             existing.updated = new Date().toISOString()
             await this.$db.items.update(existing.id, existing)
@@ -75,12 +81,19 @@ export const convert = {
             if(!to && !from) { return null }
 
             const conv = to && from ? this.conversions[from][to] : null
+            if(!conv) return { conflict: true }
+            /*
             if(!conv) {
                 const desc = this.item.amount + ' ' + from + ' of ' + this.item.name
                 throw 'Could not add ' + desc + ' because it is already on the list with a different unit'
-            }
+            } */
             
-            return existing.amount + (this.item.amount * conv)
+            const amount = existing.amount + (this.item.amount * conv)
+            return { amount }
+        },
+        resolveConflict() {
+            const name = this.item.name + '*'
+            this.$store.commit('update', ['item.name', name])
         },
         async addItem() {
             let id = genid.methods.createID()
