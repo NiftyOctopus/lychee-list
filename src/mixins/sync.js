@@ -22,6 +22,12 @@ export const sync = {
             
             const url  = process.env.VUE_APP_API + 'sync'
             const data = { last, items, recipes }
+
+            try { this.$store.commit('log', JSON.stringify(data)) }
+            catch(e) {
+                this.$store.commit('log', 'Data is not valid json')
+                this.$store.commit('log', e)
+            }
             
             let res = null
             const n = items.length + recipes.length
