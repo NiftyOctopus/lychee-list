@@ -22,19 +22,13 @@ export const sync = {
             
             const url  = process.env.VUE_APP_API + 'sync'
             const data = { last, items, recipes }
-
-            try { this.$store.commit('log', JSON.stringify(data)) }
-            catch(e) {
-                this.$store.commit('log', 'Data is not valid json')
-                this.$store.commit('log', e)
-            }
             
             let res = null
             const n = items.length + recipes.length
             this.$store.commit('log', `Sending ${n} records to cloud`)
             try {
                 res = await this.$http.post(url, data, { withCredentials: true })
-                this.$store.commit('addLogs', res.data.logs)
+                if(res.data.logs) this.$store.commit('addLogs', res.data.logs)
             } catch(e) {
                 this.$store.commit('log', 'Error in client before or during sync api call')
                 this.$store.commit('log', e)
