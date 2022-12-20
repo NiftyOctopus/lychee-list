@@ -30,6 +30,7 @@ export const sync = {
                 res = await this.$http.post(url, data, { withCredentials: true })
                 this.$store.commit('addLogs', res.data.logs)
             } catch(e) {
+                this.$store.commit('log', 'Error in client before or during sync api call')
                 this.$store.commit('log', e)
                 this.$store.commit('update', ['syncing', false])
                 return
