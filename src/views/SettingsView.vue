@@ -89,8 +89,19 @@
                 const url  = process.env.VUE_APP_API + 'restore'
                 const res  = await this.$http.get(url, { withCredentials: true })
                 
-                console.log(res.data)
-                this.$store.commit('log', JSON.stringify(res.data).substring(0, 200))
+                const backup = res.data.backup
+                console.log(backup)
+                let msg = 'No backup found'
+                if(backup && backup.items && backup.recipes) {
+                    msg = [
+                        'Found backup with',
+                        backup.items.length,
+                        'items and',
+                        backup.recipes.length,
+                        'recipes'
+                    ].join(' ')
+                }
+                this.$store.commit('log', msg)
             }
         }
     }
