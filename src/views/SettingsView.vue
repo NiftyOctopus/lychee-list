@@ -25,6 +25,8 @@
         <div>{{ count.items }} Items</div>
         <div>{{ count.recipes }} Recipes</div>
 
+        <div><button @click='restoreFromCloud'>Restore</button></div>
+
 
         <!-- <view-footer></view-footer> -->
     </div>
@@ -82,6 +84,13 @@
 
                 localStorage.setItem('synced', time.toISOString())
                 this.$store.commit('update', ['lastSync', time])
+            },
+            async restoreFromCloud() {
+                const url  = process.env.VUE_APP_API + 'restore'
+                const res  = await this.$http.get(url, { withCredentials: true })
+                const data = await res.json()
+                console.log(data)
+                this.$store.commit('log', JSON.stringify(data).substring(0, 200))
             }
         }
     }
