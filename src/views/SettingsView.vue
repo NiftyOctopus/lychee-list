@@ -88,9 +88,9 @@
             async restoreFromCloud() {
                 const url  = process.env.VUE_APP_API + 'restore'
                 const res  = await this.$http.get(url, { withCredentials: true })
-                const data = await res.json()
-                console.log(data)
-                this.$store.commit('log', JSON.stringify(data).substring(0, 200))
+                
+                console.log(res.data)
+                this.$store.commit('log', JSON.stringify(res.data).substring(0, 200))
             }
         }
     }
