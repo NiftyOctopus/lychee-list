@@ -27,7 +27,6 @@
 
         <div><button @click='restoreFromCloud'>Restore</button></div>
 
-
         <!-- <view-footer></view-footer> -->
     </div>
 </template>
@@ -36,10 +35,11 @@
 
 <script>
     //import SubComponent from '../components/SubComponent'
-    import { mapState }  from 'vuex'
-    import { margin }    from '../mixins/margin'
-    import { genid  }    from '../mixins/genid'
-    import { sync   }    from '../mixins/sync'
+    import { mapState } from 'vuex'
+    import { margin }   from '../mixins/margin'
+    import { genid }    from '../mixins/genid'
+    import { sync }     from '../mixins/sync'
+    import { restore }  from '../shared/restore'
 
     export default {
         name: 'settings-view',
@@ -86,22 +86,20 @@
                 this.$store.commit('update', ['lastSync', time])
             },
             async restoreFromCloud() {
-                const url  = process.env.VUE_APP_API + 'restore'
-                const res  = await this.$http.get(url, { withCredentials: true })
-                
-                const backup = res.data.backup
-                console.log(backup)
-                let msg = 'No backup found'
-                if(backup && backup.items && backup.recipes) {
-                    msg = [
-                        'Found backup with',
-                        backup.items.length,
-                        'items and',
-                        backup.recipes.length,
-                        'recipes'
-                    ].join(' ')
+                try {
+                    const url = process.env.VUE_APP_API + 'restore'
+                    const res = await this.$http.get(url, { withCredentials: true })
+                    await restore(this.$db, res.data.backup)
+
+                    this.$store.dispatch('message', { text: 'Restore complete' })
+                    this.$store.commit('log', 'Restore complete')
                 }
-                this.$store.commit('log', msg)
+                catch(e) {
+                    this.$store.dispatch('message', { text: 'Error during restore' })
+                    this.$store.commit('log', 'Error during restore')
+                    this.$store.commit('log', e.toString())
+                    throw e
+                }
             }
         }
     }
